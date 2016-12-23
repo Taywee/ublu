@@ -24,7 +24,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="Ublu 1.1.4 documentation" href="index.html" />
-    <link rel="next" title="&lt;no title&gt;" href="guide.html" />
+    <link rel="next" title="Guide" href="guide.html" />
     <link rel="prev" title="Intro" href="intro.html" /> 
   </head>
   <body>
@@ -35,7 +35,7 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="guide.html" title="&lt;no title&gt;"
+          <a href="guide.html" title="Guide"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="intro.html" title="Intro"
@@ -71,7 +71,7 @@ interpreter sublevel ends and some is lost.</p>
 <p>When the sublevel ends (via <em class="xref std std-ref">bye</em> or <tt class="docutils literal"><span class="pre">Ctrl-D</span></tt>),</p>
 <ul class="simple">
 <li><em class="xref std std-ref">FUNC</em> definitions made in the sublevel persist.</li>
-<li><em class="xref std std-ref">Tuple</em> definitions made in the sublevel persist.</li>
+<li><a class="reference internal" href="#tuple-variables"><em>Tuple</em></a> definitions made in the sublevel persist.</li>
 <li><a class="reference internal" href="#constants"><em>Constant</em></a> definitions made in the sublevel are lost.</li>
 </ul>
 </div>
@@ -90,8 +90,8 @@ them to individual <a class="reference internal" href="#interpreter"><em>interpr
 remote applications such as web applications to execute Ublu commands and
 receive their output. The default listener port is 43860. See the <tt class="docutils literal"><span class="pre">server</span></tt>
 command.</p>
-<p>The <tt class="docutils literal"><span class="pre">server</span></tt> command can also be used to interpret a single <em class="xref std std-ref">execution
-block</em> for each connection and then disconnect at the end
+<p>The <tt class="docutils literal"><span class="pre">server</span></tt> command can also be used to interpret a single <a class="reference internal" href="#execution-blocks"><em>execution
+block</em></a> for each connection and then disconnect at the end
 of interpreting the block. This allows the user to connect to a &#8220;canned
 program&#8221; instead of gaining access to the full interpreter.</p>
 </div>
@@ -151,7 +151,7 @@ the Ublu model for runtime program delivery.</p>
 <div class="section" id="debugger">
 <span id="id9"></span><h2>Debugger<a class="headerlink" href="#debugger" title="Permalink to this headline">¶</a></h2>
 <p>The <em class="xref std std-ref">dbug</em> command provides interactive single-step debugging of
-an <em class="xref std std-ref">execution block</em>.</p>
+an <a class="reference internal" href="#execution-blocks"><em>execution block</em></a>.</p>
 </div>
 <div class="section" id="parsing-and-syntax">
 <span id="id10"></span><h2>Parsing and syntax<a class="headerlink" href="#parsing-and-syntax" title="Permalink to this headline">¶</a></h2>
@@ -159,13 +159,13 @@ an <em class="xref std std-ref">execution block</em>.</p>
 <p>Input is parsed left-to-right, with no lookback. Each sequence of
 non-whitespace characters separated from other non-whitespace by at least one
 whitespace character is parsed as an element. No extra whitespace is preserved
-in parsing, not even within <em class="xref std std-ref">quoted strings</em> (with the
+in parsing, not even within <a class="reference internal" href="#quoted-strings"><em>quoted strings</em></a> (with the
 important exception that a quoted string is always returned with a blank space
 as the last character).</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p>the simplistic parser imposes one particularly arbitrary
-limitation in that within an <em class="xref std std-ref">execution block</em> neither
+limitation in that within an <a class="reference internal" href="#execution-blocks"><em>execution block</em></a> neither
 the block opener <tt class="docutils literal"><span class="pre">$[</span></tt> nor the block closer <tt class="docutils literal"><span class="pre">]$</span></tt> are allowed to appear
 inside a quoted string. If you need to have those symbols in a quoted string,
 the limitation is easy to get around, as follows:</p>
@@ -196,7 +196,7 @@ glyph surrounded in parentheses <tt class="docutils literal"><span class="pre">(
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p>the simplistic parser imposes one particularly arbitrary
-limitation in that within an <em class="xref std std-ref">execution block</em> neither
+limitation in that within an <a class="reference internal" href="#execution-blocks"><em>execution block</em></a> neither
 the block opener <tt class="docutils literal"><span class="pre">$[</span></tt> nor the block closer <tt class="docutils literal"><span class="pre">]$</span></tt> are allowed to appear
 inside a quoted string. If you need to have those symbols in a quoted string,
 the limitation is easy to get around, as follows:</p>
@@ -291,13 +291,13 @@ this is a test but not a clever test
 </div>
 </div>
 <div class="section" id="autonomic-tuple-variables">
-<h2>Autonomic Tuple Variables<a class="headerlink" href="#autonomic-tuple-variables" title="Permalink to this headline">¶</a></h2>
+<span id="id17"></span><h2>Autonomic Tuple Variables<a class="headerlink" href="#autonomic-tuple-variables" title="Permalink to this headline">¶</a></h2>
 <p>If the interpreter encounters a tuple variable or the tuple stack pop
 symbol <a class="reference internal" href="#tuple-stack"><em>~</em></a> (tilde) when it is expecting a <cite>command  &lt;Commands&gt;</cite>, it
 checks the value of that variable. If the value is of a class in the
 list of autonomes, that is, classes whose instances are generally passed
-as the argument to the <em class="xref std std-ref">eponymous
-dash-command</em> of a specific Ublu
+as the argument to the <a class="reference internal" href="commands.html#eponymous-dash-command"><em>eponymous
+dash-command</em></a> of a specific Ublu
 command, that command is invoked with tuple as the eponymous argument,
 along with any <a class="reference internal" href="commands.html#dash-command"><em>dash-commands</em></a> and/or arguments which
 follow. If the variable is not autonomic, the interpreter reports an
@@ -330,7 +330,7 @@ invoke, use <tt class="docutils literal"><span class="pre">tuple</span> <span cl
 </ul>
 </div>
 <div class="section" id="numbers">
-<span id="id17"></span><h2>Numbers<a class="headerlink" href="#numbers" title="Permalink to this headline">¶</a></h2>
+<span id="id18"></span><h2>Numbers<a class="headerlink" href="#numbers" title="Permalink to this headline">¶</a></h2>
 <p>Numbers are signed integers and generally can be input as decimal, hex (0x00),
 or octal (000).</p>
 <div class="admonition-see-also admonition">
@@ -339,15 +339,15 @@ or octal (000).</p>
 </div>
 </div>
 <div class="section" id="plainwords">
-<span id="id18"></span><h2>Plainwords<a class="headerlink" href="#plainwords" title="Permalink to this headline">¶</a></h2>
+<span id="id19"></span><h2>Plainwords<a class="headerlink" href="#plainwords" title="Permalink to this headline">¶</a></h2>
 <p>Any whitespace-delimited sequence of non-whitespace characters provided as an
 argument to a command or dash-command&nbsp; or function is a <em>plainword</em>. A
 plainword can be used in most cases to represent a number or a single
-whitespace-delimited textual item where a <em class="xref std std-ref">tuple variable</em> or <em class="xref std std-ref">quoted string</em> would have to be
+whitespace-delimited textual item where a <a class="reference internal" href="#tuple-variables"><em>tuple variable</em></a> or <a class="reference internal" href="#quoted-strings"><em>quoted string</em></a> would have to be
 used to contain longer whitespace-including strings of text.</p>
 </div>
 <div class="section" id="constants">
-<span id="id19"></span><h2>Constants<a class="headerlink" href="#constants" title="Permalink to this headline">¶</a></h2>
+<span id="id20"></span><h2>Constants<a class="headerlink" href="#constants" title="Permalink to this headline">¶</a></h2>
 <p>Constants are created via the <em class="xref std std-ref">const</em> command. Constants have a
 string value. The name of a constant has the form <tt class="docutils literal"><span class="pre">*somename</span></tt> and can be used
 as the <em class="xref std std-ref">argument</em> to a <em class="xref std std-ref">command</em> or
@@ -363,7 +363,7 @@ constants defined in nested interpreter sublevels do not persist into
 the previous interpreter level.</p>
 </div>
 <div class="section" id="execution-blocks">
-<span id="id20"></span><h2>Execution blocks<a class="headerlink" href="#execution-blocks" title="Permalink to this headline">¶</a></h2>
+<span id="id21"></span><h2>Execution blocks<a class="headerlink" href="#execution-blocks" title="Permalink to this headline">¶</a></h2>
 <p>An <strong>execution block</strong> is a body of commands enclosed between the block
 opener <tt class="docutils literal"><span class="pre">$[</span></tt> and the block closer <tt class="docutils literal"><span class="pre">]$</span></tt> . Execution blocks are used in
 <em class="xref std std-ref">functor</em> declarations (callable routines) via the
@@ -389,7 +389,7 @@ one command line, so the comment command will devour the rest of the block.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p>the simplistic parser imposes one particularly arbitrary
-limitation in that within an <em class="xref std std-ref">execution block</em> neither
+limitation in that within an <a class="reference internal" href="#execution-blocks"><em>execution block</em></a> neither
 the block opener <tt class="docutils literal"><span class="pre">$[</span></tt> nor the block closer <tt class="docutils literal"><span class="pre">]$</span></tt> are allowed to appear
 inside a quoted string. If you need to have those symbols in a quoted string,
 the limitation is easy to get around, as follows:</p>
@@ -408,8 +408,8 @@ the conditional control flow command operating upon it.</p>
 example which will <em class="xref std std-ref">get a list of active interactive jobs and search that
 list for specific jobs</em>.</p>
 <div class="section" id="local-variables">
-<span id="id21"></span><h3>Local variables<a class="headerlink" href="#local-variables" title="Permalink to this headline">¶</a></h3>
-<p>An execution block can have local <em class="xref std std-ref">tuple variables</em>
+<span id="id22"></span><h3>Local variables<a class="headerlink" href="#local-variables" title="Permalink to this headline">¶</a></h3>
+<p>An execution block can have local <a class="reference internal" href="#tuple-variables"><em>tuple variables</em></a>
 declared via the <em class="xref std std-ref">LOCAL</em> command whose names hide variables of the
 same name which may exist outside the execution block. Locals disappear at the
 end of the block in which they are declared.</p>
@@ -434,28 +434,28 @@ local a:  inner @a
 </div>
 </div>
 </div>
-<div class="section" id="id22">
-<span id="id23"></span><h2>Functors<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h2>
-<p>A functor is an anonymous <em class="xref std std-ref">execution block</em> created
-via <em class="xref std std-ref">FUN</em> which can then be stored in <em class="xref std std-ref">tuple variable</em> and invoked via <em class="xref std std-ref">CALL</em> and/or associated with a
+<div class="section" id="id23">
+<span id="id24"></span><h2>Functors<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h2>
+<p>A functor is an anonymous <a class="reference internal" href="#execution-blocks"><em>execution block</em></a> created
+via <em class="xref std std-ref">FUN</em> which can then be stored in <a class="reference internal" href="#tuple-variables"><em>tuple variable</em></a> and invoked via <em class="xref std std-ref">CALL</em> and/or associated with a
 name entry in the function dictionary via <tt class="docutils literal"><span class="pre">defun</span></tt>. Arguments can be passed to
 the functor. Arguments are call-by-reference; the resolution of these arguments
-is discussed under <em class="xref std std-ref">Function Parameter Binding</em>.</p>
+is discussed under <a class="reference internal" href="#function-parameter-binding"><em>Function Parameter Binding</em></a>.</p>
 </div>
 <div class="section" id="functions">
-<span id="id24"></span><h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<span id="id25"></span><h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
 <p>A function is a <em class="xref std std-ref">functor</em> associated with a name entry in the
-<em class="xref std std-ref">function dictionary</em>, usually via <tt class="docutils literal"><span class="pre">FUNC</span></tt> but
+<a class="reference internal" href="#function-dictionary"><em>function dictionary</em></a>, usually via <tt class="docutils literal"><span class="pre">FUNC</span></tt> but
 also via the combination of <em class="xref std std-ref">FUN</em> and <em class="xref std std-ref">defun</em>.</p>
 <p>The function dictionary is searched after the list of built-in commands.
 Dictionaries can be listed, saved, restored and merged via the
 <em class="xref std std-ref">dict</em> command. Arguments can be passed to the block. All
-arguments are passed by reference, i.e., passing a <em class="xref std std-ref">tuple
-variable</em> to a function argument list passes the
+arguments are passed by reference, i.e., passing a <a class="reference internal" href="#tuple-variables"><em>tuple
+variable</em></a> to a function argument list passes the
 tuple itself, not the tuple&#8217;s value, and any alteration of the argument
 alters the tuple referred to in the argument list. The resolution of
-these arguments is discussed under <em class="xref std std-ref">Function Parameter
-Binding</em>:</p>
+these arguments is discussed under <a class="reference internal" href="#function-parameter-binding"><em>Function Parameter
+Binding</em></a>:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span>&gt; FUNC yadda ( a ) $[ FOR @word in @@a $[ put -n -s -from @word put ${ yadda-yadda ... }$ ]$ ]$
 &gt; put -to @words ${ this that t&#39;other }$
 &gt; yadda ( @words )
@@ -481,7 +481,7 @@ FUNC yadda ( a ) $[ FOR @word in @@a $[ put -n -s -from @word put ${ yadda-yadda
 <p class="last">the <em class="xref std std-ref">FUN</em> and <em class="xref std std-ref">defun</em> commands.</p>
 </div>
 <div class="section" id="function-parameter-binding">
-<span id="id25"></span><h3>Function Parameter Binding<a class="headerlink" href="#function-parameter-binding" title="Permalink to this headline">¶</a></h3>
+<span id="id26"></span><h3>Function Parameter Binding<a class="headerlink" href="#function-parameter-binding" title="Permalink to this headline">¶</a></h3>
 <p>Ublu&#8217;s interpreter being purely a text interpreter, performing (almost)
 no tokenization during interpretation and compilation, function
 parameter binding is effected by runtime rewriting (&#8220;token pasting&#8221;) of
@@ -490,17 +490,17 @@ actual positional parameter value provided at the time the function is
 called.</p>
 <p>Arguments passed to a function or functor can be</p>
 <ul class="simple">
-<li><em class="xref std std-ref">&#64;variable</em></li>
+<li><a class="reference internal" href="#tuple-variables"><em>&#64;variable</em></a></li>
 <li><em class="xref std std-ref">plainword</em></li>
-<li><em class="xref std std-ref">quoted string</em></li>
-<li><em class="xref std std-ref">block</em></li>
+<li><a class="reference internal" href="#quoted-strings"><em>quoted string</em></a></li>
+<li><a class="reference internal" href="#execution-blocks"><em>block</em></a></li>
 </ul>
 <p>Arguments other than blocks or quoted strings are handled as follows:</p>
 <ul class="simple">
 <li>If the argument provided is a simple lex, e.g., <tt class="docutils literal"><span class="pre">foo</span></tt> or <tt class="docutils literal"><span class="pre">1234</span></tt>,
 or a <em class="xref std std-ref">const</em>, that text is substituted uncritically at
 runtime for all references to that argument in the function body.</li>
-<li>If the argument provided is a <em class="xref std std-ref">tuple variable</em>,
+<li>If the argument provided is a <a class="reference internal" href="#tuple-variables"><em>tuple variable</em></a>,
 a temporary alias for the tuple variable named in the invocation
 argument is created in a local extension to the tuple map and
 references to the argument are rewritten with the name of the
@@ -530,19 +530,19 @@ modes</em> provided with Ublu.</p>
 </div>
 </div>
 <div class="section" id="function-dictionary">
-<span id="id26"></span><h2>Function Dictionary<a class="headerlink" href="#function-dictionary" title="Permalink to this headline">¶</a></h2>
+<span id="id27"></span><h2>Function Dictionary<a class="headerlink" href="#function-dictionary" title="Permalink to this headline">¶</a></h2>
 <p>Function definitions are stored in the function dictionary.</p>
 <p><a class="reference internal" href="#interpreter"><em>Interpreter</em></a> instances launched by the <tt class="docutils literal"><span class="pre">interpret</span></tt>
 command inherit the current function dictionary. Any additions within an
 interpreter instance are lost when the instance exits back to its parent
 interpreter instance.</p>
 <p>You can view the current function dictionary or save it to a file or
-<em class="xref std std-ref">tuple variable</em> and later restore it or merge it
+<a class="reference internal" href="#tuple-variables"><em>tuple variable</em></a> and later restore it or merge it
 with the current dictionary. See the <em class="xref std std-ref">dict</em> and
 <em class="xref std std-ref">savesys</em> commands.</p>
 </div>
 <div class="section" id="user-id-and-password">
-<span id="id27"></span><h2>User ID and password<a class="headerlink" href="#user-id-and-password" title="Permalink to this headline">¶</a></h2>
+<span id="id28"></span><h2>User ID and password<a class="headerlink" href="#user-id-and-password" title="Permalink to this headline">¶</a></h2>
 <p>You supply a user ID and a password in the argument list for any Ublu command
 which accesses an AS/400 (iSeries, System/i) host, or for creating an instance
 of the host using the <em class="xref std std-ref">as400</em> command so that you can employ the
@@ -620,7 +620,7 @@ the windowing password prompt.</p>
 <li><a class="reference internal" href="#local-variables">Local variables</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id22">Functors</a></li>
+<li><a class="reference internal" href="#id23">Functors</a></li>
 <li><a class="reference internal" href="#functions">Functions</a><ul>
 <li><a class="reference internal" href="#function-parameter-binding">Function Parameter Binding</a></li>
 </ul>
@@ -636,7 +636,7 @@ the windowing password prompt.</p>
                         title="previous chapter">Intro</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="guide.html"
-                        title="next chapter">&lt;no title&gt;</a></p>
+                        title="next chapter">Guide</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/concepts.txt"
@@ -666,7 +666,7 @@ the windowing password prompt.</p>
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="guide.html" title="&lt;no title&gt;"
+          <a href="guide.html" title="Guide"
              >next</a> |</li>
         <li class="right" >
           <a href="intro.html" title="Intro"
