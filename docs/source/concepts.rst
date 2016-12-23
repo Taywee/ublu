@@ -31,7 +31,7 @@ interpreter sublevel ends and some is lost.
 When the sublevel ends (via :ref:`bye <bye>` or ``Ctrl-D``),
 
 -  :ref:`FUNC <FUNC>` definitions made in the sublevel persist.
--  :ref:`Tuple <Tuple_Variables>` definitions made in the sublevel persist.
+-  :ref:`Tuple <Tuple variables>` definitions made in the sublevel persist.
 -  :ref:`Constant <Constants>` definitions made in the sublevel are lost.
 
 .. _Main interpreter:
@@ -56,7 +56,7 @@ receive their output. The default listener port is 43860. See the ``server``
 command.
 
 The ``server`` command can also be used to interpret a single :ref:`execution
-block  <Execution_blocks>` for each connection and then disconnect at the end
+block  <Execution blocks>` for each connection and then disconnect at the end
 of interpreting the block. This allows the user to connect to a "canned
 program" instead of gaining access to the full interpreter.
 
@@ -135,7 +135,7 @@ Debugger
 --------
 
 The :ref:`dbug  <dbug>` command provides interactive single-step debugging of
-an :ref:`execution block  <Execution_blocks>`.
+an :ref:`execution block  <Execution blocks>`.
 
 .. _Parsing and syntax:
 
@@ -147,13 +147,13 @@ Parsing and syntax are simplistic.
 Input is parsed left-to-right, with no lookback. Each sequence of
 non-whitespace characters separated from other non-whitespace by at least one
 whitespace character is parsed as an element. No extra whitespace is preserved
-in parsing, not even within :ref:`quoted strings <Quoted_strings>` (with the
+in parsing, not even within :ref:`quoted strings <Quoted strings>` (with the
 important exception that a quoted string is always returned with a blank space
 as the last character).
 
 .. Note::
     the simplistic parser imposes one particularly arbitrary
-    limitation in that within an :ref:`execution block  <Execution_blocks>` neither
+    limitation in that within an :ref:`execution block  <Execution blocks>` neither
     the block opener ``$[`` nor the block closer ``]$`` are allowed to appear
     inside a quoted string. If you need to have those symbols in a quoted string,
     the limitation is easy to get around, as follows::
@@ -187,7 +187,7 @@ glyph surrounded in parentheses ``(${)`` .
 
 .. Note::
     the simplistic parser imposes one particularly arbitrary
-    limitation in that within an :ref:`execution block  <Execution_blocks>` neither
+    limitation in that within an :ref:`execution block  <Execution blocks>` neither
     the block opener ``$[`` nor the block closer ``]$`` are allowed to appear
     inside a quoted string. If you need to have those symbols in a quoted string,
     the limitation is easy to get around, as follows::
@@ -284,6 +284,8 @@ automatically wrapped in an anonymous tuple. Hence the following session::
     > put ~
     this is a test but not a clever test
 
+.. _Autonomic Tuple Variables:
+
 Autonomic Tuple Variables
 -------------------------
 
@@ -292,7 +294,7 @@ symbol :ref:`~ <Tuple stack>` (tilde) when it is expecting a `command  <Commands
 checks the value of that variable. If the value is of a class in the
 list of autonomes, that is, classes whose instances are generally passed
 as the argument to the :ref:`eponymous
-dash-command <Eponymous_dash-command>` of a specific Ublu
+dash-command <Eponymous dash-command>` of a specific Ublu
 command, that command is invoked with tuple as the eponymous argument,
 along with any :ref:`dash-commands  <Dash Command>` and/or arguments which
 follow. If the variable is not autonomic, the interpreter reports an
@@ -348,7 +350,7 @@ Any whitespace-delimited sequence of non-whitespace characters provided as an
 argument to a command or dash-command  or function is a *plainword*. A
 plainword can be used in most cases to represent a number or a single
 whitespace-delimited textual item where a :ref:`tuple variable
-<Tuple_Variables>` or :ref:`quoted string  <Quoted_strings>` would have to be
+<Tuple variables>` or :ref:`quoted string  <Quoted strings>` would have to be
 used to contain longer whitespace-including strings of text.
 
 .. _Constants:
@@ -401,7 +403,7 @@ enclosed block.
 
 .. Note::
     the simplistic parser imposes one particularly arbitrary
-    limitation in that within an :ref:`execution block  <Execution_blocks>` neither
+    limitation in that within an :ref:`execution block  <Execution blocks>` neither
     the block opener ``$[`` nor the block closer ``]$`` are allowed to appear
     inside a quoted string. If you need to have those symbols in a quoted string,
     the limitation is easy to get around, as follows::
@@ -426,7 +428,7 @@ list for specific jobs <Get_a_list_of_active_interactive_jobs>`.
 Local variables
 ~~~~~~~~~~~~~~~
 
-An execution block can have local :ref:`tuple variables <Tuple_Variables>`
+An execution block can have local :ref:`tuple variables <Tuple variables>`
 declared via the :ref:`LOCAL <LOCAL>` command whose names hide variables of the
 same name which may exist outside the execution block. Locals disappear at the
 end of the block in which they are declared.
@@ -459,13 +461,13 @@ referenced.
 Functors
 --------
 
-A functor is an anonymous :ref:`execution block  <Execution_blocks>` created
+A functor is an anonymous :ref:`execution block  <Execution blocks>` created
 via :ref:`FUN <FUN>` which can then be stored in :ref:`tuple variable
-<Tuple_Variables>` and invoked via :ref:`CALL <CALL>` and/or associated with a
+<Tuple variables>` and invoked via :ref:`CALL <CALL>` and/or associated with a
 name entry in the function dictionary via ``defun``. Arguments can be passed to
 the functor. Arguments are call-by-reference; the resolution of these arguments
 is discussed under :ref:`Function Parameter Binding
-<Function_Parameter_Binding>`.
+<Function Parameter Binding>`.
 
 .. _Functions:
 
@@ -473,18 +475,18 @@ Functions
 ---------
 
 A function is a :ref:`functor <Functors>` associated with a name entry in the
-:ref:`function dictionary  <Function_Dictionary>`, usually via ``FUNC`` but
+:ref:`function dictionary  <Function Dictionary>`, usually via ``FUNC`` but
 also via the combination of :ref:`FUN <FUN>` and :ref:`defun <defun>`.
 
 The function dictionary is searched after the list of built-in commands.
 Dictionaries can be listed, saved, restored and merged via the
 :ref:`dict <dict>` command. Arguments can be passed to the block. All
 arguments are passed by reference, i.e., passing a :ref:`tuple
-variable <Tuple_Variables>` to a function argument list passes the
+variable <Tuple variables>` to a function argument list passes the
 tuple itself, not the tuple's value, and any alteration of the argument
 alters the tuple referred to in the argument list. The resolution of
 these arguments is discussed under :ref:`Function Parameter
-Binding <Function_Parameter_Binding>`::
+Binding <Function Parameter Binding>`::
 
     > FUNC yadda ( a ) $[ FOR @word in @@a $[ put -n -s -from @word put ${ yadda-yadda ... }$ ]$ ]$
     > put -to @words ${ this that t'other }$
@@ -524,17 +526,17 @@ called.
 
 Arguments passed to a function or functor can be
 
--  :ref:`@variable <Tuple_Variables>`
+-  :ref:`@variable <Tuple variables>`
 -  :ref:`plainword  <Plain_words>`
--  :ref:`quoted string  <Quoted_strings>`
--  :ref:`block  <Execution_blocks>`
+-  :ref:`quoted string  <Quoted strings>`
+-  :ref:`block  <Execution blocks>`
 
 Arguments other than blocks or quoted strings are handled as follows:
 
 -  If the argument provided is a simple lex, e.g., ``foo`` or ``1234``,
    or a :ref:`const  <const>`, that text is substituted uncritically at
    runtime for all references to that argument in the function body.
--  If the argument provided is a :ref:`tuple variable  <Tuple_Variables>`,
+-  If the argument provided is a :ref:`tuple variable  <Tuple variables>`,
    a temporary alias for the tuple variable named in the invocation
    argument is created in a local extension to the tuple map and
    references to the argument are rewritten with the name of the
@@ -576,7 +578,7 @@ interpreter instance are lost when the instance exits back to its parent
 interpreter instance.
 
 You can view the current function dictionary or save it to a file or
-:ref:`tuple variable  <Tuple_Variables>` and later restore it or merge it
+:ref:`tuple variable  <Tuple variables>` and later restore it or merge it
 with the current dictionary. See the :ref:`dict <dict>` and
 :ref:`savesys  <savesys>` commands.
 
