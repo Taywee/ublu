@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Overview &mdash; Ublu 1.1.4 documentation</title>
+    <title>Intro &mdash; Ublu 1.1.4 documentation</title>
     
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -24,6 +24,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="Ublu 1.1.4 documentation" href="index.html" />
+    <link rel="next" title="Concepts" href="concepts.html" />
     <link rel="prev" title="Welcome to Ublu’s documentation!" href="index.html" /> 
   </head>
   <body>
@@ -33,6 +34,9 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="concepts.html" title="Concepts"
+             accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="index.html" title="Welcome to Ublu’s documentation!"
              accesskey="P">previous</a> |</li>
@@ -45,8 +49,10 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="overview">
-<h1>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="intro">
+<h1>Intro<a class="headerlink" href="#intro" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference external" href="https://github.com/jwoehr/ublu">Ublu</a> is a tool for ad-hoc process
 automation primarily aimed at <a class="reference external" href="http://www-03.ibm.com/systems/power/software/i/">IBM
 i</a> ®.</p>
@@ -56,7 +62,7 @@ intended for interaction between any Java platform on the one hand,
 and OS400 (IBM i Series OS ®) and IBM z/VM ® SMAPI operations
 programming on the other. The language is <em class="xref std std-ref">multithreaded</em>
 and offers a <em class="xref std std-ref">client-server</em> mode. It also possesses
-a built-in single-step <em class="xref std std-ref">debugger</em>.</p>
+a built-in single-step <a class="reference internal" href="concepts.html#debugger"><em>debugger</em></a>.</p>
 <ul class="simple">
 <li>Access to the i Series OS server is implemented via the <a class="reference external" href="http://jt400.sourceforge.net/">JTOpen
 library</a>.</li>
@@ -97,7 +103,7 @@ are welcome and should be made via whatever ticketing system is present
 on the site where Ublu is distributed.</p>
 </div>
 <div class="section" id="installation">
-<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
 <p>Ublu is distributed as an archive containing</p>
 <ul class="simple">
 <li><tt class="docutils literal"><span class="pre">ublu.jar</span></tt><ul>
@@ -151,7 +157,7 @@ the directory containing <tt class="docutils literal"><span class="pre">ublu.jar
 </ul>
 </div>
 <div class="section" id="invocation">
-<h1>Invocation<a class="headerlink" href="#invocation" title="Permalink to this headline">¶</a></h1>
+<span id="id1"></span><h2>Invocation<a class="headerlink" href="#invocation" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><tt class="docutils literal"><span class="pre">java</span> <span class="pre">ublu.Ublu</span> <span class="pre">[args</span> <span class="pre">...]</span></tt> <em>(set classpath first)</em></li>
 </ul>
@@ -208,7 +214,7 @@ line.</p>
 </li>
 </ul>
 <blockquote>
-<div><p>command line is the name of an Ublu source file to <a href="#id1"><span class="problematic" id="id2">:ref:`include
+<div><p>command line is the name of an Ublu source file to <a href="#id2"><span class="problematic" id="id3">:ref:`include
 &lt;include&gt;`__</span></a>. If <tt class="docutils literal"><span class="pre">-s</span></tt> is also one of the switches passed to Ublu, then
 the include will be a silent include. After the include, the rest of the
 command line will be parsed and executed as Ublu commands by the main
@@ -267,18 +273,16 @@ Copyright (c) 2002 JSON.org
 Type help for help. Type license for license. Type bye to exit.
 </pre></div>
 </div>
-<div class="line-block">
-<div class="line">To exit the system, type <tt class="docutils literal"><span class="pre">bye</span></tt> . Some minimal cleanup will be
-performed.</div>
-<div class="line-block">
-<div class="line"><tt class="docutils literal"><span class="pre">[Ctrl-D]</span></tt> is effectively the same as <tt class="docutils literal"><span class="pre">bye</span></tt> .</div>
-<div class="line">If you must force exit, type <tt class="docutils literal"><span class="pre">exit</span></tt> . No cleanup beyond that
-provided by Java itself will be performed.</div>
-<div class="line"><tt class="docutils literal"><span class="pre">[Ctrl-C]</span></tt> is effectively the same as <tt class="docutils literal"><span class="pre">exit</span></tt> .</div>
-</div>
-</div>
+<ul class="simple">
+<li>To exit the system, type <tt class="docutils literal"><span class="pre">bye</span></tt> . Some minimal cleanup will be
+performed.</li>
+<li><tt class="docutils literal"><span class="pre">[Ctrl-D]</span></tt> is effectively the same as <tt class="docutils literal"><span class="pre">bye</span></tt> .</li>
+<li>If you must force exit, type <tt class="docutils literal"><span class="pre">exit</span></tt> . No cleanup beyond that provided by
+Java itself will be performed.</li>
+<li><tt class="docutils literal"><span class="pre">[Ctrl-C]</span></tt> is effectively the same as <tt class="docutils literal"><span class="pre">exit</span></tt> .</li>
+</ul>
 <div class="section" id="memory-requirements">
-<h2>Memory requirements<a class="headerlink" href="#memory-requirements" title="Permalink to this headline">¶</a></h2>
+<h3>Memory requirements<a class="headerlink" href="#memory-requirements" title="Permalink to this headline">¶</a></h3>
 <p>Ublu ordinarily runs well with default Java memory values. However, in
 performing database operations on large databases one may be forced to
 boost the heap allocation considerably on invocation, e.g.:</p>
@@ -286,6 +290,7 @@ boost the heap allocation considerably on invocation, e.g.:</p>
 </pre></div>
 </div>
 <p>which allocates 4 gigabytes.</p>
+</div>
 </div>
 </div>
 
@@ -297,10 +302,13 @@ boost the heap allocation considerably on invocation, e.g.:</p>
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Overview</a></li>
+<li><a class="reference internal" href="#">Intro</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
 <li><a class="reference internal" href="#installation">Installation</a></li>
 <li><a class="reference internal" href="#invocation">Invocation</a><ul>
 <li><a class="reference internal" href="#memory-requirements">Memory requirements</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -308,6 +316,9 @@ boost the heap allocation considerably on invocation, e.g.:</p>
   <h4>Previous topic</h4>
   <p class="topless"><a href="index.html"
                         title="previous chapter">Welcome to Ublu&#8217;s documentation!</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="concepts.html"
+                        title="next chapter">Concepts</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/intro.txt"
@@ -336,6 +347,9 @@ boost the heap allocation considerably on invocation, e.g.:</p>
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="concepts.html" title="Concepts"
+             >next</a> |</li>
         <li class="right" >
           <a href="index.html" title="Welcome to Ublu’s documentation!"
              >previous</a> |</li>

@@ -1,0 +1,683 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Concepts &mdash; Ublu 1.1.4 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.1.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Ublu 1.1.4 documentation" href="index.html" />
+    <link rel="next" title="&lt;no title&gt;" href="guide.html" />
+    <link rel="prev" title="Intro" href="intro.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="guide.html" title="&lt;no title&gt;"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="intro.html" title="Intro"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Ublu 1.1.4 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="concepts">
+<h1>Concepts<a class="headerlink" href="#concepts" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="interpreter">
+<span id="id1"></span><h2>Interpreter<a class="headerlink" href="#interpreter" title="Permalink to this headline">¶</a></h2>
+<p>As an interpreter, one or more commands with their arguments can be issued on a
+line. The commands will be executed in sequence. If any command fails,
+generally the interpreter will abandon the rest of the commands on the line and
+return to the prompt. The interpreter mode prompt is a right-arrow (<tt class="docutils literal"><span class="pre">&gt;</span></tt>) but
+will have a number to the left of it (e.g., <tt class="docutils literal"><span class="pre">1&gt;</span></tt>) if in a nested interpreter
+sublevel.</p>
+<div class="section" id="nested-interpreter-sublevel">
+<span id="id2"></span><h3>Nested interpreter sublevel<a class="headerlink" href="#nested-interpreter-sublevel" title="Permalink to this headline">¶</a></h3>
+<p>The <em class="xref std std-ref">interpret</em> command can be used to enter a nested
+interpreter sublevel, an interpreter nested within the previous level of
+interpreter.</p>
+<p>State is inherited by a nested interpreter sublevel from the previous level of
+interpreter.</p>
+<p>Some state persists in the previous level of interpreter when the nested
+interpreter sublevel ends and some is lost.</p>
+<p>When the sublevel ends (via <em class="xref std std-ref">bye</em> or <tt class="docutils literal"><span class="pre">Ctrl-D</span></tt>),</p>
+<ul class="simple">
+<li><em class="xref std std-ref">FUNC</em> definitions made in the sublevel persist.</li>
+<li><em class="xref std std-ref">Tuple</em> definitions made in the sublevel persist.</li>
+<li><a class="reference internal" href="#constants"><em>Constant</em></a> definitions made in the sublevel are lost.</li>
+</ul>
+</div>
+<div class="section" id="main-interpreter">
+<span id="id3"></span><h3>Main interpreter<a class="headerlink" href="#main-interpreter" title="Permalink to this headline">¶</a></h3>
+<p>The instance of the interpreter presented to the user upon program invocation
+is called the <strong>main interpreter</strong> to distinguish it from <em class="xref std std-ref">nested
+interpreter sublevels</em> and from (possibly
+multiple) interpreter instances created in <em class="xref std std-ref">server mode</em>.</p>
+</div>
+</div>
+<div class="section" id="server-mode">
+<span id="id4"></span><h2>Server mode<a class="headerlink" href="#server-mode" title="Permalink to this headline">¶</a></h2>
+<p>Ublu can launch multiple TCP/IP port servers that accept connections and bind
+them to individual <a class="reference internal" href="#interpreter"><em>interpreter</em></a> sessions.  This allows
+remote applications such as web applications to execute Ublu commands and
+receive their output. The default listener port is 43860. See the <tt class="docutils literal"><span class="pre">server</span></tt>
+command.</p>
+<p>The <tt class="docutils literal"><span class="pre">server</span></tt> command can also be used to interpret a single <em class="xref std std-ref">execution
+block</em> for each connection and then disconnect at the end
+of interpreting the block. This allows the user to connect to a &#8220;canned
+program&#8221; instead of gaining access to the full interpreter.</p>
+</div>
+<div class="section" id="commandline">
+<span id="id5"></span><h2>Commandline<a class="headerlink" href="#commandline" title="Permalink to this headline">¶</a></h2>
+<p>Invoked as a command line application with or more commands following the
+<a class="reference internal" href="intro.html#invocation"><em>invocation</em></a> on the shell command line, the commands and
+their arguments are processed as in the interpreter, then the application
+exits. If one of the commands is <em class="xref std std-ref">interpret</em>, then the
+application continues to run until that interpreter exits when that interpreter
+encounters the <tt class="docutils literal"><span class="pre">bye</span></tt> or <em class="xref std std-ref">exit</em> command. <tt class="docutils literal"><span class="pre">exit</span></tt> always exits,
+but <tt class="docutils literal"><span class="pre">bye</span></tt> only unnests one interpreter level. If that interpreter is the
+<em class="xref std std-ref">main interpreter</em>, Ublu exits.</p>
+</div>
+<div class="section" id="input">
+<span id="id6"></span><h2>Input<a class="headerlink" href="#input" title="Permalink to this headline">¶</a></h2>
+<p>Input for the <em class="xref std std-ref">main interpreter</em> can come from the
+console or from standard input when Ublu is invoked using some form of shell
+redirection, e.g., shell pipes ( <tt class="docutils literal"><span class="pre">|</span></tt> ) or &#8220;here documents&#8221; ( <tt class="docutils literal"><span class="pre">&lt;&lt;</span></tt> ).</p>
+<p>When interpreter input comes from standard in, prompting is suppressed.</p>
+<p>In <em class="xref std std-ref">server mode</em>, input comes from the network socket and
+prompting is suppressed.</p>
+</div>
+<div class="section" id="output">
+<span id="id7"></span><h2>Output<a class="headerlink" href="#output" title="Permalink to this headline">¶</a></h2>
+<p>In <a class="reference internal" href="#interpreter"><em>interpreter</em></a> and <a class="reference internal" href="#commandline"><em>commandline</em></a>
+mode, command output of Ublu is written to standard out, with the exception of
+the following which are written to standard error:</p>
+<ul class="simple">
+<li>error and exception mesages</li>
+<li>some user informational messages which appear in interpretive mode,
+such as the initial version message, copyright message</li>
+<li>all help and usage messages</li>
+<li>the prompt</li>
+</ul>
+<p>When automating system tasks, it may be helpful to redirect stderr from the
+shell command line via <tt class="docutils literal"><span class="pre">2&gt;/dev/null</span></tt> to discard miscellaneous interpreter
+informational output. This, however, discards error messages as well.</p>
+<p>In <em class="xref std std-ref">server mode</em>, Ublu standard out is connected the
+network socket. However, Ublu standard error output remains attached to
+the invoking interpreter&#8217;s standard error. This makes the <em class="xref std std-ref">main
+interpreter</em> a monitor of errors occurring in
+server threads.</p>
+</div>
+<div class="section" id="executing-commands-from-a-file">
+<span id="id8"></span><h2>Executing commands from a file<a class="headerlink" href="#executing-commands-from-a-file" title="Permalink to this headline">¶</a></h2>
+<p>Interpretation of a text file of <em class="xref std std-ref">commands</em> and
+<a class="reference internal" href="#functions"><em>functions</em></a> is performed via the command <tt class="docutils literal"><span class="pre">include</span></tt>.</p>
+</div>
+<div class="section" id="launch-your-application-from-a-shell-script-autogenerated-via-gensh">
+<h2>Launch your application from a shell script autogenerated via <tt class="docutils literal"><span class="pre">gensh</span></tt><a class="headerlink" href="#launch-your-application-from-a-shell-script-autogenerated-via-gensh" title="Permalink to this headline">¶</a></h2>
+<p>Ublu offers a command <em class="xref std std-ref">gensh</em> which autogenerates a shell
+script to process arguments to your custom function via command line
+switches and invoke your custom function with those arguments. This is
+the Ublu model for runtime program delivery.</p>
+</div>
+<div class="section" id="debugger">
+<span id="id9"></span><h2>Debugger<a class="headerlink" href="#debugger" title="Permalink to this headline">¶</a></h2>
+<p>The <em class="xref std std-ref">dbug</em> command provides interactive single-step debugging of
+an <em class="xref std std-ref">execution block</em>.</p>
+</div>
+<div class="section" id="parsing-and-syntax">
+<span id="id10"></span><h2>Parsing and syntax<a class="headerlink" href="#parsing-and-syntax" title="Permalink to this headline">¶</a></h2>
+<p>Parsing and syntax are simplistic.</p>
+<p>Input is parsed left-to-right, with no lookback. Each sequence of
+non-whitespace characters separated from other non-whitespace by at least one
+whitespace character is parsed as an element. No extra whitespace is preserved
+in parsing, not even within <em class="xref std std-ref">quoted strings</em> (with the
+important exception that a quoted string is always returned with a blank space
+as the last character).</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>the simplistic parser imposes one particularly arbitrary
+limitation in that within an <em class="xref std std-ref">execution block</em> neither
+the block opener <tt class="docutils literal"><span class="pre">$[</span></tt> nor the block closer <tt class="docutils literal"><span class="pre">]$</span></tt> are allowed to appear
+inside a quoted string. If you need to have those symbols in a quoted string,
+the limitation is easy to get around, as follows:</p>
+<div class="last highlight-python"><div class="highlight"><pre><span></span>put -to @foo ${ $[ }$
+put -to @bar ${ $] }$
+FOR @i in @foo $[ put -from @i ]$
+FOR @i in @bar $[ put -from @i ]$
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="quoted-strings">
+<span id="id11"></span><h2>Quoted strings<a class="headerlink" href="#quoted-strings" title="Permalink to this headline">¶</a></h2>
+<p>Quoting of strings is achieved by placing the string between two elements
+<strong>``${``</strong> and <strong>``}$``</strong> . The open and close elements of a quoted string must
+each be separated by at least one space from the contents of the string and
+from any leading or following commands or arguments.</p>
+<p>Whitespace between non-whitespace elements of the string is compacted
+into single spaces&nbsp; <tt class="docutils literal"><span class="pre">${</span> <span class="pre">This</span> <span class="pre">&nbsp;</span> <span class="pre">&nbsp;</span> <span class="pre">is</span>&nbsp;&nbsp; <span class="pre">&nbsp;</span> <span class="pre">&nbsp;</span> <span class="pre">&nbsp;</span> <span class="pre">a</span> <span class="pre">quoted&nbsp;&nbsp;&nbsp;&nbsp;</span> <span class="pre">string.</span>&nbsp;&nbsp; <span class="pre">}$</span></tt>
+represents <tt class="docutils literal"><span class="pre">This</span> <span class="pre">is</span> <span class="pre">a</span> <span class="pre">quoted</span> <span class="pre">string.</span></tt> A quoted string is always
+returned by the parser with a blank space at the end of it.</p>
+<p>A quoted string can span multiple lines. When end-of-line is reached in
+the interpreter after the open-quote glyph ( <tt class="docutils literal"><span class="pre">${</span></tt> ) without finding
+the close-quote glyph ( <tt class="docutils literal"><span class="pre">}$</span></tt> ), then string parsing continues and the
+prompt changes for any lines following until the close-quote glyph is
+encountered. The string parsing continuation prompt is the open-quote
+glyph surrounded in parentheses <tt class="docutils literal"><span class="pre">(${)</span></tt> .</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>the simplistic parser imposes one particularly arbitrary
+limitation in that within an <em class="xref std std-ref">execution block</em> neither
+the block opener <tt class="docutils literal"><span class="pre">$[</span></tt> nor the block closer <tt class="docutils literal"><span class="pre">]$</span></tt> are allowed to appear
+inside a quoted string. If you need to have those symbols in a quoted string,
+the limitation is easy to get around, as follows:</p>
+<div class="last highlight-python"><div class="highlight"><pre><span></span>put -to @foo ${ $[ }$
+put -to @bar ${ $] }$
+FOR @i in @foo $[ put -from @i ]$
+FOR @i in @bar $[ put -from @i ]$
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="tuple-variables">
+<span id="id12"></span><h2>Tuple variables<a class="headerlink" href="#tuple-variables" title="Permalink to this headline">¶</a></h2>
+<p>A tuple variable is a <em class="xref std std-ref">autoinstancing</em> name-value
+pair that is either globally accessible within the given interpreter session or
+made <em class="xref std std-ref">local</em> to a function definition via the
+<em class="xref std std-ref">LOCAL</em> command. Tuples are always referenced with a &#8220;&#64;&#8221; as the
+first character of their name, e.g., <tt class="docutils literal"><span class="pre">&#64;session</span></tt>. You can direct any kind of
+object to a tuple with the :ref:<tt class="docutils literal"><span class="pre">-to</span></tt> <tt class="docutils literal"><span class="pre">&#64;tuplename</span></tt> <cite>dash-command
+&lt;Dash_Command&gt;</cite> (adjunct to commands which support that) and retrieve the value
+with <tt class="docutils literal"><span class="pre">-from</span>&nbsp;&nbsp; <span class="pre">&#64;tuplename</span></tt> (adjunct to commands which support that).</p>
+<p>Tuples can be directly manipulated via the <em class="xref std std-ref">put</em> and <em class="xref std std-ref">tuple</em> commands.</p>
+<div class="section" id="default-tuples">
+<span id="id13"></span><h3>Default Tuples<a class="headerlink" href="#default-tuples" title="Permalink to this headline">¶</a></h3>
+<p>The Ublu interpreter starts with certain tuples already defined, as
+shown in the chart below:</p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="22%" />
+<col width="20%" />
+<col width="58%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><em>name</em></td>
+<td><em>value</em></td>
+<td><em>notes</em></td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">&#64;true</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">true</span></tt></td>
+<td>can be used for conditionals, etc.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">&#64;false</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">false</span></tt></td>
+<td>can be used for conditionals, etc.</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p>These defaults are not constant and can be overwritten at runtime via
+normal tuple manipulation.</p>
+</div>
+<div class="section" id="tuple-naming">
+<span id="id14"></span><h3>Tuple naming<a class="headerlink" href="#tuple-naming" title="Permalink to this headline">¶</a></h3>
+<p>A tuple name can consist of any string of printable characters starting with
+the initial <tt class="docutils literal"><span class="pre">&#64;</span></tt> marker <em>except</em> that the name may not start with the reserved
+sequence <tt class="docutils literal"><span class="pre">&#64;///</span></tt><em>number</em>. A tuple name of this form (e.g., <tt class="docutils literal"><span class="pre">&#64;///19</span></tt>)
+denotes a temporary variable used in function argument binding. Currently the
+protection of this form of tuple name is not enforced by the interpreter.
+<strong>Unpredictable results</strong> can occur if you use this form to name a tuple
+variable.</p>
+</div>
+<div class="section" id="tuple-autoinstancing">
+<span id="id15"></span><h3>Tuple autoinstancing<a class="headerlink" href="#tuple-autoinstancing" title="Permalink to this headline">¶</a></h3>
+<p>A tuple springs into being in the global tuple map when a previously
+unused tuple name is used as a <em class="xref std std-ref">destination datasink</em> or
+as a parameter (input or output) to a <a class="reference internal" href="#functions"><em>function</em></a>. When
+autoinstanced in this fashion, the new tuple&#8217;s value is <tt class="docutils literal"><span class="pre">null</span></tt>.
+Alternatively, you can create a tuple variable using the tuple command,
+e.g. <tt class="docutils literal"><span class="pre">tuple</span> <span class="pre">-true</span> <span class="pre">&#64;foo</span></tt> will set <tt class="docutils literal"><span class="pre">&#64;foo</span></tt> to <tt class="docutils literal"><span class="pre">true</span></tt> if it exists
+already, or will create <tt class="docutils literal"><span class="pre">&#64;foo</span></tt> and set it to <tt class="docutils literal"><span class="pre">true</span></tt> if it does not
+yet exist.</p>
+</div>
+</div>
+<div class="section" id="tuple-stack">
+<span id="id16"></span><h2>Tuple stack<a class="headerlink" href="#tuple-stack" title="Permalink to this headline">¶</a></h2>
+<p>The system maintains a Last In, First Out (LIFO) stack of tuple variables for
+programming convenience manipulated via the <em class="xref std std-ref">lifo</em> command.</p>
+<p>A command and its dash-commands that expect tuple arguments can also take the
+argument <strong>``~``</strong> (&#8220;tilde&#8221;) which signifies &#8220;pop the tuple from the tuple
+stack&#8221;. An error will result if the stack is empty.</p>
+<p>When a command references a source or destination <em class="xref std std-ref">datasink</em>
+via the <tt class="docutils literal"><span class="pre">-to</span></tt> or <tt class="docutils literal"><span class="pre">-from</span></tt> dash-commands, that datasink may also be <strong>``~``</strong>
+(&#8220;tilde&#8221;), meaning the source or destination is the tuple stack. Non-tuples,
+e.g, strings put to a destination datasink via <tt class="docutils literal"><span class="pre">-to</span> <span class="pre">~</span></tt> in this fashion are
+automatically wrapped in an anonymous tuple. Hence the following session:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>&gt; put -to ~ ${ but not a clever test }$
+&gt; put -to ~ ${ this is a test }$
+&gt; string -to ~ -cat ~ ~
+&gt; put ~
+this is a test but not a clever test
+</pre></div>
+</div>
+</div>
+<div class="section" id="autonomic-tuple-variables">
+<h2>Autonomic Tuple Variables<a class="headerlink" href="#autonomic-tuple-variables" title="Permalink to this headline">¶</a></h2>
+<p>If the interpreter encounters a tuple variable or the tuple stack pop
+symbol :ref:<tt class="docutils literal"><span class="pre">~</span></tt> (tilde) when it is expecting a <cite>command  &lt;Commands&gt;</cite>, it
+checks the value of that variable. If the value is of a class in the
+list of autonomes, that is, classes whose instances are generally passed
+as the argument to the <em class="xref std std-ref">eponymous
+dash-command</em> of a specific Ublu
+command, that command is invoked with tuple as the eponymous argument,
+along with any <em class="xref std std-ref">dash-commands</em> and/or arguments which
+follow. If the variable is not autonomic, the interpreter reports an
+error.</p>
+<p>Thus, the third, fourth and sixth commands of the following example
+using <em class="xref std std-ref">ifs</em> to get the size of a file in the Integrated File
+System are equivalent:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>&gt; as400 -to @mysys MYSYS.com myid mYpAssWoRd
+&gt; ifs -to @f -as400 @mysys -file /home/myid/.profile
+&gt; ifs -- @f -size
+56
+&gt; @f -size
+56
+&gt; lifo -push @f
+&gt; ~ -size
+56
+</pre></div>
+</div>
+<p>Autonomic tuple variables offer a useful
+<em class="xref std std-ref">object-disoriented</em> shorthand which, along with
+<em class="xref std std-ref">tuple stack</em> wizardry, one should consider avoiding in
+larger programs in the interest of clarity.</p>
+<ul class="simple">
+<li>To test whether the tuple variable <tt class="docutils literal"><span class="pre">&#64;foo</span></tt> is autonomic, use
+<tt class="docutils literal"><span class="pre">tuple</span> <span class="pre">-autonomic</span> <span class="pre">&#64;foo</span></tt></li>
+<li>To display whether the tuple variable <tt class="docutils literal"><span class="pre">&#64;foo</span></tt> is autonomic, use
+<tt class="docutils literal"><span class="pre">tuple</span> <span class="pre">-autonome</span> <span class="pre">&#64;foo</span></tt></li>
+<li>To display a list of all autonomic classes and the Ublu commands they
+invoke, use <tt class="docutils literal"><span class="pre">tuple</span> <span class="pre">-autonomes</span></tt></li>
+</ul>
+</div>
+<div class="section" id="numbers">
+<span id="id17"></span><h2>Numbers<a class="headerlink" href="#numbers" title="Permalink to this headline">¶</a></h2>
+<p>Numbers are signed integers and generally can be input as decimal, hex (0x00),
+or octal (000).</p>
+<div class="admonition-see-also admonition">
+<p class="first admonition-title">See also</p>
+<p class="last">the <em class="xref std std-ref">num</em> command.</p>
+</div>
+</div>
+<div class="section" id="plainwords">
+<span id="id18"></span><h2>Plainwords<a class="headerlink" href="#plainwords" title="Permalink to this headline">¶</a></h2>
+<p>Any whitespace-delimited sequence of non-whitespace characters provided as an
+argument to a command or dash-command&nbsp; or function is a <em>plainword</em>. A
+plainword can be used in most cases to represent a number or a single
+whitespace-delimited textual item where a <em class="xref std std-ref">tuple variable</em> or <em class="xref std std-ref">quoted string</em> would have to be
+used to contain longer whitespace-including strings of text.</p>
+</div>
+<div class="section" id="constants">
+<span id="id19"></span><h2>Constants<a class="headerlink" href="#constants" title="Permalink to this headline">¶</a></h2>
+<p>Constants are created via the <em class="xref std std-ref">const</em> command. Constants have a
+string value. The name of a constant has the form <tt class="docutils literal"><span class="pre">*somename</span></tt> and can be used
+as the <em class="xref std std-ref">argument</em> to a <em class="xref std std-ref">command</em> or
+<em class="xref std std-ref">dash-command</em> where the syntax notation represent the
+argument as <tt class="docutils literal"><span class="pre">~&#64;{something}</span></tt> and only in such position. Constants are not
+expanded within quoted strings.  Constants cannot be used as the argument to a
+<tt class="docutils literal"><span class="pre">-from</span></tt> or <tt class="docutils literal"><span class="pre">-to</span></tt> dash-command. <a class="reference internal" href="#plainwords"><em>Plainwords</em></a> resembling
+constants, i.e., starting with an asterisk * are not mistaken for constants if
+they have not been defined as such.</p>
+<p>Constants defined in an interpreter level appear in its <em class="xref std std-ref">nested
+interpreter sublevels</em>. However,
+constants defined in nested interpreter sublevels do not persist into
+the previous interpreter level.</p>
+</div>
+<div class="section" id="execution-blocks">
+<span id="id20"></span><h2>Execution blocks<a class="headerlink" href="#execution-blocks" title="Permalink to this headline">¶</a></h2>
+<p>An <strong>execution block</strong> is a body of commands enclosed between the block
+opener <tt class="docutils literal"><span class="pre">$[</span></tt> and the block closer <tt class="docutils literal"><span class="pre">]$</span></tt> . Execution blocks are used in
+<em class="xref std std-ref">functor</em> declarations (callable routines) via the
+<em class="xref std std-ref">FUN</em> command and with conditional control flow commands
+such as <em class="xref std std-ref">FOR</em> and <em class="xref std std-ref">IF - THEN - ELSE</em> to
+express the limit of a code phrase in a condition.:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>IF @varname THEN $[ command command .. ]$ ELSE $[     command command ]$
+</pre></div>
+</div>
+<p>is a generalized example of block usage.</p>
+<p>An execution block can contain <em class="xref std std-ref">local variable</em>
+declarations and their use. A local variable declaration hides identically
+named variables from the global context and from any enclosing block. Inner
+blocks to the declaring block have access to the locals in enclosing blocks,
+unless, of course, an identically named variable has been declared local to the
+enclosed block.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">the &#8220;comment-to-end-of-line&#8221; command <em class="xref std std-ref">#</em> should
+not ever be used in an execution block! An execution block is treated as
+one command line, so the comment command will devour the rest of the block.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>the simplistic parser imposes one particularly arbitrary
+limitation in that within an <em class="xref std std-ref">execution block</em> neither
+the block opener <tt class="docutils literal"><span class="pre">$[</span></tt> nor the block closer <tt class="docutils literal"><span class="pre">]$</span></tt> are allowed to appear
+inside a quoted string. If you need to have those symbols in a quoted string,
+the limitation is easy to get around, as follows:</p>
+<div class="last highlight-python"><div class="highlight"><pre><span></span>put -to @foo ${ $[ }$
+put -to @bar ${ $] }$
+FOR @i in @foo $[ put -from @i ]$
+FOR @i in @bar $[ put -from @i ]$
+</pre></div>
+</div>
+</div>
+<p>An execution block may span several lines, however, the opening bracket (
+<tt class="docutils literal"><span class="pre">$[</span></tt> ) of the block <em>must</em> appear on the same line with and directly after
+the conditional control flow command operating upon it.</p>
+<p>Execution blocks may be nested.</p>
+<p>In the <em class="xref std std-ref">Tips and Tricks</em> section of this document is an
+example which will <em class="xref std std-ref">get a list of active interactive jobs and search that
+list for specific jobs</em>.</p>
+<div class="section" id="local-variables">
+<span id="id21"></span><h3>Local variables<a class="headerlink" href="#local-variables" title="Permalink to this headline">¶</a></h3>
+<p>An execution block can have local <em class="xref std std-ref">tuple variables</em>
+declared via the <em class="xref std std-ref">LOCAL</em> command whose names hide variables of the
+same name which may exist outside the execution block. Locals disappear at the
+end of the block in which they are declared.</p>
+<p>Local variables can be used safely even when a global tuple variable
+coincidentally of the same name is passed in as a function argument; no
+collision results, and both the local and the function argument can be
+referenced.</p>
+<div class="admonition-example admonition">
+<p class="first admonition-title">example</p>
+<div class="last highlight-python"><div class="highlight"><pre><span></span>FUNC foo ( a ) $[
+    LOCAL @a
+    put -to @a ${ inner @a }$
+    put -n -s ${ outer a: }$ put -from @@a
+    put -n -s ${ local a: }$ put -from @a
+]$
+put -to @a ${ outer @a }$
+foo ( @a )
+outer a:  outer @a
+local a:  inner @a
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id22">
+<span id="id23"></span><h2>Functors<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h2>
+<p>A functor is an anonymous <em class="xref std std-ref">execution block</em> created
+via <em class="xref std std-ref">FUN</em> which can then be stored in <em class="xref std std-ref">tuple variable</em> and invoked via <em class="xref std std-ref">CALL</em> and/or associated with a
+name entry in the function dictionary via <tt class="docutils literal"><span class="pre">defun</span></tt>. Arguments can be passed to
+the functor. Arguments are call-by-reference; the resolution of these arguments
+is discussed under <em class="xref std std-ref">Function Parameter Binding</em>.</p>
+</div>
+<div class="section" id="functions">
+<span id="id24"></span><h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<p>A function is a <em class="xref std std-ref">functor</em> associated with a name entry in the
+<em class="xref std std-ref">function dictionary</em>, usually via <tt class="docutils literal"><span class="pre">FUNC</span></tt> but
+also via the combination of <em class="xref std std-ref">FUN</em> and <em class="xref std std-ref">defun</em>.</p>
+<p>The function dictionary is searched after the list of built-in commands.
+Dictionaries can be listed, saved, restored and merged via the
+<em class="xref std std-ref">dict</em> command. Arguments can be passed to the block. All
+arguments are passed by reference, i.e., passing a <em class="xref std std-ref">tuple
+variable</em> to a function argument list passes the
+tuple itself, not the tuple&#8217;s value, and any alteration of the argument
+alters the tuple referred to in the argument list. The resolution of
+these arguments is discussed under <em class="xref std std-ref">Function Parameter
+Binding</em>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>&gt; FUNC yadda ( a ) $[ FOR @word in @@a $[ put -n -s -from @word put ${ yadda-yadda ... }$ ]$ ]$
+&gt; put -to @words ${ this that t&#39;other }$
+&gt; yadda ( @words )
+this yadda-yadda ...
+that yadda-yadda ...
+t&#39;other yadda-yadda ...
+&gt; dict -list
+# yadda ublu.util.Functor@1d4b0e9
+FUNC yadda ( a ) $[ FOR @word in @@a $[ put -n -s -from @word put ${ yadda-yadda ... }$ ]$  ]$
+
+&gt; dict -save -to mydict
+&gt; FUNC -delete yadda
+&gt; dict -list
+
+&gt; dict -restore -from mydict
+&gt; dict -list
+# yadda ublu.util.Functor@14fd510
+FUNC yadda ( a ) $[ FOR @word in @@a $[ put -n -s -from @word put ${ yadda-yadda ... }$ ]$  ]$
+</pre></div>
+</div>
+<div class="admonition-see-also admonition">
+<p class="first admonition-title">See also</p>
+<p class="last">the <em class="xref std std-ref">FUN</em> and <em class="xref std std-ref">defun</em> commands.</p>
+</div>
+<div class="section" id="function-parameter-binding">
+<span id="id25"></span><h3>Function Parameter Binding<a class="headerlink" href="#function-parameter-binding" title="Permalink to this headline">¶</a></h3>
+<p>Ublu&#8217;s interpreter being purely a text interpreter, performing (almost)
+no tokenization during interpretation and compilation, function
+parameter binding is effected by runtime rewriting (&#8220;token pasting&#8221;) of
+argument references (e.g., <tt class="docutils literal"><span class="pre">&#64;&#64;some_arg</span></tt>) in the execution block to the
+actual positional parameter value provided at the time the function is
+called.</p>
+<p>Arguments passed to a function or functor can be</p>
+<ul class="simple">
+<li><em class="xref std std-ref">&#64;variable</em></li>
+<li><em class="xref std std-ref">plainword</em></li>
+<li><em class="xref std std-ref">quoted string</em></li>
+<li><em class="xref std std-ref">block</em></li>
+</ul>
+<p>Arguments other than blocks or quoted strings are handled as follows:</p>
+<ul class="simple">
+<li>If the argument provided is a simple lex, e.g., <tt class="docutils literal"><span class="pre">foo</span></tt> or <tt class="docutils literal"><span class="pre">1234</span></tt>,
+or a <em class="xref std std-ref">const</em>, that text is substituted uncritically at
+runtime for all references to that argument in the function body.</li>
+<li>If the argument provided is a <em class="xref std std-ref">tuple variable</em>,
+a temporary alias for the tuple variable named in the invocation
+argument is created in a local extension to the tuple map and
+references to the argument are rewritten with the name of the
+temporary in the function&#8217;s execution block.</li>
+<li>If the argument is the tuple stack pop symbol <tt class="docutils literal"><span class="pre">~</span></tt> that symbol will
+appear at runtime wherever the argument is substituted in the
+function body.</li>
+</ul>
+<p>Thus, in the case of a function:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>foo ( a b c ) $[ put @@a put @@b put @@c ]$
+</pre></div>
+</div>
+<p>called with arguments:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>foo ( @bar woof @zotz )
+</pre></div>
+</div>
+<p>is effectively seen at invocation by the interpreter as:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>$[ put @bar put woof put @zotz ]$
+</pre></div>
+</div>
+<p>The temporary alias actually pasted for tuple variable arguments to
+functions can be seen in the debugger.</p>
+<p>It is perfectly acceptable to name function parameters with the same
+names as command or functions. But this practice can detract from the
+readability of the code, especially if using the <em class="xref std std-ref">syntax coloring edit
+modes</em> provided with Ublu.</p>
+</div>
+</div>
+<div class="section" id="function-dictionary">
+<span id="id26"></span><h2>Function Dictionary<a class="headerlink" href="#function-dictionary" title="Permalink to this headline">¶</a></h2>
+<p>Function definitions are stored in the function dictionary.</p>
+<p><a class="reference internal" href="#interpreter"><em>Interpreter</em></a> instances launched by the <tt class="docutils literal"><span class="pre">interpret</span></tt>
+command inherit the current function dictionary. Any additions within an
+interpreter instance are lost when the instance exits back to its parent
+interpreter instance.</p>
+<p>You can view the current function dictionary or save it to a file or
+<em class="xref std std-ref">tuple variable</em> and later restore it or merge it
+with the current dictionary. See the <em class="xref std std-ref">dict</em> and
+<em class="xref std std-ref">savesys</em> commands.</p>
+</div>
+<div class="section" id="user-id-and-password">
+<span id="id27"></span><h2>User ID and password<a class="headerlink" href="#user-id-and-password" title="Permalink to this headline">¶</a></h2>
+<p>You supply a user ID and a password in the argument list for any Ublu command
+which accesses an AS/400 (iSeries, System/i) host, or for creating an instance
+of the host using the <em class="xref std std-ref">as400</em> command so that you can employ the
+<tt class="docutils literal"><span class="pre">-as400</span></tt> dash-command with subsequent commands in lieu of constant repetition
+of the system name, userid and password. On system operations, if the user ID
+or password is incorrect, you will be prompted to enter the correct user ID
+and/or password, upon completion of which the command will proceed.:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>&gt; joblist testsys frrd oopswrong
+Please enter a valid userid for testsys: fred
+Please enter a valid password for testsys (will not echo):
+000000/QSYS/SCPF
+000736/QSYS/QSYSARB
+000737/QSYS/QSYSARB2
+</pre></div>
+</div>
+<p>... etc.</p>
+<p>The behavior of Ublu when a signon attempt fails can be modified. See the
+<em class="xref std std-ref">as400</em> and <em class="xref std std-ref">props</em> commands for details.</p>
+<p>DB400 database operations behave differently with regard to an incorrect userid
+or password. Unlike the JTOpen systems operation code, the JTOpen JDBC driver
+does not provide a programmable exit for application code to handle an
+incorrect userid or password, and instead handles the exception itself by
+attempting to launch a 1990&#8217;s-style Java AWT window prompting for userid and
+password. If your environment supports a GUI, all is well: you can supply the
+correct userid and password. On the other hand, if your environment does not
+support a GUI, then the operation fails and a confusing exception is thrown
+complaining about the absence of a windowing system. You can avoid this
+windowing behavior and just allow the operation to fail on incorrect
+userid/password with an understandable exception by adding the following
+connection property <em class="xref std std-ref">dash-command</em> to the string of
+dash-commands for the <tt class="docutils literal"><span class="pre">db</span></tt> command:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>-property prompt false
+</pre></div>
+</div>
+<p>which adds <tt class="docutils literal"><span class="pre">;prompt=false</span></tt> to the URL for the JDBC connection and disables
+the windowing password prompt.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Concepts</a><ul>
+<li><a class="reference internal" href="#interpreter">Interpreter</a><ul>
+<li><a class="reference internal" href="#nested-interpreter-sublevel">Nested interpreter sublevel</a></li>
+<li><a class="reference internal" href="#main-interpreter">Main interpreter</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#server-mode">Server mode</a></li>
+<li><a class="reference internal" href="#commandline">Commandline</a></li>
+<li><a class="reference internal" href="#input">Input</a></li>
+<li><a class="reference internal" href="#output">Output</a></li>
+<li><a class="reference internal" href="#executing-commands-from-a-file">Executing commands from a file</a></li>
+<li><a class="reference internal" href="#launch-your-application-from-a-shell-script-autogenerated-via-gensh">Launch your application from a shell script autogenerated via <tt class="docutils literal"><span class="pre">gensh</span></tt></a></li>
+<li><a class="reference internal" href="#debugger">Debugger</a></li>
+<li><a class="reference internal" href="#parsing-and-syntax">Parsing and syntax</a></li>
+<li><a class="reference internal" href="#quoted-strings">Quoted strings</a></li>
+<li><a class="reference internal" href="#tuple-variables">Tuple variables</a><ul>
+<li><a class="reference internal" href="#default-tuples">Default Tuples</a></li>
+<li><a class="reference internal" href="#tuple-naming">Tuple naming</a></li>
+<li><a class="reference internal" href="#tuple-autoinstancing">Tuple autoinstancing</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#tuple-stack">Tuple stack</a></li>
+<li><a class="reference internal" href="#autonomic-tuple-variables">Autonomic Tuple Variables</a></li>
+<li><a class="reference internal" href="#numbers">Numbers</a></li>
+<li><a class="reference internal" href="#plainwords">Plainwords</a></li>
+<li><a class="reference internal" href="#constants">Constants</a></li>
+<li><a class="reference internal" href="#execution-blocks">Execution blocks</a><ul>
+<li><a class="reference internal" href="#local-variables">Local variables</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id22">Functors</a></li>
+<li><a class="reference internal" href="#functions">Functions</a><ul>
+<li><a class="reference internal" href="#function-parameter-binding">Function Parameter Binding</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#function-dictionary">Function Dictionary</a></li>
+<li><a class="reference internal" href="#user-id-and-password">User ID and password</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="intro.html"
+                        title="previous chapter">Intro</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="guide.html"
+                        title="next chapter">&lt;no title&gt;</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/concepts.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="guide.html" title="&lt;no title&gt;"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="intro.html" title="Intro"
+             >previous</a> |</li>
+        <li><a href="index.html">Ublu 1.1.4 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2016, Jack J. Woehr.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+  </body>
+</html>

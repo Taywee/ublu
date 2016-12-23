@@ -1,0 +1,355 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Commands &mdash; Ublu 1.1.4 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.1.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Ublu 1.1.4 documentation" href="index.html" />
+    <link rel="next" title="&lt;no title&gt;" href="tricks.html" />
+    <link rel="prev" title="&lt;no title&gt;" href="guide.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="tricks.html" title="&lt;no title&gt;"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="guide.html" title="&lt;no title&gt;"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Ublu 1.1.4 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="commands">
+<h1>Commands<a class="headerlink" href="#commands" title="Permalink to this headline">¶</a></h1>
+<p>Commands are the verbs of Ublu. Some have only language meaning, but
+the most important commands operate directly upon a host system
+affecting its data and operation. Be sure you understand what you are
+doing when you use an Ublu command!</p>
+<p>Access to i Series hosts is provided through IBM&#8217;s open source <a class="reference external" href="http://jt400.sourceforge.net/">JTOpen
+library</a>.</p>
+<p>Access to z/VM SMAPI is provided through the author&#8217;s open source <a class="reference external" href="http://pigiron.sourceforge.net/">PigIron
+library</a>.</p>
+<div class="section" id="command-structure">
+<h2>Command Structure<a class="headerlink" href="#command-structure" title="Permalink to this headline">¶</a></h2>
+<p>Commands are conceptually structured in three parts</p>
+<ol class="arabic simple">
+<li>command</li>
+<li>dash-commands</li>
+<li>arguments</li>
+</ol>
+<p>Not all commands have dash-commands. Not all commands take arguments.  Usually
+they take one or the other. The general order of the three parts is as follows:</p>
+<blockquote>
+<div><ul class="simple">
+<li>command [dash-command dash-command-argument [dash-command-argument</li>
+</ul>
+<p>dash-command-argument ...] ] command-argument [command-argument ...]*</p>
+</div></blockquote>
+<p>Where <em class="xref std std-ref">dash-commands</em> are give in square brackets, e.g.,
+<tt class="docutils literal"><span class="pre">[-foo</span> <span class="pre">~&#64;{bazz}]</span></tt> the dash-command is optional and not required.</p>
+<p>In this documentation, square brackets and ellipses are used to describe the
+command structure. Those square brackets and ellipses are not part of the
+syntax of Ublu, merely documentation notation. See the examples given in the
+documentation and in the <tt class="docutils literal"><span class="pre">examples</span></tt> directory in the distribution.</p>
+<p>In this documentation, where multiple dash-commands are enclosed
+collectively in a outer pair of square brackets and individually
+enclosed in square brackets and the bracketed dash-commands separated by
+the .OR. bar ( | ), e.g., then the dash-commands are a set of mutually
+exclusive optional dash-commands, e.g.,
+<tt class="docutils literal"><span class="pre">[[-foo</span> <span class="pre">~&#64;{bazz}]</span> <span class="pre">|</span> <span class="pre">[-arf</span>&nbsp;&nbsp; <span class="pre">~&#64;{woof}]]</span></tt></p>
+<p>Where square brackets are missing from a dash-command description, the
+dash-command, or one of the alternative of a series of dash-commands separated
+in the description by the .OR. bar ( | ) is required.</p>
+<p>Some dash-commands are required in some contexts, and not in others.  Such
+cases are explained in the explanatory text for the command.</p>
+<div class="section" id="command">
+<h3>Command<a class="headerlink" href="#command" title="Permalink to this headline">¶</a></h3>
+<p>A <em>command</em> is a one-word command name. It is the first element of any Ublu
+command invocation.</p>
+</div>
+<div class="section" id="dash-command">
+<h3>Dash Command<a class="headerlink" href="#dash-command" title="Permalink to this headline">¶</a></h3>
+<p>A <em>dash-command</em> is a modifier to the command, itself often possessing an
+argument or string of arguments.</p>
+<p>All dash-commands to a command must appear on the same line with the command,
+except that a <em class="xref std std-ref">quoted string</em> once started may span line
+breaks, thus extending a command over two or more lines.</p>
+<p>If dash-commands specify conflicting operations, the last dash-command
+encountered in command processing is the operative choice.</p>
+<p>Often one dash-command is actually the default operation for the
+command, so that if no dash-command is provided, this default provides
+the operation of the command anyway. These defaults are noted in the
+command descriptions.</p>
+<div class="section" id="eponymous-dash-command">
+<span id="id1"></span><h4>Eponymous dash-command ( <tt class="docutils literal"><span class="pre">--</span></tt> )<a class="headerlink" href="#eponymous-dash-command" title="Permalink to this headline">¶</a></h4>
+<p>Many commands are used to create objects of various kinds and store them in
+<em class="xref std std-ref">tuple variables</em>. Later, these same command operate on
+these same objects which they themselves have created. This sort of command
+references the tuple containing such an object via an eponymous dash-command,
+e.g, <tt class="docutils literal"><span class="pre">job</span> <span class="pre">-job</span> <span class="pre">&#64;some_job</span></tt> etc.  This eponymous dash-command can generally be
+replaced by <tt class="docutils literal"><span class="pre">--</span></tt> instead, so the example just given could equally be written
+<tt class="docutils literal"><span class="pre">job</span> <span class="pre">--</span> <span class="pre">&#64;some_job</span></tt> etc.</p>
+</div>
+<div class="section" id="order-of-dash-commands">
+<h4>Order of Dash Commands<a class="headerlink" href="#order-of-dash-commands" title="Permalink to this headline">¶</a></h4>
+<p>Often the order in which dash-commands appear on a line does not matter, but
+sometimes it does. To be safe, dash commands should generally follow the
+command in this order:</p>
+<ol class="arabic simple">
+<li>the <a class="reference internal" href="#eponymous-dash-command"><em>eponymous dash-command</em></a> or the
+one representing the object being operated upon</li>
+<li>the two <em class="xref std std-ref">data sink</em> dash-commands, <tt class="docutils literal"><span class="pre">-from</span></tt> and
+<tt class="docutils literal"><span class="pre">-to</span></tt> , if used</li>
+<li>any other dash-commands</li>
+</ol>
+<p>There are exceptions to this ordering, e.g, the eponymous dash-command
+must come <em>last</em> for the <em class="xref std std-ref">dbug</em> command.</p>
+</div>
+</div>
+<div class="section" id="argument">
+<h3>Argument<a class="headerlink" href="#argument" title="Permalink to this headline">¶</a></h3>
+<p>An <em>argument</em> is the object or, for multiple arguments, list of objects
+necessary for command execution.</p>
+<p>Commands may have arguments, and their dash-commands may also have their
+own arguments.</p>
+<p>All arguments to a command or dash-command must appear on the same line as the
+command or dash-command and cannot span a line-break, except that a
+<em class="xref std std-ref">quoted string</em> once started may span line breaks, thus
+extending a command over two or more lines.</p>
+<p>In command descriptions:</p>
+<ul class="simple">
+<li>When an argument is decorated with the <em class="xref std std-ref">tuple</em>
+character <tt class="docutils literal"><span class="pre">&#64;</span></tt> , as in <tt class="docutils literal"><span class="pre">-somedashcommand</span> <span class="pre">&#64;tuple</span></tt> this signifies
+that a tuple name is expected.</li>
+<li>When an argument is decorated with both the tuple character and the
+<em class="xref std std-ref">stack-pop</em> indicator <tt class="docutils literal"><span class="pre">~</span></tt> , as in
+<tt class="docutils literal"><span class="pre">-somedashcommand</span> <span class="pre">~&#64;tuple</span></tt> this signifies that either a tuple name
+or the stack-pop indicator (popping an appropriate tuple previously
+pushed to the stack) is expected.</li>
+<li>When an argument is decorated with the tuple character, the
+<em class="xref std std-ref">stack-pop</em> indicator <tt class="docutils literal"><span class="pre">~</span></tt> and wrapped in curly
+braces, as in <tt class="docutils literal"><span class="pre">-somedashcommand</span> <span class="pre">~&#64;{some</span>&nbsp;&nbsp;&nbsp;&nbsp; <span class="pre">string}</span></tt> , it signifies
+that the string argument may come from a named tuple, or a tuple
+pushed previously to the stack, or from an inline quoted string.</li>
+<li>In any position where a quoted string is one of the allowed argument
+types, a simple undecorated inline lex
+(&#8220;<em class="xref std std-ref">plainword</em>&#8221;, no whitespace) is treated as a
+quoted string.</li>
+<li>When the string in the description of the argument to a dash-command
+consists of alternatives separated by the .OR. bar ( <tt class="docutils literal"><span class="pre">|</span></tt> ) these
+are alternative values, usually literal, for the argument.<ul>
+<li>An example is the description of the <tt class="docutils literal"><span class="pre">dpoint</span></tt> command&#8217;s
+dash-command <tt class="docutils literal"><span class="pre">-type</span> <span class="pre">~&#64;{int|long|float}</span></tt> which means that
+<tt class="docutils literal"><span class="pre">-type</span></tt> expects an argument, either from a tuple or from a
+quoted string or <a class="reference internal" href="concepts.html#plainwords"><em>plainword</em></a> that is the literal
+string either <tt class="docutils literal"><span class="pre">int</span></tt>, <tt class="docutils literal"><span class="pre">long</span></tt>, or <tt class="docutils literal"><span class="pre">float</span></tt>.</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="command-example">
+<h3>Command Example<a class="headerlink" href="#command-example" title="Permalink to this headline">¶</a></h3>
+<p>An example of a command with dash-commands and arguments is the
+following:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>job -job @j -to @subsys -get subsystem
+</pre></div>
+</div>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">job</span></tt> is the command.</li>
+<li><tt class="docutils literal"><span class="pre">-job</span> <span class="pre">&#64;j</span></tt> is the <tt class="docutils literal"><span class="pre">job</span></tt> command&#8217;s dash-command for providing the
+command with an already instanced tuple variable representing the
+server job the command is to operate upon.</li>
+<li><tt class="docutils literal"><span class="pre">-to</span> <span class="pre">&#64;subsys</span></tt> is the <tt class="docutils literal"><span class="pre">job</span></tt> command&#8217;s dash-command indicating the
+<em class="xref std std-ref">data sink</em> (in this case, a tuple) to which the
+output of the <tt class="docutils literal"><span class="pre">job</span></tt> command is to go. Most commands know the
+<tt class="docutils literal"><span class="pre">-to</span></tt> <em>datasink</em> dash-command</li>
+<li><tt class="docutils literal"><span class="pre">-get</span> <span class="pre">subsystem</span></tt> is the <tt class="docutils literal"><span class="pre">job</span></tt> command&#8217;s dash-command with single
+plainword argument indicating what aspect of the job represented by
+<tt class="docutils literal"><span class="pre">&#64;j</span></tt> we wish to examine.</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>the above example could equally have been written:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>job -- @j -to @subsys -get subsystem
+</pre></div>
+</div>
+<p class="last">using the <a class="reference internal" href="#eponymous-dash-command"><em>eponymous dash-command</em></a>
+instead of <tt class="docutils literal"><span class="pre">-job</span></tt>.</p>
+</div>
+</div>
+<div class="section" id="datasinks">
+<h3>Datasinks<a class="headerlink" href="#datasinks" title="Permalink to this headline">¶</a></h3>
+<p>Command descriptions reference <em>datasinks</em>. A datasink is a data source or a
+data destination.</p>
+<p>Many commands offer the <em class="xref std std-ref">dash-command</em> <tt class="docutils literal"><span class="pre">-to</span></tt> which
+directs the output of the command (often an object) to the specified datasink.
+Some commands offer the <tt class="docutils literal"><span class="pre">-from</span></tt> dash-command which assigns a source datasink
+for input during the command, e.g., <em class="xref std std-ref">include</em> which reads and
+interprets source code can have its input from a file or variable.</p>
+<p>A datasink is currently one of these types:</p>
+<ol class="arabic simple">
+<li>Standard input and output</li>
+<li>Error output</li>
+<li>File</li>
+<li><em class="xref std std-ref">Tuple variable</em></li>
+<li>Null output (discard all data directed to this datasink).</li>
+</ol>
+<p>A datasink&#8217;s type is recognizable from its name.</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">STD:</span></tt> represents standard input and output and is the default
+destination datasink if none is explicitly provided via the <tt class="docutils literal"><span class="pre">-to</span></tt>
+dash-command.<a href="#id2"><span class="problematic" id="id3">``</span></a><a href="#id4"><span class="problematic" id="id5">``</span></a></li>
+<li><tt class="docutils literal"><span class="pre">ERR:</span></tt> is the standard error output stream.</li>
+<li><tt class="docutils literal"><span class="pre">NULL:</span></tt> discards output.</li>
+<li>A file can be any filename, relative or fully qualified pathname.<ul>
+<li>File names are recognized in datasink assignment simply by their
+not matching one of the other name patterns for a datasink.</li>
+</ul>
+</li>
+<li>A named tuple variable is distinguished by starting with <tt class="docutils literal"><span class="pre">&#64;</span></tt> as in
+<tt class="docutils literal"><span class="pre">&#64;ThisIsAVar</span></tt> .<ul>
+<li>The tuple variable thus named is created if it did not previously
+exist.</li>
+</ul>
+</li>
+</ul>
+<p>In the absence of the <tt class="docutils literal"><span class="pre">-to</span></tt> dash-command, the default destination
+datasink of a commands is <tt class="docutils literal"><span class="pre">STD:</span></tt> (standard out).</p>
+<p>When a command results in an object other than a string and the command&#8217;s
+destination datasink is File or Standard output the object&#8217;s <tt class="docutils literal"><span class="pre">toString()</span></tt>
+method is called to provide the data.</p>
+</div>
+<div class="section" id="system-userid-password-and-as400">
+<h3>System, Userid, Password and <tt class="docutils literal"><span class="pre">-as400</span></tt><a class="headerlink" href="#system-userid-password-and-as400" title="Permalink to this headline">¶</a></h3>
+<p>In order to access the iSeries (AS400) server, many commands routinely require
+in their argument string the following three items:</p>
+<ol class="arabic simple">
+<li>system (name or IP address)</li>
+<li>userid</li>
+<li>password</li>
+</ol>
+<p>All such commands allow these three arguments to be omitted if instead the
+<tt class="docutils literal"><span class="pre">-as400</span></tt> dash-command is used to supply an extant server instance to the
+command. See the <em class="xref std std-ref">as400</em> command to learn how create a server
+instance to be used and re-used.</p>
+<p>Of course, the execution of commands that require extended ownership, access
+control or privilege level on the target system can only be executed via an
+account with such privileges.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Many of the oldest Ublu commands allow system/userid/password to be
+supplied as main command arguments as well as allowing the user to provide an
+as400 object via the -as400 dash-command. The older style of command is
+<strong>deprecated</strong> and <strong>all code should use the -as400 style of providing an
+object created by the :ref:`as400 &lt;as400&gt;` command</strong> rather than providing
+credentials as arguments to most commands.</p>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Commands</a><ul>
+<li><a class="reference internal" href="#command-structure">Command Structure</a><ul>
+<li><a class="reference internal" href="#command">Command</a></li>
+<li><a class="reference internal" href="#dash-command">Dash Command</a><ul>
+<li><a class="reference internal" href="#eponymous-dash-command">Eponymous dash-command ( <tt class="docutils literal"><span class="pre">--</span></tt> )</a></li>
+<li><a class="reference internal" href="#order-of-dash-commands">Order of Dash Commands</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#argument">Argument</a></li>
+<li><a class="reference internal" href="#command-example">Command Example</a></li>
+<li><a class="reference internal" href="#datasinks">Datasinks</a></li>
+<li><a class="reference internal" href="#system-userid-password-and-as400">System, Userid, Password and <tt class="docutils literal"><span class="pre">-as400</span></tt></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="guide.html"
+                        title="previous chapter">&lt;no title&gt;</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="tricks.html"
+                        title="next chapter">&lt;no title&gt;</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/commands.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="tricks.html" title="&lt;no title&gt;"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="guide.html" title="&lt;no title&gt;"
+             >previous</a> |</li>
+        <li><a href="index.html">Ublu 1.1.4 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2016, Jack J. Woehr.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+  </body>
+</html>

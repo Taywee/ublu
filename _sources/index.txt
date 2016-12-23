@@ -15,6 +15,7 @@ Contents:
     concepts
     guide
     commands
+    commandlist
     tricks
     externaltools
 
