@@ -1,0 +1,1008 @@
+Who is this Guide for?
+======================
+
+It's for people who just want an introduction to using Ublu, or who have
+downloaded and built Ublu, read enough of the :ref:`references <Intro>` to know
+how to launch `Ublu <https://github.com/jwoehr/ublu>`__, and now want more help
+understanding Ublu.
+
+.. note::
+    The Guide is meant to be easy to read, and extra stuff you may not want
+    to bother with is written as a note, like this.
+
+Why Ublu?
+=========
+
+Ublu is an interpretive language for remote systems programming of
+midrange or mainframe hosts from a Java platform such as Linux, Mac,
+OpenBSD or Windows. It also can run natively on IBM i ®, IBM z/OS USS ®
+or any other reasonable Java platform.
+
+I wrote Ublu because I wanted a language to run on
+OpenBSD/Mac/Linux/Windows to perform ad-hoc process automation primarily
+on IBM i Series OS ®. I was supporting consulting clients by writing
+individual utility programs using JTOpen which I have used since 1998 to
+control the AS/400. I decided to consolidate the programs in a language,
+and the result is Ublu.
+
+Additionally, Ublu can call Java directly allowing the user him- or
+herself to extend the language interpretively in nearly any direction
+desired.
+
+It is convenient to operate legacy systems remotely from modern
+environments:
+
+-  Use Ublu to empower help-desk folks who know how to feed arguments to
+   scripts and answer interactive prompts but are challenged by the
+   green screen.
+-  Intermediate programmers use Ublu as an easy entry point to legacy
+   systems programming.
+-  Teams working to design add-ons or extensions to legacy applications
+   can use Ublu.
+-  Teams designing follow-on systems who need to explore the legacy
+   environment can use Ublu.
+-  Ublu also runs locally on IBM i Series OS and is sometimes used to
+   model programs which later may be written in straight Java to run
+   locally on the server.
+
+.. note::
+    I also previously wrote `PigIron <http://pigiron.sourceforge.net/>`__, a
+    Java bridge to IBM z/VM ® System Management API `(SMAPI)
+    <https://www.ibm.com/support/knowledgecenter/SSB27U_6.3.0/com.ibm.zvm.v630.dmse6/toc.htm?lang=en>`__.
+    I provide PigIron support in Ublu. I had been using my `FIJI ForthIsh Java
+    Interpreter <http://fiji.sourceforge.net/>`__ to drive PigIron, which works
+    very well but is arcane, and also `ObjectRexx <http://www.oorexx.org/>`__,
+    which is a wonderful language which doesn't run on as many platforms as
+    Java. Ublu turns out to be an excellent language environment for PigIron
+    SMAPI operations.
+
+Ublu is a new language which was coded quick and easy in Java on top of
+other open source libraries. The "quick and easy" approach derives from
+a work environment in which folks just wanted results and had no
+particular interest in the language itself.
+
+Ublu is easy to build, install, read, and use. It is handsome but not
+beautiful. Ublu works like an interactive shell scripting language but
+also has some advanced language features such as compiling, tasking,
+debugging and a TCP/IP port server mode.
+
+Work in Progress
+----------------
+
+Ublu is a work in progress and, like all "living" software, likely to remain
+so. There are always more aspects to IBM i programming to support. Everything
+that's in Ublu is there because I/We needed it *right then*. The ``db`` command
+was almost the first thing added, which is effectively an interpretive shell
+around JDBC. On the other hand, we never needed classic record file access
+because everyone on staff was SQL-oriented and knew little about physical file
+access.  Thus, only recently have I added the ```file`` <ubluref.html#file>`__
+and ``record`` commands for classic record file access.
+
+If you find Ublu useful, please `let me know <http://www.softwoehr.com/>`__!
+
+If you find a bug, or wish to issue a feature request, you can `create an issue
+in the issue tracker <https://github.com/jwoehr/ublu/issues/new>`__.
+
+What does Ublu do?
+==================
+
+- Ublu is an interpreter with full language features such as flow
+  control (``IF``, ``ELSE``, ``DO``, ``WHILE`` etc.), exception handling, and even a
+  multitasker and debugger.
+- Ublu has commands that manipulate Java objects representing objects,
+  services and various facilities on the remote server.
+- In Ublu you can define functions to create complex programs to
+  manipulate the remote server and its databases, tape drives,
+  whatever.
+- You can also do `Postgresql <http://www.postgresql.org/>`__
+  databasing (and pretty much anything else) on your local computer,
+  allowing you to interoperate your local database with the database on
+  the remote server.
+- You can do this interactively or load a program from text files which can,
+  in turn, :ref:`include <include>` other text files.
+- You can automate a telnet 5250 terminal emulator session.
+- You can interact directly with the underlying Java and class
+  libraries.
+
+When you've got your complete application written in Ublu, there's an Ublu
+command :ref:`gensh <gensh>` which autogenerates a shell script to work under
+either ``bash`` or ``ksh``. The script takes arguments via command-line
+switches and pass them to your program's top-level function. *The script
+effects a closure on your top-level function.*
+
+For a formal summary of everything, see the rest of the reference, probably
+starting at the :ref:`intro <Intro>`.  That Reference tells you how to install
+and run Ublu and lists the Open Source project dependencies as well as
+documenting every command and facility built into Ublu.
+
+Discussing Ublu Online
+======================
+
+Currently I discuss Ublu on the `Ublu, Java & JTOpen forum
+<https://ibmioss.ryver.com/index.html#forums/1057363>`__ of the `OSS on IBM i
+Ryver team <https://ibmioss.ryver.com/index.html>`__.
+
+Quick Tour of the Ublu Language
+===============================
+
+Overview
+--------
+
+Ublu is mostly composed of commands and a language interpreter. There are also
+are other Ublu features such as server mode and the tasker, but commands and
+the language interpreter are the nexus.
+
+Commands
+--------
+
+Ublu commands are like individual application programs which are invoked with
+their arguments under the language interpreter. Command arguments are often
+references to objects which have been created by other commands. You usually
+don't have to know much about objects passed from command to command other than
+what they're supposed to represent.
+
+Most arguments are passed to the `dash-commands <ubluref.html#Dash_Command>`__
+associated with the command, e.g.::
+
+    ask -to @answer -say ${ Do you wish to reply to this message? (y/n) }$
+
+The ``ask`` command here has two dash-commands, ``-to`` and ``-say``.  ``-to``
+has an argument which says to which :ref:`variable <Tuple Variables>` to put
+the answer to the question about to be asked the user, and ``-say`` takes a
+:ref:`quoted string <Quoted Strings>` which is the prompt to the user.
+
+Language Interpreter
+--------------------
+
+The heart of the Ublu language is a text interpreter loop. There can be
+multiple nested or branching interpreter instances with different variable
+spaces in one Ublu session, but basically they're all doing the same sort of
+thing: an outer input loop is getting input and running an inner interpretive
+`loop <#ublu.util.Interpreter.loop>`__ to interpret a single line of text.
+
+.. note::
+    There are actually several different but very similar loops, e.g.,
+    the debugger interpreter loop is different from the normal runtime
+    intepreter loop.
+
+Parsing is very simplistic. The parse parses, and having parsed, moves on,
+`*nor can all your piety and wit*
+<https://www.google.com/search?q=nor+can+all+your+piety+and+wit>`__ make it go
+back one *lex* (unit of parsing).
+
+The text interpreter loop parses the next whitespace-delimited element (a lex)
+and tries to locate it as an Ublu command or as a defined function. Matching is
+case-sensitive.
+
+If no match is found, the loop falls out to the outer input loop with an error.
+The outer loop then waits for more input to pass to the inner interpretive
+loop.
+
+If the interpretive loop succeeds in finding the next lex in the input as a
+command or function, it passes the rest of the line to the command or to the
+function interpreter. Both do their work then pass back the remnant of the
+input line that wasn't consumed in their work.
+
+Thus, line processing is a relay: the loop hands off to the command/function,
+which then hands back to loop, and on to next command/function ... until the
+line is consumed or an error is encountered.
+
+If an error is encountered, the rest of the input is discarded.  Typically the
+interpretive loop will fall out to the outer parsing loop. However, there is a
+``TRY CATCH THROW`` exception facility in Ublu allowing the program to catch
+errors without losing its place in the executing program.
+
+While the interpretive loop is line-oriented, certain constructs can span
+lines, particularly a delimited string or an execution block.  Strings are
+delimited::
+
+    ${ like this }$
+
+
+and execution blocks::
+
+    $[ like this ]$
+
+so it is easy for the loop to identify them and demand another line from the
+outer loop if the closing delimiter hasn't been found yet.
+
+Language control flow constructs are just a form of command.  Typically they
+consume execution blocks from the input::
+
+    IF @truefalse THEN $[
+        command arg arg command arg arg
+        command arg ...
+    ]$ ELSE $[
+        command arg ...
+    ]$
+
+
+As noted, these execution blocks can span multiple lines.
+
+A Full Ublu Program
+===================
+
+Here is a full Ublu program. It uses `FUNC <./ubluref.html#FUNC>`__ to define a
+number of functions allowing the user to checks a message queue on an i Series
+OS server and lists the messages, asking the user on each if s/he would like to
+reply, and parsing the reply if one is given.  Take a look at the program (and
+its associate shell script given here) and then we will `discuss the program
+line-by-line <#Understanding_examplesautoreply.ublu>`__ below.
+
+``examples/autoreply.ublu``
+---------------------------
+
+::
+
+       1 # autoreply.ublu ... Find and reply to all *INQ & *NOTIFY messages in a given MSGQ
+       2 # jack j. woehr jwoehr@absolute-performance.com jwoehr@softwoehr.com
+       3 # 2015-03-10
+       4 
+       5 # instance message queue
+       6 FUNC getMsgQ ( system user password ifspath msgq ) $[
+       7     LOCAL @as400
+       8     as400 -to @as400 @@system @@user @@password
+       9     msgq -to @@msgq -as400 @as400 -instance @@ifspath
+      10 ]$
+      11 
+      12 # get list of messages needing reply
+      13 FUNC getReplyMsgs ( msgq replylist ) $[
+      14     msgq -- @@msgq -query -reply -to @@replylist
+      15 ]$
+      16 
+      17 # get messages, walk list and offer user chance to reply to each
+      18 FUNC autoreply ( system user password ifspath ) $[
+      19     LOCAL @msgq LOCAL @replylist LOCAL @key
+      20     LOCAL @answer LOCAL @tf LOCAL @reply
+      21     getMsgQ ( @@system @@user @@password @@ifspath @msgq )
+      22     getReplyMsgs ( @msgq @replylist )
+      23     FOR @msg in @replylist $[
+      24         msg -- @msg -to @key -key
+      25         put -from @msg
+      26         ask -to @answer -say ${ Do you wish to reply to this message? (y/n) }$
+      27         test -to @tf -eq @answer y
+      28         IF @tf THEN $[
+      29             ask -to @reply -say ${ Please enter your reply }$
+      30             msgq -- @msgq -sendreplybinkey @key @reply
+      31             put ${ Reply sent. }$
+      32         ]$
+      33     ]$
+      34 ]$
+      35 
+
+Understanding ``examples/autoreply.ublu``
+-----------------------------------------
+
+::
+
+       1 # autoreply.ublu ... Find and reply to all *INQ & *NOTIFY messages in a given MSGQ
+       2 # jack j. woehr jwoehr@absolute-performance.com jwoehr@softwoehr.com
+       3 # 2015-03-10
+       4 
+
+These lines are, of course, comments. Comments go to the end of the line.
+
+As we discussed above, execution blocks (e.g., the body of a function)
+delimited by ``$[`` and ``]$`` can span lines. The way the interpretive loop
+does this is that it keeps calling for input from the outer parsing loop until
+it finds the closing delimiter.  Effectively, the entire execution block is one
+line. So line comments (those commented by the :ref:`# <comment introducer>`
+command) should not be placed inside function bodies or they will comment out
+the entire function body! Instead, inside functions use the :ref:`\\ <comment
+quote>` command.
+
+::
+
+    6 FUNC getMsgQ ( system user password ifspath msgq ) $[
+    7     LOCAL @as400
+    8     as400 -to @as400 @@system @@user @@password
+    9     msgq -to @@msgq -as400 @as400 -instance @@ifspath
+    10 ]$
+
+Here the function ``getMsgQ`` is defined. The argument list is not typed in any
+way. These are merely token names for whatever will appear in that position
+inside the parentheses when the function is invoked. Inside the body of the
+function these arguments will be referenced by prefixing them with ``@@`` e.g.,
+``@@password``.
+
+.. note::
+    the parentheses are separated from both the function name and from the
+    argument list!!
+
+.. note::
+    In the example, I happened to use the bad style of naming arguments the
+    same name as Ublu commands (``system``* *``user``* *and ``msgq``) which, of
+    course, the editor then syntax-colored, mistaking them for keywords. This
+    is entirely legal in Ublu but, again, it's bad style.
+
+The function body is the execution block between ``$[`` and ``]$``
+
+On line 7, a local variable is declared. All variables ("tuple variables" as
+they are called, or just "tuples") are identified by the ``@`` prefix, whether
+they are ``LOCAL`` or global (or interpreter-level-local).
+
+Tuple variables come into existence just by being mentioned.  Arguments to a
+function may be tuples or plain words, Ublu commands typically know what to do
+with either when passed them as arguments.
+
+The LOCAL declaration ``LOCAL @as400`` serves to says that there will be a
+local tuple variable which will hide any other variables of the same name in
+the program while in this execution block and then disappear at the end of the
+execution block, i.e., at the end of function execution. Equally, the variable
+name ``@as400`` could have been used without declaration, but then it would
+persist beyond the end of the function, and further, if there happened to
+already exist such a variable in the program, it would be referencing that same
+variable, possibly unintentionally.
+
+Lines 8 and 9 are Ublu commands.
+
+Line 8 says, "Create a remote server instance for the system function argument
+using the user and password function arguments. Store that instance in the
+declared local variable ``@as400``".
+
+Line 9 says, "Create an object referencing the message queue on the server
+represented by ``@as400`` and identified by the IFS path represented by the
+function argument ``ifspath`` and store that object to the function argument
+``msgq`` , presumably a variable, with an error resulting if a variable was not
+provided in that position in the function argument list."
+
+The variable named which is provided in the function argument list in that
+position does not have to be named anything like the declaring argument list
+named it. It could be called ``@fred`` for instance. It does not even have to
+have been previously declared. It comes into global existence by being named.
+It can later be deleted via the ``tuple -delete @fred`` command, if so desired.
+Or, it might be a LOCAL variable from a calling function.
+
+::
+
+      13 FUNC getReplyMsgs ( msgq replylist ) $[
+      14     msgq -- @@msgq -query -reply -to @@replylist
+      15 ]$
+
+
+These lines declare another function which says, "Given a message queue
+instance and a variable name in which to store the result of this function,
+create a list of messages needing reply waiting on the remoted i Series OS
+message queue represented by the message queue instance."
+
+::
+
+    18 FUNC autoreply ( system user password ifspath ) $[
+    19     LOCAL @msgq LOCAL @replylist LOCAL @key
+    20     LOCAL @answer LOCAL @tf LOCAL @reply
+    21     getMsgQ ( @@system @@user @@password @@ifspath @msgq )
+    22     getReplyMsgs ( @msgq @replylist )
+    23     FOR @msg in @replylist $[
+    24         msg -- @msg -to @key -key
+    25         put -from @msg
+    26         ask -to @answer -say ${ Do you wish to reply to this message? (y/n) }$
+    27         test -to @tf -eq @answer y
+    28         IF @tf THEN $[
+    29             ask -to @reply -say ${ Please enter your reply }$
+    30             msgq -- @msgq -sendreplybinkey @key @reply
+    31             put ${ Reply sent. }$
+    32         ]$
+    33     ]$
+    34 ]$
+    35 
+
+These lines declare ``autoreply`` which is the top-level function in the file.
+Note that we declared these functions from low-level to top level. This is not
+necessary, since the functions are not interpreted until called, but it's
+easier to understand this way.
+
+.. note::
+    Ublu function definitions offer almost no compiler security. They are simply
+    parsed and stored as execution blocks associated with a call specification and
+    no validation of their runtime action is performed.
+
+``autoreply`` takes as its arguments a system name, user id, password and IFS
+path. Arguments to the function, whether they are plainwords or variables are
+referenced inside the function by their declared name decorated with ``@@`` .
+If a function is declared::
+
+    FUNC foo ( bar )
+
+
+then the argument ``bar`` is referenced inside the body of the function as
+``@@bar``::
+
+    FUNC foo ( bar ) $[ put -from @@bar ]$
+
+
+``autoreply`` also declares a few local variables that will hide global and
+more outer local variables of the same name and then disappear at the end of
+the execution block in which they are declared.
+
+``autoreply`` calls the function ``getMsgQ`` to get the message queue
+instance.
+
+``autoreply`` then calls ``getReplyMsgs`` to get a list messages awaiting a
+reply.
+
+``autoreply`` then loops in a ``FOR`` loop through the list and uses ``ask``
+command to ask the user if the user wishes to reply each individual message. It
+does ``test`` on the response against the character ``y`` and ``IF`` the result
+of that test is true, gets a reply via ``ask`` and replies to the message
+queue, informing the user via ``put`` that the reply was sent.
+
+.. important::
+    Continue fixing RST at this point
+
+Generating launcher scripts for Ublu programs via ``gensh``
+===========================================================
+
+
+| The ``autoreply`` program would still require understanding of Ublu to
+  load and execute, but our help desk operator doesn't have to deal with
+  that. As noted above, the Ublu ```gensh`` <ubluref.html#gensh>`__
+  command can generate a shell script so that ``autoreply`` can become
+  effectively a shell command that takes options to identify system and
+  queue. *``gensh`` shell scripts allow the designer to turn Ublu
+  functions into closures.*
+|  Here is the ``gensh``-generated  shell script to run the top-level
+  function ``autoreply`` from the program ``autoreply.ublu``
+
+``examples/autoreply.sh``
+-------------------------
+
+::
+
+       1 # autoreply.sh ... Find and reply to all *INQ & *NOTIFY messages in a given MSGQ 
+       2 # autogenerated Wed Mar 09 19:26:19 MST 2016 by jax using command:
+       3 # gensh -to autoreply.sh -path /opt/ublu/ublu.jar -optr s SERVER @server ${ Server }$ -optr u USER @user ${ User }$ -optr p PASSWORD @password ${ Password }$ -optr q QPATHIFS @qpathifs ${ IFS path to message queue, e.g., /QSYS.LIB/QSYSOPR.MSGQ or /QSYS.LIB/QUSRSYS.LIB/MYUSERID.MSGQ }$ ${ autoreply.sh ... Find and reply to all *INQ & *NOTIFY messages in a given MSGQ }$ /opt/ublu/examples/autoreply.ublu ${ autoreply ( @server @user @password @qpathifs ) }$
+       4 
+       5 # Usage message
+       6 function usage { 
+       7 echo "autoreply.sh ... Find and reply to all *INQ & *NOTIFY messages in a given MSGQ "
+       8 echo "This shell script was autogenerated Wed Mar 09 19:26:19 MST 2016 by jax."
+       9 echo "Usage: $0 [silent] -h -s SERVER -u USER -p PASSWORD -q QPATHIFS "
+      10 echo "  where"
+      11 echo "  -h      display this help message and exit 0"
+      12 echo "  -s SERVER   Server  (required option)"
+      13 echo "  -u USER User  (required option)"
+      14 echo "  -p PASSWORD Password  (required option)"
+      15 echo "  -q QPATHIFS IFS path to message queue, e.g., /QSYS.LIB/QSYSOPR.MSGQ or /QSYS.LIB/QUSRSYS.LIB/MYUSERID.MSGQ  (required option)"
+      16 echo "---"
+      17 echo "If the keyword 'silent' appears ahead of all options, then included files will not echo and prompting is suppressed."
+      18 echo "Exit code is the result of execution, or 0 for -h or 2 if there is an error in processing options"
+      19 }
+      20 
+      21 #Test if user wants silent includes
+      22 if [ "$1" == "silent" ]
+      23 then
+      24     SILENT="-silent "
+      25     shift
+      26 else
+      27     SILENT=""
+      28 fi
+      29 
+      30 # Process options
+      31 while getopts s:u:p:q:h the_opt
+      32 do
+      33     case "$the_opt" in
+      34         s)  SERVER="$OPTARG";;
+      35         u)  USER="$OPTARG";;
+      36         p)  PASSWORD="$OPTARG";;
+      37         q)  QPATHIFS="$OPTARG";;
+      38         h)  usage;exit 0;;
+      39         [?])    usage;exit 2;;
+      40 
+      41     esac
+      42 done
+      43 shift `expr ${OPTIND} - 1`
+      44 if [ $# -ne 0 ]
+      45 then
+      46     echo "Superfluous argument(s) $*"
+      47     usage
+      48     exit 2
+      49 fi
+      50 
+      51 # Translate options to tuple assignments
+      52 if [ "${SERVER}" != "" ]
+      53 then
+      54     gensh_runtime_opts="${gensh_runtime_opts}string -to @server -trim \${ ${SERVER} }$ "
+      55 else
+      56     echo "Option -s SERVER is a required option but is not present."
+      57     usage
+      58     exit 2
+      59 fi
+      60 if [ "${USER}" != "" ]
+      61 then
+      62     gensh_runtime_opts="${gensh_runtime_opts}string -to @user -trim \${ ${USER} }$ "
+      63 else
+      64     echo "Option -u USER is a required option but is not present."
+      65     usage
+      66     exit 2
+      67 fi
+      68 if [ "${PASSWORD}" != "" ]
+      69 then
+      70     gensh_runtime_opts="${gensh_runtime_opts}string -to @password -trim \${ ${PASSWORD} }$ "
+      71 else
+      72     echo "Option -p PASSWORD is a required option but is not present."
+      73     usage
+      74     exit 2
+      75 fi
+      76 if [ "${QPATHIFS}" != "" ]
+      77 then
+      78     gensh_runtime_opts="${gensh_runtime_opts}string -to @qpathifs -trim \${ ${QPATHIFS} }$ "
+      79 else
+      80     echo "Option -q QPATHIFS is a required option but is not present."
+      81     usage
+      82     exit 2
+      83 fi
+      84 
+      85 # Invocation
+      86 java -jar /opt/ublu/ublu.jar ${gensh_runtime_opts} include ${SILENT}/opt/ublu/examples/autoreply.ublu autoreply \( @server @user @password @qpathifs \) 
+      87 exit $?
+      88 
+
+Some Obvious Questions about Ublu
+=================================
+
+The above explanations raise several new questions:
+
+-  What are the data types in Ublu?
+-  What are those dash thingies after Ublu commands?
+-  What is a ``put`` ?
+-  How are arguments passed?
+
+| We'll answer those questions next.
+
+What are the data types in Ublu?
+--------------------------------
+
+| Ublu can be described as an "object-disoriented language".
+
+| Ublu is a form of interpretive Java that hides as much as possible
+  about object usage.
+
+| There are basically three data types in the Ublu language:
+
+#. plainword
+#. object
+#. variable
+#. string
+#. execution block
+
+| A **plainword** is a single whitespace-delimited lex
+
+-  ``arthur``
+-  ``99999``
+-  ``supercalifra$gilist$ticexpialifoobar..**(())``
+
+| An **object** represents something or other, often a
+  something-or-other on a remote server but it's pretty opaque and you
+  just have to know which  objects you have in hand go with which Ublu
+  commands. It's mostly simple to do because the same commands that use
+  the objects typically provide the objects in the first place.
+|  Objects are passed around in **variables** ("tuple variables" or
+  "tuples") marked with the ``@`` sign. Variables come into existence by
+  being mentioned. If they're in an execution block between ``$[`` and
+  ``]$`` they can be marked ``LOCAL`` and disappear at the end of the
+  block. Otherwise, they persist until expressly deleted or until the
+  interpreter in whose context they reside exits.
+|  A string in Ublu is parsed from a sequence of plainwords wrapped by 
+  ``${`` and ``}$`` e.g. ``${ hi there }$`` Many commands in Ublu will
+  take either a string, a plainword, or a variable as an argument. This
+  is symbolized in the command descriptions in the Ublu Reference by
+  ``~@{something}``. *The ~ means also that the argument to the
+  dash-command can be popped from Ublu's LIFO stack.
+  *
+|  An execution block is a body of Ublu program text wrapped in ``$[``
+  and ``]$`` . Execution blocks are used as the body of control
+  constructs, such as ``IF`` ... ``THEN`` ... ``ELSE`` , function
+  definitions and ``TRY`` ... ``CATCH`` , e.g.
+
+    ``IF @trueorfalse THEN $[ joblist -as400 @myserver -to @jl     ]$``
+
+What are those dash thingies after Ublu commands?
+-------------------------------------------------
+
+The dash-commands after Ublu commands pass arguments to the command,
+often objects being kept in variables.
+
+    | ``as400 -to @myServer somehostname.com someuserid     somepassword``\ ````\ ``joblist -as400     @myServer``
+
+| would retrieve a joblist from ``somehostname.com`` provided
+  ``someuserid`` had authorization to request it.
+|  One special dash-command is double-dash ``--`` the "eponymous
+  dash-command" which represents an object identified in the command
+  description with same name as the command itself. For example, the
+  ``as400`` command instances and operates on objects representing a
+  connection to a remote i Series OS server. Once you have instanced
+  such an object and stored it ``-to   @someServer`` you can use it and
+  then later test if it is still connected by passing the same variable
+  back to the ``as400`` command like this:
+
+    ``as400 -as400 @someServer -connected``
+
+| which will ``put`` either ``true`` or ``false``. But you could also
+  have simply used the eponymous dash-command:
+
+    ``as400 -- @someServer -connected``
+
+| since, for the as400 command, ``--`` represents ``-as400``.
+
+What is a ``put`` ?
+-------------------
+
+ The ``as400`` command stored ``-to @myServer`` which variable was then
+passed to joblist command as ``-as400 @myServer``
+
+| ``-to`` is a dash-command to almost every Ublu command. It says where
+  the ``put`` is to go.
+
+| Most Ublu commands ``put`` a result. That result could be text or an
+  object. If no ``-to`` destination is specified, then the ``put`` goes
+  to standard out. If the result is an object and the ``put`` is to
+  standard out,  the object is rendered in text. Ublu knows how to
+  render objects in text in a useful fashion.
+
+| The full discussion of ``put`` requires an understanding of `Data
+  Sinks <ubluref.html#Datasinks>`__ discussed in the Ublu Reference.
+
+How are arguments passed?
+-------------------------
+
+| Arguments in Ublu are passed by reference, not of by value.
+
+| When you pass a variable as an argument to a command or function, that
+  variable is accessible to the function and any changes the function
+  makes to that argument are changes to the variable itself.
+
+Arguments in function argument lists are actually
+`token-pasted <./ubluref.html#Function_Parameter_Binding>`__ into the
+execution block which is the body of the function.
+
+Token pasting in function argument marshalling allows some unusual
+programming techniques as we'll see later, e.g., in the section on the
+`Tuple Stack <#TupleStack>`__.
+
+Local variables as arguments
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+| Local variables only are accessible within the execution block in
+  which they are declared. This encompassed nested blocks within the
+  declaring block (unless a local of the same name is declared in the
+  inner block, thus hiding the outer block's local).
+
+| This means you can pass a local as a positional argument to a function
+  called within a block and that function can reference the provided
+  value normally.
+
+    | ``FUNC bar ( myarg ) $[ put -from @@myarg     ]$``\ ````\ ``FUNC foo ( ) $[ LOCAL @a put -to @a 17     bar ( @a ) ]$``
+
+| ``foo ( )`` when invoked will display the number 17.
+
+A limit on local variables as arguments
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Because calls are by reference and locals have only block scope, there
+exist cases where it appears you can pass a local to a function but you
+really cannot. Here's an instance of that:
+
+``examples/test/localvarthread.ublu``
+'''''''''''''''''''''''''''''''''''''
+
+::
+
+       1 # Test background threading with local vars and global vars.
+       2 # Example from Ublu https://github.com/jwoehr/ublu
+       3 # Copyright (C) 2016 Jack J. Woehr http://www.softwoehr.com
+       4 # See the Ublu license (BSD-2 open source)
+       5 
+       6 # A simple function to run in a thread
+       7 FUNC localVarThread ( var ) $[
+       8     LOCAL @myvar 
+       9     LOCAL @start 
+      10     LOCAL @end 
+      11     put -from @@var 
+      12     eval -to @myvar + 1 @@var
+      13     put -to @start 1
+      14     put -to @end 9 
+      15     DO @start @end $[
+      16         eval -to @myvar + @myvar 1 put -from @myvar  system ${ sleep 10 }$
+      17     ]$
+      18     put done!
+      19 ]$
+      20 
+      21 # Doesn't work with locals.
+      22 # Locals in the calling function don't exist in the context of the created thread.
+      23 FUNC runItLocal ( number ) $[    
+      24     LOCAL @x
+      25     put -to @x 100000
+      26     eval -to @x + @@number 7
+      27     put -to @p ${ localVarThread ( @x ) }$
+      28     thread -to @t -from @p
+      29     thread -thread @t -start
+      30 ]$
+      31 
+      32 # This works, uses a global variable  
+      33 FUNC runIt ( number ) $[
+      34     put -to @x 100000
+      35     eval -to @x + @@number 7
+      36     put -to @p ${ localVarThread ( @x ) }$
+      37     thread -to @t -from @p
+      38     thread -thread @t -start
+      39 ]$
+      40 
+
+| In the above example, a thread is launched with a string argument,
+  effectively an execution block although passed as a string in a
+  variable. Even though the thread is launched in the same execution
+  block as the local variable declaration, the thread's runtime
+  environment is not nested within the execution block, so a local
+  variable cannot be passed to the thread.
+
+The ``examples`` directory
+==========================
+
+| Ublu is distributed with an ``examples`` directory. Most of these are
+  code actually used in production, though of course **there is NO
+  WARRANTY OR GUARANTY of correctness or fitness for a given application
+  (see the LICENSE)**.
+|  Example files consist of definitions of functions embodying factors
+  of common operations, and of the shell scripts generated by ``gensh``
+  used to launch the functions.  Not all examples are pristine examples
+  of Ublu coding style, which is evolving. Generally, the more
+  parameterization, the better.
+
+The test directory
+------------------
+
+| Under the ``examples`` directory is the ``test`` directory which are
+  fairly crude regression code used to test the basic functionality of
+  Ublu commands.
+
+The ``extensions`` directory
+============================
+
+Ublu is distributed with an ``extensions`` directory which contains
+extensions to the base Ublu system which are written in Ublu itself.
+
+As the IBM i system upon which Ublu primarily operates is so
+feature-rich, it is impractical to put every useful utility in the base
+system. Therefore, as Ublu evolves, more and more features will likely
+be relegated to the ``extensions`` directory to be loaded via
+```include`` <./ubluref.html#include>`__ as needed by the application
+programmer.
+
+Again, **there is NO WARRANTY OR GUARANTY of correctness or fitness for
+a given application (see the LICENSE)**.
+
+Object-disoriented
+==================
+
+| A few words about "object-disoriented". Object languages associate
+  methods with specific data structures and define these relationships
+  in classes. Ublu began as a collection of single-purpose utilities
+  designed procedurally and then grew into a language when it became
+  necessary to pass objects from utility to utility in order to get more
+  useful work done.
+|  You have seen how Ublu works and `read about the ``put``
+  command <#mozTocId58628>`__. The ``put`` command was the beginning of
+  Ublu "object-disorientation". When Ublu emerged from the need to pass
+  objects rather than string values from one utility to the next, the
+  ``put`` command was an immediate result of that change to an
+  interpretive language. I needed to see quickly what was going on.
+|  A lot of effort went into ``put`` so it would give useful insight
+  into anything passed around from command to command in Ublu without
+  demanding that the programmer remember what was where. It is always
+  safe to simply ``put @foo`` because a useful string representation is
+  returned. And ``put -to @bar   @foo`` put whatever is in ``@foo`` also
+  into ``@bar`` without worrying about object class.
+|  What Ublu's language structure comes down to is that:
+
+-  commands are effectively *classes*
+-  dash-commands are effectively *methods*
+-  the object values passed in tuple vars to the commands are the
+   *object instances* multiply inheriting from the *classes*.
+
+   -  Multiple inheritance because the *object instances* respond to the
+      *methods* of many *classes*
+
+| E.g, in the example ...
+
+    ``as400 -to @sys mysys myuid mypwd``\ ````\ ``as400     -- @sys -alivesvc     CENTRAL``\ ````\ *``true``
+    *
+
+| ... effectively, an Ublu ``as400`` *class* creates an *object
+  instance* stored in ``@sys``. That object has a method
+  *alivesvc(CENTRAL)* invoked on it.
+
+Ublu's default "object-disoriented" syntax is wordier than a true object
+language, in that the class is named each time (the "command"), but it
+tends to be easy to use interpretively. It's clunky, yet it is
+reminiscent of traditional "big iron"-style command syntax and is pretty
+easy to remember.
+
+Autonomes offer easier syntax
+-----------------------------
+
+`Autonomes <./ubluref.html#Autonomic_Tuple_Variables>`__ simplify Ublu
+syntax. An *autonome* is a tuple variable whose value is of one of many
+recognized types allowed by Ublu to stand for its most typical command
+and the `eponymous
+dash-command <./ubluref.html#Eponymous_dash-command__--_>`__.
+
+Thus, assuming that ``@job`` contains a valid instance created by the
+```job`` command <./ubluref.html#job>`__,
+
+    ``job -- @job -info``
+
+can be expressed
+
+    ``@job -info``
+
+The Tuple Stack
+===============
+
+| The `Forth programming
+  language <https://en.wikipedia.org/wiki/Forth_(programming_language)>`__
+  taught me the use of a LIFO stack in programming. The Ublu `Tuple
+  stack <./ubluref.html#Tuple_stack>`__ allows some interesting
+  programming metaphors that allow coding functions that get around some
+  of the clunkiness of basic Ublu syntax. Instead of stowing results in
+  tuple variables, functions can push their results to the stack to be
+  popped as arguments by the next function. Additionally, the
+  `token-pasting <./ubluref.html#Function_Parameter_Binding>`__ nature
+  of Ublu ```FUNC`` <./ubluref.html#FUNC>`__ arguments allow even
+  dash-commands to be presented to an Ublu command via the argument list
+  to a function.
+|  Here is an example (``examples/stringpush.ublu``) of this
+  object-disoriented slackomorphic style of programming:
+
+::
+
+     1 # stringpush.ublu
+     2 # Example from Ublu Midrange and Mainframe Life Cycle Extension language
+     3 # https://github.com/jwoehr/ublu
+     4 # Copyright (C) 2016 Jack J. Woehr http://www.softwoehr.com
+     5 # See the Ublu license (BSD-2 open source)
+     6 
+     7 # Execute the string command providing the op and 2 arguments
+     8 # and push the result to the tuple LIFO stack
+     9 # Example: $-2 ( -cat ~ ~ ) will pop the tuple stack twice,
+    10 # concatenate the two string values and push the result back.
+    11 FUNC $~2 ( op a b ) $[ string -to ~ @@op @@a @@b ]$
+    12 # Here's an example session:
+    13 # > put -to ~ ${ arf arf arf }$
+    14 # > put -to ~ ${ foo bar woof }$
+    15 # > $~2 ( -cat ~ ~ )
+    16 # > put ~
+    17 # foo bar woof arf arf arf
+    18 # ...
+    19 # Note that "the first shall be last".
+    20 # ...
+    21 # > put -to ~ ${ arf arf arf }$
+    22 # > put -to ~ ${ arf arf arf }$
+    23 # > $~2 ( -eq ~ ~ )
+    24 # > put ~
+    25 # true
+    26 
+    27 # end
+    28 
+
+Calling Java
+============
+
+Ublu can call Java directly via the
+```calljava`` <./ubluref.html#calljava>`__ command. This allows the user
+to extend the language interpretively in nearly any direction desired.
+This is useful, because as I continually extend Ublu, it is not
+practical to support every option for every object in the JTOpen library
+with Ublu sytax
+
+For instance, at present writing, there is no Ublu dash-command to fetch
+the reply status of a queued message. Maybe I'll add that later, if I
+need it enough. For the present, if I need that reply status, I
+``calljava`` on the queued message object easily obtainable from Ublu.
+
+::
+
+    > as400 -to @mysys MYSYS.ORG MYPROFILE MYPASSWORD
+    > joblog -to @jl -as400 @mysys -new MYJOBNAME MYUID 349989
+    > joblog -to ~ -- @jl -length
+    > joblog -- @jl -to ~ -qm 0 ~
+    > FOR @i in ~ $[ calljava -obj @i -method getReplyStatus -to @result put @result ]$
+
+Of course, in this sort of programming, downloading and perusing the
+Ublu javadocs and JTOpen library javadocs is essential. In the example
+above, one would have to know that Ublu's ``joblog -qm`` is returning a
+collection of ``com.ibm.as400.access.QueuedMessage`` instances.
+
+Notes
+=====
+
+``ublu.util.Interpreter.loop()``
+--------------------------------
+
+Here is the Java code for the interpretive loop.
+
+::
+
+    1122     /**
+    1123      * The processing loop, processes all the input for a line until exhausted
+    1124      * or until a command returns a command result indicating failure.
+    1125      *
+    1126      * @return the last command result indicating success or failure.
+    1127      */
+    1128     public COMMANDRESULT loop() {
+    1129         COMMANDRESULT lastCommandResult = COMMANDRESULT.SUCCESS;
+    1130         String initialCommandLine = getArgArray().toHistoryLine();
+    1131         while (!getArgArray().isEmpty() && !good_bye && !isBreakIssued()) {
+    1132             // /* Debug */ System.err.println(" arg array is " + getArgArray());
+    1133             if (getArgArray().isNextTupleNameOrPop()) {
+    1134                 Tuple t = getArgArray().peekNextTupleOrPop();
+    1135                 if (Autonome.autonomize(t, getArgArray())) {
+    1136                     continue;
+    1137                 } else {
+    1138                     getLogger().log(Level.SEVERE, "non-autonomized tuple or pop : {0}", getArgArray().next());
+    1139                     lastCommandResult = COMMANDRESULT.FAILURE;
+    1140                     break;
+    1141                 }
+    1142             }
+    1143             String commandName = getArgArray().next().trim();
+    1144             if (commandName.equals("")) {
+    1145                 continue; // cr or some sort of whitespace got parsed, skip to next
+    1146             }
+    1147             if (getCmdMap().containsKey(commandName)) {
+    1148                 CommandInterface command = getCmd(this, commandName);
+    1149                 try {
+    1150                     setArgArray(command.cmd(getArgArray()));
+    1151                     lastCommandResult = command.getResult();
+    1152                     if (lastCommandResult == COMMANDRESULT.FAILURE) {
+    1153                         break; // we exit the loop on error
+    1154                     }
+    1155                 } catch (IllegalArgumentException ex) {
+    1156                     getLogger().log(Level.SEVERE, "Command \"" + commandName + "\" threw exception", ex);
+    1157                     lastCommandResult = COMMANDRESULT.FAILURE;
+    1158                     break;
+    1159                 } catch (java.lang.RuntimeException ex) {
+    1160                     /* java.net.UnknownHostException lands here, as well as  */
+    1161  /* com.ibm.as400.access.ExtendedIllegalArgumentException */
+    1162                     getLogger().log(Level.SEVERE, "Command \"" + commandName + "\" threw exception", ex);
+    1163                     lastCommandResult = COMMANDRESULT.FAILURE;
+    1164                     break;
+    1165                 }
+    1166             } else if (getFunctorMap().containsKey(commandName)) {
+    1167                 try {
+    1168                     TupleNameList tnl = parseTupleNameList();
+    1169                     if (tnl != null) {
+    1170                         lastCommandResult = executeFunctor(getFunctor(commandName), tnl);
+    1171                         if (lastCommandResult == COMMANDRESULT.FAILURE) {
+    1172                             break;
+    1173                         }
+    1174                     } else {
+    1175                         getLogger().log(Level.SEVERE, "Found function {0} but could not execute it", commandName);
+    1176                         lastCommandResult = COMMANDRESULT.FAILURE;
+    1177                         break;
+    1178                     }
+    1179                 } catch (java.lang.RuntimeException ex) {
+    1180                     getLogger().log(Level.SEVERE, "Function \"" + commandName + "\" threw exception", ex);
+    1181                     lastCommandResult = COMMANDRESULT.FAILURE;
+    1182                     break;
+    1183                 }
+    1184             } else {
+    1185                 getLogger().log(Level.SEVERE, "Command \"{0}\" not found.", commandName);
+    1186                 lastCommandResult = COMMANDRESULT.FAILURE;
+    1187                 break;
+    1188             }
+    1189         }
+    1190         if (!isIncluding() && !initialCommandLine.isEmpty()) {
+    1191             if (getHistory() != null) {
+    1192                 try {
+    1193                     getHistory().writeLine(initialCommandLine);
+    1194                 } catch (IOException ex) {
+    1195                     getLogger().log(Level.WARNING, "Couldn't write to history file " + getHistory().getHistoryFileName(), ex);
+    1196                 }
+    1197             }
+    1198         }
+    1199         setGlobal_ret_val(lastCommandResult.ordinal());
+    1200         return lastCommandResult;
+    1201     }
+    1202 
+
+.. note::
+    This guide is a work in progress

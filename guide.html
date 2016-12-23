@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>&lt;no title&gt; &mdash; Ublu 1.1.4 documentation</title>
+    <title>Who is this Guide for? &mdash; Ublu 1.1.4 documentation</title>
     
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -49,13 +49,1057 @@
         <div class="bodywrapper">
           <div class="body">
             
-  
+  <div class="section" id="who-is-this-guide-for">
+<h1>Who is this Guide for?<a class="headerlink" href="#who-is-this-guide-for" title="Permalink to this headline">¶</a></h1>
+<p>It&#8217;s for people who just want an introduction to using Ublu, or who have
+downloaded and built Ublu, read enough of the <a class="reference internal" href="intro.html#intro"><em>references</em></a> to know
+how to launch <a class="reference external" href="https://github.com/jwoehr/ublu">Ublu</a>, and now want more help
+understanding Ublu.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The Guide is meant to be easy to read, and extra stuff you may not want
+to bother with is written as a note, like this.</p>
+</div>
+</div>
+<div class="section" id="why-ublu">
+<h1>Why Ublu?<a class="headerlink" href="#why-ublu" title="Permalink to this headline">¶</a></h1>
+<p>Ublu is an interpretive language for remote systems programming of
+midrange or mainframe hosts from a Java platform such as Linux, Mac,
+OpenBSD or Windows. It also can run natively on IBM i ®, IBM z/OS USS ®
+or any other reasonable Java platform.</p>
+<p>I wrote Ublu because I wanted a language to run on
+OpenBSD/Mac/Linux/Windows to perform ad-hoc process automation primarily
+on IBM i Series OS ®. I was supporting consulting clients by writing
+individual utility programs using JTOpen which I have used since 1998 to
+control the AS/400. I decided to consolidate the programs in a language,
+and the result is Ublu.</p>
+<p>Additionally, Ublu can call Java directly allowing the user him- or
+herself to extend the language interpretively in nearly any direction
+desired.</p>
+<p>It is convenient to operate legacy systems remotely from modern
+environments:</p>
+<ul class="simple">
+<li>Use Ublu to empower help-desk folks who know how to feed arguments to
+scripts and answer interactive prompts but are challenged by the
+green screen.</li>
+<li>Intermediate programmers use Ublu as an easy entry point to legacy
+systems programming.</li>
+<li>Teams working to design add-ons or extensions to legacy applications
+can use Ublu.</li>
+<li>Teams designing follow-on systems who need to explore the legacy
+environment can use Ublu.</li>
+<li>Ublu also runs locally on IBM i Series OS and is sometimes used to
+model programs which later may be written in straight Java to run
+locally on the server.</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">I also previously wrote <a class="reference external" href="http://pigiron.sourceforge.net/">PigIron</a>, a
+Java bridge to IBM z/VM ® System Management API <a class="reference external" href="https://www.ibm.com/support/knowledgecenter/SSB27U_6.3.0/com.ibm.zvm.v630.dmse6/toc.htm?lang=en">(SMAPI)</a>.
+I provide PigIron support in Ublu. I had been using my <a class="reference external" href="http://fiji.sourceforge.net/">FIJI ForthIsh Java
+Interpreter</a> to drive PigIron, which works
+very well but is arcane, and also <a class="reference external" href="http://www.oorexx.org/">ObjectRexx</a>,
+which is a wonderful language which doesn&#8217;t run on as many platforms as
+Java. Ublu turns out to be an excellent language environment for PigIron
+SMAPI operations.</p>
+</div>
+<p>Ublu is a new language which was coded quick and easy in Java on top of
+other open source libraries. The &#8220;quick and easy&#8221; approach derives from
+a work environment in which folks just wanted results and had no
+particular interest in the language itself.</p>
+<p>Ublu is easy to build, install, read, and use. It is handsome but not
+beautiful. Ublu works like an interactive shell scripting language but
+also has some advanced language features such as compiling, tasking,
+debugging and a TCP/IP port server mode.</p>
+<div class="section" id="work-in-progress">
+<h2>Work in Progress<a class="headerlink" href="#work-in-progress" title="Permalink to this headline">¶</a></h2>
+<p>Ublu is a work in progress and, like all &#8220;living&#8221; software, likely to remain
+so. There are always more aspects to IBM i programming to support. Everything
+that&#8217;s in Ublu is there because I/We needed it <em>right then</em>. The <tt class="docutils literal"><span class="pre">db</span></tt> command
+was almost the first thing added, which is effectively an interpretive shell
+around JDBC. On the other hand, we never needed classic record file access
+because everyone on staff was SQL-oriented and knew little about physical file
+access.  Thus, only recently have I added the <tt class="docutils literal"><span class="pre">`file</span></tt> &lt;ubluref.html#file&gt;`__
+and <tt class="docutils literal"><span class="pre">record</span></tt> commands for classic record file access.</p>
+<p>If you find Ublu useful, please <a class="reference external" href="http://www.softwoehr.com/">let me know</a>!</p>
+<p>If you find a bug, or wish to issue a feature request, you can <a class="reference external" href="https://github.com/jwoehr/ublu/issues/new">create an issue
+in the issue tracker</a>.</p>
+</div>
+</div>
+<div class="section" id="what-does-ublu-do">
+<h1>What does Ublu do?<a class="headerlink" href="#what-does-ublu-do" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li>Ublu is an interpreter with full language features such as flow
+control (<tt class="docutils literal"><span class="pre">IF</span></tt>, <tt class="docutils literal"><span class="pre">ELSE</span></tt>, <tt class="docutils literal"><span class="pre">DO</span></tt>, <tt class="docutils literal"><span class="pre">WHILE</span></tt> etc.), exception handling, and even a
+multitasker and debugger.</li>
+<li>Ublu has commands that manipulate Java objects representing objects,
+services and various facilities on the remote server.</li>
+<li>In Ublu you can define functions to create complex programs to
+manipulate the remote server and its databases, tape drives,
+whatever.</li>
+<li>You can also do <a class="reference external" href="http://www.postgresql.org/">Postgresql</a>
+databasing (and pretty much anything else) on your local computer,
+allowing you to interoperate your local database with the database on
+the remote server.</li>
+<li>You can do this interactively or load a program from text files which can,
+in turn, <em class="xref std std-ref">include</em> other text files.</li>
+<li>You can automate a telnet 5250 terminal emulator session.</li>
+<li>You can interact directly with the underlying Java and class
+libraries.</li>
+</ul>
+<p>When you&#8217;ve got your complete application written in Ublu, there&#8217;s an Ublu
+command <em class="xref std std-ref">gensh</em> which autogenerates a shell script to work under
+either <tt class="docutils literal"><span class="pre">bash</span></tt> or <tt class="docutils literal"><span class="pre">ksh</span></tt>. The script takes arguments via command-line
+switches and pass them to your program&#8217;s top-level function. <em>The script
+effects a closure on your top-level function.</em></p>
+<p>For a formal summary of everything, see the rest of the reference, probably
+starting at the <a class="reference internal" href="intro.html#intro"><em>intro</em></a>.  That Reference tells you how to install
+and run Ublu and lists the Open Source project dependencies as well as
+documenting every command and facility built into Ublu.</p>
+</div>
+<div class="section" id="discussing-ublu-online">
+<h1>Discussing Ublu Online<a class="headerlink" href="#discussing-ublu-online" title="Permalink to this headline">¶</a></h1>
+<p>Currently I discuss Ublu on the <a class="reference external" href="https://ibmioss.ryver.com/index.html#forums/1057363">Ublu, Java &amp; JTOpen forum</a> of the <a class="reference external" href="https://ibmioss.ryver.com/index.html">OSS on IBM i
+Ryver team</a>.</p>
+</div>
+<div class="section" id="quick-tour-of-the-ublu-language">
+<h1>Quick Tour of the Ublu Language<a class="headerlink" href="#quick-tour-of-the-ublu-language" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Ublu is mostly composed of commands and a language interpreter. There are also
+are other Ublu features such as server mode and the tasker, but commands and
+the language interpreter are the nexus.</p>
+</div>
+<div class="section" id="commands">
+<h2>Commands<a class="headerlink" href="#commands" title="Permalink to this headline">¶</a></h2>
+<p>Ublu commands are like individual application programs which are invoked with
+their arguments under the language interpreter. Command arguments are often
+references to objects which have been created by other commands. You usually
+don&#8217;t have to know much about objects passed from command to command other than
+what they&#8217;re supposed to represent.</p>
+<p>Most arguments are passed to the <a class="reference external" href="ubluref.html#Dash_Command">dash-commands</a>
+associated with the command, e.g.:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>ask -to @answer -say ${ Do you wish to reply to this message? (y/n) }$
+</pre></div>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">ask</span></tt> command here has two dash-commands, <tt class="docutils literal"><span class="pre">-to</span></tt> and <tt class="docutils literal"><span class="pre">-say</span></tt>.  <tt class="docutils literal"><span class="pre">-to</span></tt>
+has an argument which says to which <a class="reference internal" href="concepts.html#tuple-variables"><em>variable</em></a> to put
+the answer to the question about to be asked the user, and <tt class="docutils literal"><span class="pre">-say</span></tt> takes a
+<a class="reference internal" href="concepts.html#quoted-strings"><em>quoted string</em></a> which is the prompt to the user.</p>
+</div>
+<div class="section" id="language-interpreter">
+<h2>Language Interpreter<a class="headerlink" href="#language-interpreter" title="Permalink to this headline">¶</a></h2>
+<p>The heart of the Ublu language is a text interpreter loop. There can be
+multiple nested or branching interpreter instances with different variable
+spaces in one Ublu session, but basically they&#8217;re all doing the same sort of
+thing: an outer input loop is getting input and running an inner interpretive
+<a class="reference external" href="#ublu.util.Interpreter.loop">loop</a> to interpret a single line of text.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">There are actually several different but very similar loops, e.g.,
+the debugger interpreter loop is different from the normal runtime
+intepreter loop.</p>
+</div>
+<p>Parsing is very simplistic. The parse parses, and having parsed, moves on,
+<a class="reference external" href="https://www.google.com/search?q=nor+can+all+your+piety+and+wit">*nor can all your piety and wit*</a> make it go
+back one <em>lex</em> (unit of parsing).</p>
+<p>The text interpreter loop parses the next whitespace-delimited element (a lex)
+and tries to locate it as an Ublu command or as a defined function. Matching is
+case-sensitive.</p>
+<p>If no match is found, the loop falls out to the outer input loop with an error.
+The outer loop then waits for more input to pass to the inner interpretive
+loop.</p>
+<p>If the interpretive loop succeeds in finding the next lex in the input as a
+command or function, it passes the rest of the line to the command or to the
+function interpreter. Both do their work then pass back the remnant of the
+input line that wasn&#8217;t consumed in their work.</p>
+<p>Thus, line processing is a relay: the loop hands off to the command/function,
+which then hands back to loop, and on to next command/function ... until the
+line is consumed or an error is encountered.</p>
+<p>If an error is encountered, the rest of the input is discarded.  Typically the
+interpretive loop will fall out to the outer parsing loop. However, there is a
+<tt class="docutils literal"><span class="pre">TRY</span> <span class="pre">CATCH</span> <span class="pre">THROW</span></tt> exception facility in Ublu allowing the program to catch
+errors without losing its place in the executing program.</p>
+<p>While the interpretive loop is line-oriented, certain constructs can span
+lines, particularly a delimited string or an execution block.  Strings are
+delimited:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>${ like this }$
+</pre></div>
+</div>
+<p>and execution blocks:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>$[ like this ]$
+</pre></div>
+</div>
+<p>so it is easy for the loop to identify them and demand another line from the
+outer loop if the closing delimiter hasn&#8217;t been found yet.</p>
+<p>Language control flow constructs are just a form of command.  Typically they
+consume execution blocks from the input:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>IF @truefalse THEN $[
+    command arg arg command arg arg
+    command arg ...
+]$ ELSE $[
+    command arg ...
+]$
+</pre></div>
+</div>
+<p>As noted, these execution blocks can span multiple lines.</p>
+</div>
+</div>
+<div class="section" id="a-full-ublu-program">
+<h1>A Full Ublu Program<a class="headerlink" href="#a-full-ublu-program" title="Permalink to this headline">¶</a></h1>
+<p>Here is a full Ublu program. It uses <a class="reference external" href="./ubluref.html#FUNC">FUNC</a> to define a
+number of functions allowing the user to checks a message queue on an i Series
+OS server and lists the messages, asking the user on each if s/he would like to
+reply, and parsing the reply if one is given.&nbsp; Take a look at the program (and
+its associate shell script given here) and then we will <a class="reference external" href="#Understanding_examplesautoreply.ublu">discuss the program
+line-by-line</a> below.</p>
+<div class="section" id="examples-autoreply-ublu">
+<h2><tt class="docutils literal"><span class="pre">examples/autoreply.ublu</span></tt><a class="headerlink" href="#examples-autoreply-ublu" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span></span> 1 # autoreply.ublu ... Find and reply to all *INQ &amp; *NOTIFY messages in a given MSGQ
+ 2 # jack j. woehr jwoehr@absolute-performance.com jwoehr@softwoehr.com
+ 3 # 2015-03-10
+ 4
+ 5 # instance message queue
+ 6 FUNC getMsgQ ( system user password ifspath msgq ) $[
+ 7     LOCAL @as400
+ 8     as400 -to @as400 @@system @@user @@password
+ 9     msgq -to @@msgq -as400 @as400 -instance @@ifspath
+10 ]$
+11
+12 # get list of messages needing reply
+13 FUNC getReplyMsgs ( msgq replylist ) $[
+14     msgq -- @@msgq -query -reply -to @@replylist
+15 ]$
+16
+17 # get messages, walk list and offer user chance to reply to each
+18 FUNC autoreply ( system user password ifspath ) $[
+19     LOCAL @msgq LOCAL @replylist LOCAL @key
+20     LOCAL @answer LOCAL @tf LOCAL @reply
+21     getMsgQ ( @@system @@user @@password @@ifspath @msgq )
+22     getReplyMsgs ( @msgq @replylist )
+23     FOR @msg in @replylist $[
+24         msg -- @msg -to @key -key
+25         put -from @msg
+26         ask -to @answer -say ${ Do you wish to reply to this message? (y/n) }$
+27         test -to @tf -eq @answer y
+28         IF @tf THEN $[
+29             ask -to @reply -say ${ Please enter your reply }$
+30             msgq -- @msgq -sendreplybinkey @key @reply
+31             put ${ Reply sent. }$
+32         ]$
+33     ]$
+34 ]$
+35
+</pre></div>
+</div>
+</div>
+<div class="section" id="understanding-examples-autoreply-ublu">
+<h2>Understanding <tt class="docutils literal"><span class="pre">examples/autoreply.ublu</span></tt><a class="headerlink" href="#understanding-examples-autoreply-ublu" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="mi">1</span> <span class="c1"># autoreply.ublu ... Find and reply to all *INQ &amp; *NOTIFY messages in a given MSGQ</span>
+<span class="mi">2</span> <span class="c1"># jack j. woehr jwoehr@absolute-performance.com jwoehr@softwoehr.com</span>
+<span class="mi">3</span> <span class="c1"># 2015-03-10</span>
+<span class="mi">4</span>
+</pre></div>
+</div>
+<p>These lines are, of course, comments. Comments go to the end of the line.</p>
+<p>As we discussed above, execution blocks (e.g., the body of a function)
+delimited by <tt class="docutils literal"><span class="pre">$[</span></tt> and <tt class="docutils literal"><span class="pre">]$</span></tt> can span lines. The way the interpretive loop
+does this is that it keeps calling for input from the outer parsing loop until
+it finds the closing delimiter.  Effectively, the entire execution block is one
+line. So line comments (those commented by the <em class="xref std std-ref">#</em>
+command) should not be placed inside function bodies or they will comment out
+the entire function body! Instead, inside functions use the <em class="xref std std-ref">\</em> command.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>6 FUNC getMsgQ ( system user password ifspath msgq ) $[
+7     LOCAL @as400
+8     as400 -to @as400 @@system @@user @@password
+9     msgq -to @@msgq -as400 @as400 -instance @@ifspath
+10 ]$
+</pre></div>
+</div>
+<p>Here the function <tt class="docutils literal"><span class="pre">getMsgQ</span></tt> is defined. The argument list is not typed in any
+way. These are merely token names for whatever will appear in that position
+inside the parentheses when the function is invoked. Inside the body of the
+function these arguments will be referenced by prefixing them with <tt class="docutils literal"><span class="pre">&#64;&#64;</span></tt> e.g.,
+<tt class="docutils literal"><span class="pre">&#64;&#64;password</span></tt>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">the parentheses are separated from both the function name and from the
+argument list!!</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">In the example, I happened to use the bad style of naming arguments the
+same name as Ublu commands (<tt class="docutils literal"><span class="pre">system``*</span> <span class="pre">*``user``*</span> <span class="pre">*and</span> <span class="pre">``msgq</span></tt>) which, of
+course, the editor then syntax-colored, mistaking them for keywords. This
+is entirely legal in Ublu but, again, it&#8217;s bad style.</p>
+</div>
+<p>The function body is the execution block between <tt class="docutils literal"><span class="pre">$[</span></tt> and <tt class="docutils literal"><span class="pre">]$</span></tt></p>
+<p>On line 7, a local variable is declared. All variables (&#8220;tuple variables&#8221; as
+they are called, or just &#8220;tuples&#8221;) are identified by the <tt class="docutils literal"><span class="pre">&#64;</span></tt> prefix, whether
+they are <tt class="docutils literal"><span class="pre">LOCAL</span></tt> or global (or interpreter-level-local).</p>
+<p>Tuple variables come into existence just by being mentioned.  Arguments to a
+function may be tuples or plain words, Ublu commands typically know what to do
+with either when passed them as arguments.</p>
+<p>The LOCAL declaration <tt class="docutils literal"><span class="pre">LOCAL</span> <span class="pre">&#64;as400</span></tt> serves to says that there will be a
+local tuple variable which will hide any other variables of the same name in
+the program while in this execution block and then disappear at the end of the
+execution block, i.e., at the end of function execution. Equally, the variable
+name <tt class="docutils literal"><span class="pre">&#64;as400</span></tt> could have been used without declaration, but then it would
+persist beyond the end of the function, and further, if there happened to
+already exist such a variable in the program, it would be referencing that same
+variable, possibly unintentionally.</p>
+<p>Lines 8 and 9 are Ublu commands.</p>
+<p>Line 8 says, &#8220;Create a remote server instance for the system function argument
+using the user and password function arguments. Store that instance in the
+declared local variable <tt class="docutils literal"><span class="pre">&#64;as400</span></tt>&#8221;.</p>
+<p>Line 9 says, &#8220;Create an object referencing the message queue on the server
+represented by <tt class="docutils literal"><span class="pre">&#64;as400</span></tt> and identified by the IFS path represented by the
+function argument <tt class="docutils literal"><span class="pre">ifspath</span></tt> and store that object to the function argument
+<tt class="docutils literal"><span class="pre">msgq</span></tt> , presumably a variable, with an error resulting if a variable was not
+provided in that position in the function argument list.&#8221;</p>
+<p>The variable named which is provided in the function argument list in that
+position does not have to be named anything like the declaring argument list
+named it. It could be called <tt class="docutils literal"><span class="pre">&#64;fred</span></tt> for instance. It does not even have to
+have been previously declared. It comes into global existence by being named.
+It can later be deleted via the <tt class="docutils literal"><span class="pre">tuple</span> <span class="pre">-delete</span> <span class="pre">&#64;fred</span></tt> command, if so desired.
+Or, it might be a LOCAL variable from a calling function.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>13 FUNC getReplyMsgs ( msgq replylist ) $[
+14     msgq -- @@msgq -query -reply -to @@replylist
+15 ]$
+</pre></div>
+</div>
+<p>These lines declare another function which says, &#8220;Given a message queue
+instance and a variable name in which to store the result of this function,
+create a list of messages needing reply waiting on the remoted i Series OS
+message queue represented by the message queue instance.&#8221;</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>18 FUNC autoreply ( system user password ifspath ) $[
+19     LOCAL @msgq LOCAL @replylist LOCAL @key
+20     LOCAL @answer LOCAL @tf LOCAL @reply
+21     getMsgQ ( @@system @@user @@password @@ifspath @msgq )
+22     getReplyMsgs ( @msgq @replylist )
+23     FOR @msg in @replylist $[
+24         msg -- @msg -to @key -key
+25         put -from @msg
+26         ask -to @answer -say ${ Do you wish to reply to this message? (y/n) }$
+27         test -to @tf -eq @answer y
+28         IF @tf THEN $[
+29             ask -to @reply -say ${ Please enter your reply }$
+30             msgq -- @msgq -sendreplybinkey @key @reply
+31             put ${ Reply sent. }$
+32         ]$
+33     ]$
+34 ]$
+35
+</pre></div>
+</div>
+<p>These lines declare <tt class="docutils literal"><span class="pre">autoreply</span></tt> which is the top-level function in the file.
+Note that we declared these functions from low-level to top level. This is not
+necessary, since the functions are not interpreted until called, but it&#8217;s
+easier to understand this way.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Ublu function definitions offer almost no compiler security. They are simply
+parsed and stored as execution blocks associated with a call specification and
+no validation of their runtime action is performed.</p>
+</div>
+<p><tt class="docutils literal"><span class="pre">autoreply</span></tt> takes as its arguments a system name, user id, password and IFS
+path. Arguments to the function, whether they are plainwords or variables are
+referenced inside the function by their declared name decorated with <tt class="docutils literal"><span class="pre">&#64;&#64;</span></tt> .
+If a function is declared:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>FUNC foo ( bar )
+</pre></div>
+</div>
+<p>then the argument <tt class="docutils literal"><span class="pre">bar</span></tt> is referenced inside the body of the function as
+<tt class="docutils literal"><span class="pre">&#64;&#64;bar</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>FUNC foo ( bar ) $[ put -from @@bar ]$
+</pre></div>
+</div>
+<p><tt class="docutils literal"><span class="pre">autoreply</span></tt> also declares a few local variables that will hide global and
+more outer local variables of the same name and then disappear at the end of
+the execution block in which they are declared.</p>
+<p><tt class="docutils literal"><span class="pre">autoreply</span></tt> calls the function <tt class="docutils literal"><span class="pre">getMsgQ</span></tt> to get the message queue
+instance.</p>
+<p><tt class="docutils literal"><span class="pre">autoreply</span></tt> then calls <tt class="docutils literal"><span class="pre">getReplyMsgs</span></tt> to get a list messages awaiting a
+reply.</p>
+<p><tt class="docutils literal"><span class="pre">autoreply</span></tt> then loops in a <tt class="docutils literal"><span class="pre">FOR</span></tt> loop through the list and uses <tt class="docutils literal"><span class="pre">ask</span></tt>
+command to ask the user if the user wishes to reply each individual message. It
+does <tt class="docutils literal"><span class="pre">test</span></tt> on the response against the character <tt class="docutils literal"><span class="pre">y</span></tt> and <tt class="docutils literal"><span class="pre">IF</span></tt> the result
+of that test is true, gets a reply via <tt class="docutils literal"><span class="pre">ask</span></tt> and replies to the message
+queue, informing the user via <tt class="docutils literal"><span class="pre">put</span></tt> that the reply was sent.</p>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">Continue fixing RST at this point</p>
+</div>
+</div>
+</div>
+<div class="section" id="generating-launcher-scripts-for-ublu-programs-via-gensh">
+<h1>Generating launcher scripts for Ublu programs via <tt class="docutils literal"><span class="pre">gensh</span></tt><a class="headerlink" href="#generating-launcher-scripts-for-ublu-programs-via-gensh" title="Permalink to this headline">¶</a></h1>
+<div class="line-block">
+<div class="line">The <tt class="docutils literal"><span class="pre">autoreply</span></tt> program would still require understanding of Ublu to
+load and execute, but our help desk operator doesn&#8217;t have to deal with
+that. As noted above, the Ublu <tt class="docutils literal"><span class="pre">`gensh</span></tt> &lt;ubluref.html#gensh&gt;`__
+command can generate a shell script so that <tt class="docutils literal"><span class="pre">autoreply</span></tt> can become
+effectively a shell command that takes options to identify system and
+queue. <em>``gensh`` shell scripts allow the designer to turn Ublu
+functions into closures.</em></div>
+<div class="line-block">
+<div class="line">Here is the <tt class="docutils literal"><span class="pre">gensh</span></tt>-generated&nbsp; shell script to run the top-level
+function <tt class="docutils literal"><span class="pre">autoreply</span></tt> from the program <tt class="docutils literal"><span class="pre">autoreply.ublu</span></tt></div>
+</div>
+</div>
+<div class="section" id="examples-autoreply-sh">
+<h2><tt class="docutils literal"><span class="pre">examples/autoreply.sh</span></tt><a class="headerlink" href="#examples-autoreply-sh" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span></span> 1 # autoreply.sh ... Find and reply to all *INQ &amp; *NOTIFY messages in a given MSGQ
+ 2 # autogenerated Wed Mar 09 19:26:19 MST 2016 by jax using command:
+ 3 # gensh -to autoreply.sh -path /opt/ublu/ublu.jar -optr s SERVER @server ${ Server }$ -optr u USER @user ${ User }$ -optr p PASSWORD @password ${ Password }$ -optr q QPATHIFS @qpathifs ${ IFS path to message queue, e.g., /QSYS.LIB/QSYSOPR.MSGQ or /QSYS.LIB/QUSRSYS.LIB/MYUSERID.MSGQ }$ ${ autoreply.sh ... Find and reply to all *INQ &amp; *NOTIFY messages in a given MSGQ }$ /opt/ublu/examples/autoreply.ublu ${ autoreply ( @server @user @password @qpathifs ) }$
+ 4
+ 5 # Usage message
+ 6 function usage {
+ 7 echo &quot;autoreply.sh ... Find and reply to all *INQ &amp; *NOTIFY messages in a given MSGQ &quot;
+ 8 echo &quot;This shell script was autogenerated Wed Mar 09 19:26:19 MST 2016 by jax.&quot;
+ 9 echo &quot;Usage: $0 [silent] -h -s SERVER -u USER -p PASSWORD -q QPATHIFS &quot;
+10 echo &quot;  where&quot;
+11 echo &quot;  -h      display this help message and exit 0&quot;
+12 echo &quot;  -s SERVER   Server  (required option)&quot;
+13 echo &quot;  -u USER User  (required option)&quot;
+14 echo &quot;  -p PASSWORD Password  (required option)&quot;
+15 echo &quot;  -q QPATHIFS IFS path to message queue, e.g., /QSYS.LIB/QSYSOPR.MSGQ or /QSYS.LIB/QUSRSYS.LIB/MYUSERID.MSGQ  (required option)&quot;
+16 echo &quot;---&quot;
+17 echo &quot;If the keyword &#39;silent&#39; appears ahead of all options, then included files will not echo and prompting is suppressed.&quot;
+18 echo &quot;Exit code is the result of execution, or 0 for -h or 2 if there is an error in processing options&quot;
+19 }
+20
+21 #Test if user wants silent includes
+22 if [ &quot;$1&quot; == &quot;silent&quot; ]
+23 then
+24     SILENT=&quot;-silent &quot;
+25     shift
+26 else
+27     SILENT=&quot;&quot;
+28 fi
+29
+30 # Process options
+31 while getopts s:u:p:q:h the_opt
+32 do
+33     case &quot;$the_opt&quot; in
+34         s)  SERVER=&quot;$OPTARG&quot;;;
+35         u)  USER=&quot;$OPTARG&quot;;;
+36         p)  PASSWORD=&quot;$OPTARG&quot;;;
+37         q)  QPATHIFS=&quot;$OPTARG&quot;;;
+38         h)  usage;exit 0;;
+39         [?])    usage;exit 2;;
+40
+41     esac
+42 done
+43 shift `expr ${OPTIND} - 1`
+44 if [ $# -ne 0 ]
+45 then
+46     echo &quot;Superfluous argument(s) $*&quot;
+47     usage
+48     exit 2
+49 fi
+50
+51 # Translate options to tuple assignments
+52 if [ &quot;${SERVER}&quot; != &quot;&quot; ]
+53 then
+54     gensh_runtime_opts=&quot;${gensh_runtime_opts}string -to @server -trim \${ ${SERVER} }$ &quot;
+55 else
+56     echo &quot;Option -s SERVER is a required option but is not present.&quot;
+57     usage
+58     exit 2
+59 fi
+60 if [ &quot;${USER}&quot; != &quot;&quot; ]
+61 then
+62     gensh_runtime_opts=&quot;${gensh_runtime_opts}string -to @user -trim \${ ${USER} }$ &quot;
+63 else
+64     echo &quot;Option -u USER is a required option but is not present.&quot;
+65     usage
+66     exit 2
+67 fi
+68 if [ &quot;${PASSWORD}&quot; != &quot;&quot; ]
+69 then
+70     gensh_runtime_opts=&quot;${gensh_runtime_opts}string -to @password -trim \${ ${PASSWORD} }$ &quot;
+71 else
+72     echo &quot;Option -p PASSWORD is a required option but is not present.&quot;
+73     usage
+74     exit 2
+75 fi
+76 if [ &quot;${QPATHIFS}&quot; != &quot;&quot; ]
+77 then
+78     gensh_runtime_opts=&quot;${gensh_runtime_opts}string -to @qpathifs -trim \${ ${QPATHIFS} }$ &quot;
+79 else
+80     echo &quot;Option -q QPATHIFS is a required option but is not present.&quot;
+81     usage
+82     exit 2
+83 fi
+84
+85 # Invocation
+86 java -jar /opt/ublu/ublu.jar ${gensh_runtime_opts} include ${SILENT}/opt/ublu/examples/autoreply.ublu autoreply \( @server @user @password @qpathifs \)
+87 exit $?
+88
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="some-obvious-questions-about-ublu">
+<h1>Some Obvious Questions about Ublu<a class="headerlink" href="#some-obvious-questions-about-ublu" title="Permalink to this headline">¶</a></h1>
+<p>The above explanations raise several new questions:</p>
+<ul class="simple">
+<li>What are the data types in Ublu?</li>
+<li>What are those dash thingies after Ublu commands?</li>
+<li>What is a <tt class="docutils literal"><span class="pre">put</span></tt> ?</li>
+<li>How are arguments passed?</li>
+</ul>
+<div class="line-block">
+<div class="line">We&#8217;ll answer those questions next.</div>
+</div>
+<div class="section" id="what-are-the-data-types-in-ublu">
+<h2>What are the data types in Ublu?<a class="headerlink" href="#what-are-the-data-types-in-ublu" title="Permalink to this headline">¶</a></h2>
+<div class="line-block">
+<div class="line">Ublu can be described as an &#8220;object-disoriented language&#8221;.</div>
+</div>
+<div class="line-block">
+<div class="line">Ublu is a form of interpretive Java that hides as much as possible
+about object usage.</div>
+</div>
+<div class="line-block">
+<div class="line">There are basically three data types in the Ublu language:</div>
+</div>
+<ol class="arabic simple">
+<li>plainword</li>
+<li>object</li>
+<li>variable</li>
+<li>string</li>
+<li>execution block</li>
+</ol>
+<div class="line-block">
+<div class="line">A <strong>plainword</strong> is a single whitespace-delimited lex</div>
+</div>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">arthur</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">99999</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">supercalifra$gilist$ticexpialifoobar..**(())</span></tt></li>
+</ul>
+<div class="line-block">
+<div class="line">An <strong>object</strong> represents something or other, often a
+something-or-other on a remote server but it&#8217;s pretty opaque and you
+just have to know which&nbsp; objects you have in hand go with which Ublu
+commands. It&#8217;s mostly simple to do because the same commands that use
+the objects typically provide the objects in the first place.</div>
+<div class="line-block">
+<div class="line">Objects are passed around in <strong>variables</strong> (&#8220;tuple variables&#8221; or
+&#8220;tuples&#8221;) marked with the <tt class="docutils literal"><span class="pre">&#64;</span></tt> sign. Variables come into existence by
+being mentioned. If they&#8217;re in an execution block between <tt class="docutils literal"><span class="pre">$[</span></tt> and
+<tt class="docutils literal"><span class="pre">]$</span></tt> they can be marked <tt class="docutils literal"><span class="pre">LOCAL</span></tt> and disappear at the end of the
+block. Otherwise, they persist until expressly deleted or until the
+interpreter in whose context they reside exits.</div>
+<div class="line">A string in Ublu is parsed from a sequence of plainwords wrapped by
+<tt class="docutils literal"><span class="pre">${</span></tt> and <tt class="docutils literal"><span class="pre">}$</span></tt> e.g. <tt class="docutils literal"><span class="pre">${</span> <span class="pre">hi</span> <span class="pre">there</span> <span class="pre">}$</span></tt> Many commands in Ublu will
+take either a string, a plainword, or a variable as an argument. This
+is symbolized in the command descriptions in the Ublu Reference by
+<tt class="docutils literal"><span class="pre">~&#64;{something}</span></tt>. <a href="#id1"><span class="problematic" id="id2">*</span></a>The ~ means also that the argument to the
+dash-command can be popped from Ublu&#8217;s LIFO stack.
+*</div>
+<div class="line">An execution block is a body of Ublu program text wrapped in <tt class="docutils literal"><span class="pre">$[</span></tt>
+and <tt class="docutils literal"><span class="pre">]$</span></tt> . Execution blocks are used as the body of control
+constructs, such as <tt class="docutils literal"><span class="pre">IF</span></tt> ... <tt class="docutils literal"><span class="pre">THEN</span></tt> ... <tt class="docutils literal"><span class="pre">ELSE</span></tt> , function
+definitions and <tt class="docutils literal"><span class="pre">TRY</span></tt> ... <tt class="docutils literal"><span class="pre">CATCH</span></tt> , e.g.</div>
+</div>
+</div>
+<blockquote>
+<div><tt class="docutils literal"><span class="pre">IF</span> <span class="pre">&#64;trueorfalse</span> <span class="pre">THEN</span> <span class="pre">$[</span> <span class="pre">joblist</span> <span class="pre">-as400</span> <span class="pre">&#64;myserver</span> <span class="pre">-to</span> <span class="pre">&#64;jl</span>&nbsp;&nbsp;&nbsp;&nbsp; <span class="pre">]$</span></tt></div></blockquote>
+</div>
+<div class="section" id="what-are-those-dash-thingies-after-ublu-commands">
+<h2>What are those dash thingies after Ublu commands?<a class="headerlink" href="#what-are-those-dash-thingies-after-ublu-commands" title="Permalink to this headline">¶</a></h2>
+<p>The dash-commands after Ublu commands pass arguments to the command,
+often objects being kept in variables.</p>
+<blockquote>
+<div><div class="line-block">
+<div class="line"><tt class="docutils literal"><span class="pre">as400</span> <span class="pre">-to</span> <span class="pre">&#64;myServer</span> <span class="pre">somehostname.com</span> <span class="pre">someuserid</span>&nbsp;&nbsp;&nbsp;&nbsp; <span class="pre">somepassword</span></tt><a href="#id3"><span class="problematic" id="id4">``</span></a><tt class="docutils literal"><span class="pre">\</span> <span class="pre">``joblist</span> <span class="pre">-as400</span>&nbsp;&nbsp;&nbsp;&nbsp; <span class="pre">&#64;myServer</span></tt></div>
+</div>
+</div></blockquote>
+<div class="line-block">
+<div class="line">would retrieve a joblist from <tt class="docutils literal"><span class="pre">somehostname.com</span></tt> provided
+<tt class="docutils literal"><span class="pre">someuserid</span></tt> had authorization to request it.</div>
+<div class="line-block">
+<div class="line">One special dash-command is double-dash <tt class="docutils literal"><span class="pre">--</span></tt> the &#8220;eponymous
+dash-command&#8221; which represents an object identified in the command
+description with same name as the command itself. For example, the
+<tt class="docutils literal"><span class="pre">as400</span></tt> command instances and operates on objects representing a
+connection to a remote i Series OS server. Once you have instanced
+such an object and stored it <tt class="docutils literal"><span class="pre">-to</span>&nbsp;&nbsp; <span class="pre">&#64;someServer</span></tt> you can use it and
+then later test if it is still connected by passing the same variable
+back to the <tt class="docutils literal"><span class="pre">as400</span></tt> command like this:</div>
+</div>
+</div>
+<blockquote>
+<div><tt class="docutils literal"><span class="pre">as400</span> <span class="pre">-as400</span> <span class="pre">&#64;someServer</span> <span class="pre">-connected</span></tt></div></blockquote>
+<div class="line-block">
+<div class="line">which will <tt class="docutils literal"><span class="pre">put</span></tt> either <tt class="docutils literal"><span class="pre">true</span></tt> or <tt class="docutils literal"><span class="pre">false</span></tt>. But you could also
+have simply used the eponymous dash-command:</div>
+</div>
+<blockquote>
+<div><tt class="docutils literal"><span class="pre">as400</span> <span class="pre">--</span> <span class="pre">&#64;someServer</span> <span class="pre">-connected</span></tt></div></blockquote>
+<div class="line-block">
+<div class="line">since, for the as400 command, <tt class="docutils literal"><span class="pre">--</span></tt> represents <tt class="docutils literal"><span class="pre">-as400</span></tt>.</div>
+</div>
+</div>
+<div class="section" id="what-is-a-put">
+<h2>What is a <tt class="docutils literal"><span class="pre">put</span></tt> ?<a class="headerlink" href="#what-is-a-put" title="Permalink to this headline">¶</a></h2>
+<p>&nbsp;The <tt class="docutils literal"><span class="pre">as400</span></tt> command stored <tt class="docutils literal"><span class="pre">-to</span> <span class="pre">&#64;myServer</span></tt> which variable was then
+passed to joblist command as <tt class="docutils literal"><span class="pre">-as400</span> <span class="pre">&#64;myServer</span></tt></p>
+<div class="line-block">
+<div class="line"><tt class="docutils literal"><span class="pre">-to</span></tt> is a dash-command to almost every Ublu command. It says where
+the <tt class="docutils literal"><span class="pre">put</span></tt> is to go.</div>
+</div>
+<div class="line-block">
+<div class="line">Most Ublu commands <tt class="docutils literal"><span class="pre">put</span></tt> a result. That result could be text or an
+object. If no <tt class="docutils literal"><span class="pre">-to</span></tt> destination is specified, then the <tt class="docutils literal"><span class="pre">put</span></tt> goes
+to standard out. If the result is an object and the <tt class="docutils literal"><span class="pre">put</span></tt> is to
+standard out,&nbsp; the object is rendered in text. Ublu knows how to
+render objects in text in a useful fashion.</div>
+</div>
+<div class="line-block">
+<div class="line">The full discussion of <tt class="docutils literal"><span class="pre">put</span></tt> requires an understanding of <a class="reference external" href="ubluref.html#Datasinks">Data
+Sinks</a> discussed in the Ublu Reference.</div>
+</div>
+</div>
+<div class="section" id="how-are-arguments-passed">
+<h2>How are arguments passed?<a class="headerlink" href="#how-are-arguments-passed" title="Permalink to this headline">¶</a></h2>
+<div class="line-block">
+<div class="line">Arguments in Ublu are passed by reference, not of by value.</div>
+</div>
+<div class="line-block">
+<div class="line">When you pass a variable as an argument to a command or function, that
+variable is accessible to the function and any changes the function
+makes to that argument are changes to the variable itself.</div>
+</div>
+<p>Arguments in function argument lists are actually
+<a class="reference external" href="./ubluref.html#Function_Parameter_Binding">token-pasted</a> into the
+execution block which is the body of the function.</p>
+<p>Token pasting in function argument marshalling allows some unusual
+programming techniques as we&#8217;ll see later, e.g., in the section on the
+<a class="reference external" href="#TupleStack">Tuple Stack</a>.</p>
+<div class="section" id="local-variables-as-arguments">
+<h3>Local variables as arguments<a class="headerlink" href="#local-variables-as-arguments" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line">Local variables only are accessible within the execution block in
+which they are declared. This encompassed nested blocks within the
+declaring block (unless a local of the same name is declared in the
+inner block, thus hiding the outer block&#8217;s local).</div>
+</div>
+<div class="line-block">
+<div class="line">This means you can pass a local as a positional argument to a function
+called within a block and that function can reference the provided
+value normally.</div>
+</div>
+<blockquote>
+<div><div class="line-block">
+<div class="line"><tt class="docutils literal"><span class="pre">FUNC</span> <span class="pre">bar</span> <span class="pre">(</span> <span class="pre">myarg</span> <span class="pre">)</span> <span class="pre">$[</span> <span class="pre">put</span> <span class="pre">-from</span> <span class="pre">&#64;&#64;myarg</span>&nbsp;&nbsp;&nbsp;&nbsp; <span class="pre">]$</span></tt><a href="#id5"><span class="problematic" id="id6">``</span></a><tt class="docutils literal"><span class="pre">\</span> <span class="pre">``FUNC</span> <span class="pre">foo</span> <span class="pre">(</span> <span class="pre">)</span> <span class="pre">$[</span> <span class="pre">LOCAL</span> <span class="pre">&#64;a</span> <span class="pre">put</span> <span class="pre">-to</span> <span class="pre">&#64;a</span> <span class="pre">17</span>&nbsp;&nbsp;&nbsp;&nbsp; <span class="pre">bar</span> <span class="pre">(</span> <span class="pre">&#64;a</span> <span class="pre">)</span> <span class="pre">]$</span></tt></div>
+</div>
+</div></blockquote>
+<div class="line-block">
+<div class="line"><tt class="docutils literal"><span class="pre">foo</span> <span class="pre">(</span> <span class="pre">)</span></tt> when invoked will display the number 17.</div>
+</div>
+<div class="section" id="a-limit-on-local-variables-as-arguments">
+<h4>A limit on local variables as arguments<a class="headerlink" href="#a-limit-on-local-variables-as-arguments" title="Permalink to this headline">¶</a></h4>
+<p>Because calls are by reference and locals have only block scope, there
+exist cases where it appears you can pass a local to a function but you
+really cannot. Here&#8217;s an instance of that:</p>
+<div class="section" id="examples-test-localvarthread-ublu">
+<h5><tt class="docutils literal"><span class="pre">examples/test/localvarthread.ublu</span></tt><a class="headerlink" href="#examples-test-localvarthread-ublu" title="Permalink to this headline">¶</a></h5>
+<div class="highlight-python"><div class="highlight"><pre><span></span> 1 # Test background threading with local vars and global vars.
+ 2 # Example from Ublu https://github.com/jwoehr/ublu
+ 3 # Copyright (C) 2016 Jack J. Woehr http://www.softwoehr.com
+ 4 # See the Ublu license (BSD-2 open source)
+ 5
+ 6 # A simple function to run in a thread
+ 7 FUNC localVarThread ( var ) $[
+ 8     LOCAL @myvar
+ 9     LOCAL @start
+10     LOCAL @end
+11     put -from @@var
+12     eval -to @myvar + 1 @@var
+13     put -to @start 1
+14     put -to @end 9
+15     DO @start @end $[
+16         eval -to @myvar + @myvar 1 put -from @myvar  system ${ sleep 10 }$
+17     ]$
+18     put done!
+19 ]$
+20
+21 # Doesn&#39;t work with locals.
+22 # Locals in the calling function don&#39;t exist in the context of the created thread.
+23 FUNC runItLocal ( number ) $[
+24     LOCAL @x
+25     put -to @x 100000
+26     eval -to @x + @@number 7
+27     put -to @p ${ localVarThread ( @x ) }$
+28     thread -to @t -from @p
+29     thread -thread @t -start
+30 ]$
+31
+32 # This works, uses a global variable
+33 FUNC runIt ( number ) $[
+34     put -to @x 100000
+35     eval -to @x + @@number 7
+36     put -to @p ${ localVarThread ( @x ) }$
+37     thread -to @t -from @p
+38     thread -thread @t -start
+39 ]$
+40
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">In the above example, a thread is launched with a string argument,
+effectively an execution block although passed as a string in a
+variable. Even though the thread is launched in the same execution
+block as the local variable declaration, the thread&#8217;s runtime
+environment is not nested within the execution block, so a local
+variable cannot be passed to the thread.</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="the-examples-directory">
+<h1>The <tt class="docutils literal"><span class="pre">examples</span></tt> directory<a class="headerlink" href="#the-examples-directory" title="Permalink to this headline">¶</a></h1>
+<div class="line-block">
+<div class="line">Ublu is distributed with an <tt class="docutils literal"><span class="pre">examples</span></tt> directory. Most of these are
+code actually used in production, though of course <strong>there is NO
+WARRANTY OR GUARANTY of correctness or fitness for a given application
+(see the LICENSE)</strong>.</div>
+<div class="line-block">
+<div class="line">Example files consist of definitions of functions embodying factors
+of common operations, and of the shell scripts generated by <tt class="docutils literal"><span class="pre">gensh</span></tt>
+used to launch the functions.&nbsp; Not all examples are pristine examples
+of Ublu coding style, which is evolving. Generally, the more
+parameterization, the better.</div>
+</div>
+</div>
+<div class="section" id="the-test-directory">
+<h2>The test directory<a class="headerlink" href="#the-test-directory" title="Permalink to this headline">¶</a></h2>
+<div class="line-block">
+<div class="line">Under the <tt class="docutils literal"><span class="pre">examples</span></tt> directory is the <tt class="docutils literal"><span class="pre">test</span></tt> directory which are
+fairly crude regression code used to test the basic functionality of
+Ublu commands.</div>
+</div>
+</div>
+</div>
+<div class="section" id="the-extensions-directory">
+<h1>The <tt class="docutils literal"><span class="pre">extensions</span></tt> directory<a class="headerlink" href="#the-extensions-directory" title="Permalink to this headline">¶</a></h1>
+<p>Ublu is distributed with an <tt class="docutils literal"><span class="pre">extensions</span></tt> directory which contains
+extensions to the base Ublu system which are written in Ublu itself.</p>
+<p>As the IBM i system upon which Ublu primarily operates is so
+feature-rich, it is impractical to put every useful utility in the base
+system. Therefore, as Ublu evolves, more and more features will likely
+be relegated to the <tt class="docutils literal"><span class="pre">extensions</span></tt> directory to be loaded via
+<tt class="docutils literal"><span class="pre">`include</span></tt> &lt;./ubluref.html#include&gt;`__ as needed by the application
+programmer.</p>
+<p>Again, <strong>there is NO WARRANTY OR GUARANTY of correctness or fitness for
+a given application (see the LICENSE)</strong>.</p>
+</div>
+<div class="section" id="object-disoriented">
+<h1>Object-disoriented<a class="headerlink" href="#object-disoriented" title="Permalink to this headline">¶</a></h1>
+<div class="line-block">
+<div class="line">A few words about &#8220;object-disoriented&#8221;. Object languages associate
+methods with specific data structures and define these relationships
+in classes. Ublu began as a collection of single-purpose utilities
+designed procedurally and then grew into a language when it became
+necessary to pass objects from utility to utility in order to get more
+useful work done.</div>
+<div class="line-block">
+<div class="line">You have seen how Ublu works and <cite>read about the ``put`</cite>
+command &lt;#mozTocId58628&gt;`__. The <tt class="docutils literal"><span class="pre">put</span></tt> command was the beginning of
+Ublu &#8220;object-disorientation&#8221;. When Ublu emerged from the need to pass
+objects rather than string values from one utility to the next, the
+<tt class="docutils literal"><span class="pre">put</span></tt> command was an immediate result of that change to an
+interpretive language. I needed to see quickly what was going on.</div>
+<div class="line">A lot of effort went into <tt class="docutils literal"><span class="pre">put</span></tt> so it would give useful insight
+into anything passed around from command to command in Ublu without
+demanding that the programmer remember what was where. It is always
+safe to simply <tt class="docutils literal"><span class="pre">put</span> <span class="pre">&#64;foo</span></tt> because a useful string representation is
+returned. And <tt class="docutils literal"><span class="pre">put</span> <span class="pre">-to</span> <span class="pre">&#64;bar</span>&nbsp;&nbsp; <span class="pre">&#64;foo</span></tt> put whatever is in <tt class="docutils literal"><span class="pre">&#64;foo</span></tt> also
+into <tt class="docutils literal"><span class="pre">&#64;bar</span></tt> without worrying about object class.</div>
+<div class="line">What Ublu&#8217;s language structure comes down to is that:</div>
+</div>
+</div>
+<ul class="simple">
+<li>commands are effectively <em>classes</em></li>
+<li>dash-commands are effectively <em>methods</em></li>
+<li>the object values passed in tuple vars to the commands are the
+<em>object instances</em> multiply inheriting from the <em>classes</em>.<ul>
+<li>Multiple inheritance because the <em>object instances</em> respond to the
+<em>methods</em> of many <em>classes</em></li>
+</ul>
+</li>
+</ul>
+<div class="line-block">
+<div class="line">E.g, in the example ...</div>
+</div>
+<blockquote>
+<div><tt class="docutils literal"><span class="pre">as400</span> <span class="pre">-to</span> <span class="pre">&#64;sys</span> <span class="pre">mysys</span> <span class="pre">myuid</span> <span class="pre">mypwd</span></tt><a href="#id7"><span class="problematic" id="id8">``</span></a><tt class="docutils literal"><span class="pre">\</span> <span class="pre">``as400</span>&nbsp;&nbsp;&nbsp;&nbsp; <span class="pre">--</span> <span class="pre">&#64;sys</span> <span class="pre">-alivesvc</span>&nbsp;&nbsp;&nbsp;&nbsp; <span class="pre">CENTRAL</span></tt><a href="#id9"><span class="problematic" id="id10">``</span></a><tt class="docutils literal"><span class="pre">\</span> <span class="pre">*``true</span></tt>
+*</div></blockquote>
+<div class="line-block">
+<div class="line">... effectively, an Ublu <tt class="docutils literal"><span class="pre">as400</span></tt> <em>class</em> creates an <em>object
+instance</em> stored in <tt class="docutils literal"><span class="pre">&#64;sys</span></tt>. That object has a method
+<em>alivesvc(CENTRAL)</em> invoked on it.</div>
+</div>
+<p>Ublu&#8217;s default &#8220;object-disoriented&#8221; syntax is wordier than a true object
+language, in that the class is named each time (the &#8220;command&#8221;), but it
+tends to be easy to use interpretively. It&#8217;s clunky, yet it is
+reminiscent of traditional &#8220;big iron&#8221;-style command syntax and is pretty
+easy to remember.</p>
+<div class="section" id="autonomes-offer-easier-syntax">
+<h2>Autonomes offer easier syntax<a class="headerlink" href="#autonomes-offer-easier-syntax" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="./ubluref.html#Autonomic_Tuple_Variables">Autonomes</a> simplify Ublu
+syntax. An <em>autonome</em> is a tuple variable whose value is of one of many
+recognized types allowed by Ublu to stand for its most typical command
+and the <a href="#id11"><span class="problematic" id="id12">`eponymous
+dash-command &lt;./ubluref.html#Eponymous_dash-command__&#8211;_&gt;`__</span></a>.</p>
+<p>Thus, assuming that <tt class="docutils literal"><span class="pre">&#64;job</span></tt> contains a valid instance created by the
+<tt class="docutils literal"><span class="pre">`job</span></tt> command &lt;./ubluref.html#job&gt;`__,</p>
+<blockquote>
+<div><tt class="docutils literal"><span class="pre">job</span> <span class="pre">--</span> <span class="pre">&#64;job</span> <span class="pre">-info</span></tt></div></blockquote>
+<p>can be expressed</p>
+<blockquote>
+<div><tt class="docutils literal"><span class="pre">&#64;job</span> <span class="pre">-info</span></tt></div></blockquote>
+</div>
+</div>
+<div class="section" id="the-tuple-stack">
+<h1>The Tuple Stack<a class="headerlink" href="#the-tuple-stack" title="Permalink to this headline">¶</a></h1>
+<div class="line-block">
+<div class="line">The <a class="reference external" href="https://en.wikipedia.org/wiki/Forth_(programming_language)">Forth programming
+language</a>
+taught me the use of a LIFO stack in programming. The Ublu <a class="reference external" href="./ubluref.html#Tuple_stack">Tuple
+stack</a> allows some interesting
+programming metaphors that allow coding functions that get around some
+of the clunkiness of basic Ublu syntax. Instead of stowing results in
+tuple variables, functions can push their results to the stack to be
+popped as arguments by the next function. Additionally, the
+<a class="reference external" href="./ubluref.html#Function_Parameter_Binding">token-pasting</a> nature
+of Ublu <tt class="docutils literal"><span class="pre">`FUNC</span></tt> &lt;./ubluref.html#FUNC&gt;`__ arguments allow even
+dash-commands to be presented to an Ublu command via the argument list
+to a function.</div>
+<div class="line-block">
+<div class="line">Here is an example (<tt class="docutils literal"><span class="pre">examples/stringpush.ublu</span></tt>) of this
+object-disoriented slackomorphic style of programming:</div>
+</div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span> 1 # stringpush.ublu
+ 2 # Example from Ublu Midrange and Mainframe Life Cycle Extension language
+ 3 # https://github.com/jwoehr/ublu
+ 4 # Copyright (C) 2016 Jack J. Woehr http://www.softwoehr.com
+ 5 # See the Ublu license (BSD-2 open source)
+ 6
+ 7 # Execute the string command providing the op and 2 arguments
+ 8 # and push the result to the tuple LIFO stack
+ 9 # Example: $-2 ( -cat ~ ~ ) will pop the tuple stack twice,
+10 # concatenate the two string values and push the result back.
+11 FUNC $~2 ( op a b ) $[ string -to ~ @@op @@a @@b ]$
+12 # Here&#39;s an example session:
+13 # &gt; put -to ~ ${ arf arf arf }$
+14 # &gt; put -to ~ ${ foo bar woof }$
+15 # &gt; $~2 ( -cat ~ ~ )
+16 # &gt; put ~
+17 # foo bar woof arf arf arf
+18 # ...
+19 # Note that &quot;the first shall be last&quot;.
+20 # ...
+21 # &gt; put -to ~ ${ arf arf arf }$
+22 # &gt; put -to ~ ${ arf arf arf }$
+23 # &gt; $~2 ( -eq ~ ~ )
+24 # &gt; put ~
+25 # true
+26
+27 # end
+28
+</pre></div>
+</div>
+</div>
+<div class="section" id="calling-java">
+<h1>Calling Java<a class="headerlink" href="#calling-java" title="Permalink to this headline">¶</a></h1>
+<p>Ublu can call Java directly via the
+<tt class="docutils literal"><span class="pre">`calljava</span></tt> &lt;./ubluref.html#calljava&gt;`__ command. This allows the user
+to extend the language interpretively in nearly any direction desired.
+This is useful, because as I continually extend Ublu, it is not
+practical to support every option for every object in the JTOpen library
+with Ublu sytax</p>
+<p>For instance, at present writing, there is no Ublu dash-command to fetch
+the reply status of a queued message. Maybe I&#8217;ll add that later, if I
+need it enough. For the present, if I need that reply status, I
+<tt class="docutils literal"><span class="pre">calljava</span></tt> on the queued message object easily obtainable from Ublu.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>&gt; as400 -to @mysys MYSYS.ORG MYPROFILE MYPASSWORD
+&gt; joblog -to @jl -as400 @mysys -new MYJOBNAME MYUID 349989
+&gt; joblog -to ~ -- @jl -length
+&gt; joblog -- @jl -to ~ -qm 0 ~
+&gt; FOR @i in ~ $[ calljava -obj @i -method getReplyStatus -to @result put @result ]$
+</pre></div>
+</div>
+<p>Of course, in this sort of programming, downloading and perusing the
+Ublu javadocs and JTOpen library javadocs is essential. In the example
+above, one would have to know that Ublu&#8217;s <tt class="docutils literal"><span class="pre">joblog</span> <span class="pre">-qm</span></tt> is returning a
+collection of <tt class="docutils literal"><span class="pre">com.ibm.as400.access.QueuedMessage</span></tt> instances.</p>
+</div>
+<div class="section" id="notes">
+<h1>Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="ublu-util-interpreter-loop">
+<h2><tt class="docutils literal"><span class="pre">ublu.util.Interpreter.loop()</span></tt><a class="headerlink" href="#ublu-util-interpreter-loop" title="Permalink to this headline">¶</a></h2>
+<p>Here is the Java code for the interpretive loop.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>1122     /**
+1123      * The processing loop, processes all the input for a line until exhausted
+1124      * or until a command returns a command result indicating failure.
+1125      *
+1126      * @return the last command result indicating success or failure.
+1127      */
+1128     public COMMANDRESULT loop() {
+1129         COMMANDRESULT lastCommandResult = COMMANDRESULT.SUCCESS;
+1130         String initialCommandLine = getArgArray().toHistoryLine();
+1131         while (!getArgArray().isEmpty() &amp;&amp; !good_bye &amp;&amp; !isBreakIssued()) {
+1132             // /* Debug */ System.err.println(&quot; arg array is &quot; + getArgArray());
+1133             if (getArgArray().isNextTupleNameOrPop()) {
+1134                 Tuple t = getArgArray().peekNextTupleOrPop();
+1135                 if (Autonome.autonomize(t, getArgArray())) {
+1136                     continue;
+1137                 } else {
+1138                     getLogger().log(Level.SEVERE, &quot;non-autonomized tuple or pop : {0}&quot;, getArgArray().next());
+1139                     lastCommandResult = COMMANDRESULT.FAILURE;
+1140                     break;
+1141                 }
+1142             }
+1143             String commandName = getArgArray().next().trim();
+1144             if (commandName.equals(&quot;&quot;)) {
+1145                 continue; // cr or some sort of whitespace got parsed, skip to next
+1146             }
+1147             if (getCmdMap().containsKey(commandName)) {
+1148                 CommandInterface command = getCmd(this, commandName);
+1149                 try {
+1150                     setArgArray(command.cmd(getArgArray()));
+1151                     lastCommandResult = command.getResult();
+1152                     if (lastCommandResult == COMMANDRESULT.FAILURE) {
+1153                         break; // we exit the loop on error
+1154                     }
+1155                 } catch (IllegalArgumentException ex) {
+1156                     getLogger().log(Level.SEVERE, &quot;Command \&quot;&quot; + commandName + &quot;\&quot; threw exception&quot;, ex);
+1157                     lastCommandResult = COMMANDRESULT.FAILURE;
+1158                     break;
+1159                 } catch (java.lang.RuntimeException ex) {
+1160                     /* java.net.UnknownHostException lands here, as well as  */
+1161  /* com.ibm.as400.access.ExtendedIllegalArgumentException */
+1162                     getLogger().log(Level.SEVERE, &quot;Command \&quot;&quot; + commandName + &quot;\&quot; threw exception&quot;, ex);
+1163                     lastCommandResult = COMMANDRESULT.FAILURE;
+1164                     break;
+1165                 }
+1166             } else if (getFunctorMap().containsKey(commandName)) {
+1167                 try {
+1168                     TupleNameList tnl = parseTupleNameList();
+1169                     if (tnl != null) {
+1170                         lastCommandResult = executeFunctor(getFunctor(commandName), tnl);
+1171                         if (lastCommandResult == COMMANDRESULT.FAILURE) {
+1172                             break;
+1173                         }
+1174                     } else {
+1175                         getLogger().log(Level.SEVERE, &quot;Found function {0} but could not execute it&quot;, commandName);
+1176                         lastCommandResult = COMMANDRESULT.FAILURE;
+1177                         break;
+1178                     }
+1179                 } catch (java.lang.RuntimeException ex) {
+1180                     getLogger().log(Level.SEVERE, &quot;Function \&quot;&quot; + commandName + &quot;\&quot; threw exception&quot;, ex);
+1181                     lastCommandResult = COMMANDRESULT.FAILURE;
+1182                     break;
+1183                 }
+1184             } else {
+1185                 getLogger().log(Level.SEVERE, &quot;Command \&quot;{0}\&quot; not found.&quot;, commandName);
+1186                 lastCommandResult = COMMANDRESULT.FAILURE;
+1187                 break;
+1188             }
+1189         }
+1190         if (!isIncluding() &amp;&amp; !initialCommandLine.isEmpty()) {
+1191             if (getHistory() != null) {
+1192                 try {
+1193                     getHistory().writeLine(initialCommandLine);
+1194                 } catch (IOException ex) {
+1195                     getLogger().log(Level.WARNING, &quot;Couldn&#39;t write to history file &quot; + getHistory().getHistoryFileName(), ex);
+1196                 }
+1197             }
+1198         }
+1199         setGlobal_ret_val(lastCommandResult.ordinal());
+1200         return lastCommandResult;
+1201     }
+1202
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This guide is a work in progress</p>
+</div>
+</div>
+</div>
+
 
           </div>
         </div>
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Who is this Guide for?</a></li>
+<li><a class="reference internal" href="#why-ublu">Why Ublu?</a><ul>
+<li><a class="reference internal" href="#work-in-progress">Work in Progress</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#what-does-ublu-do">What does Ublu do?</a></li>
+<li><a class="reference internal" href="#discussing-ublu-online">Discussing Ublu Online</a></li>
+<li><a class="reference internal" href="#quick-tour-of-the-ublu-language">Quick Tour of the Ublu Language</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#commands">Commands</a></li>
+<li><a class="reference internal" href="#language-interpreter">Language Interpreter</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#a-full-ublu-program">A Full Ublu Program</a><ul>
+<li><a class="reference internal" href="#examples-autoreply-ublu"><tt class="docutils literal"><span class="pre">examples/autoreply.ublu</span></tt></a></li>
+<li><a class="reference internal" href="#understanding-examples-autoreply-ublu">Understanding <tt class="docutils literal"><span class="pre">examples/autoreply.ublu</span></tt></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#generating-launcher-scripts-for-ublu-programs-via-gensh">Generating launcher scripts for Ublu programs via <tt class="docutils literal"><span class="pre">gensh</span></tt></a><ul>
+<li><a class="reference internal" href="#examples-autoreply-sh"><tt class="docutils literal"><span class="pre">examples/autoreply.sh</span></tt></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#some-obvious-questions-about-ublu">Some Obvious Questions about Ublu</a><ul>
+<li><a class="reference internal" href="#what-are-the-data-types-in-ublu">What are the data types in Ublu?</a></li>
+<li><a class="reference internal" href="#what-are-those-dash-thingies-after-ublu-commands">What are those dash thingies after Ublu commands?</a></li>
+<li><a class="reference internal" href="#what-is-a-put">What is a <tt class="docutils literal"><span class="pre">put</span></tt> ?</a></li>
+<li><a class="reference internal" href="#how-are-arguments-passed">How are arguments passed?</a><ul>
+<li><a class="reference internal" href="#local-variables-as-arguments">Local variables as arguments</a><ul>
+<li><a class="reference internal" href="#a-limit-on-local-variables-as-arguments">A limit on local variables as arguments</a><ul>
+<li><a class="reference internal" href="#examples-test-localvarthread-ublu"><tt class="docutils literal"><span class="pre">examples/test/localvarthread.ublu</span></tt></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#the-examples-directory">The <tt class="docutils literal"><span class="pre">examples</span></tt> directory</a><ul>
+<li><a class="reference internal" href="#the-test-directory">The test directory</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#the-extensions-directory">The <tt class="docutils literal"><span class="pre">extensions</span></tt> directory</a></li>
+<li><a class="reference internal" href="#object-disoriented">Object-disoriented</a><ul>
+<li><a class="reference internal" href="#autonomes-offer-easier-syntax">Autonomes offer easier syntax</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#the-tuple-stack">The Tuple Stack</a></li>
+<li><a class="reference internal" href="#calling-java">Calling Java</a></li>
+<li><a class="reference internal" href="#notes">Notes</a><ul>
+<li><a class="reference internal" href="#ublu-util-interpreter-loop"><tt class="docutils literal"><span class="pre">ublu.util.Interpreter.loop()</span></tt></a></li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
   <p class="topless"><a href="concepts.html"
                         title="previous chapter">Concepts</a></p>

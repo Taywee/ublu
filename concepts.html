@@ -215,9 +215,8 @@ pair that is either globally accessible within the given interpreter session or
 made <em class="xref std std-ref">local</em> to a function definition via the
 <em class="xref std std-ref">LOCAL</em> command. Tuples are always referenced with a &#8220;&#64;&#8221; as the
 first character of their name, e.g., <tt class="docutils literal"><span class="pre">&#64;session</span></tt>. You can direct any kind of
-object to a tuple with the :ref:<tt class="docutils literal"><span class="pre">-to</span></tt> <tt class="docutils literal"><span class="pre">&#64;tuplename</span></tt> <cite>dash-command
-&lt;Dash_Command&gt;</cite> (adjunct to commands which support that) and retrieve the value
-with <tt class="docutils literal"><span class="pre">-from</span>&nbsp;&nbsp; <span class="pre">&#64;tuplename</span></tt> (adjunct to commands which support that).</p>
+object to a tuple with the <tt class="docutils literal"><span class="pre">-to</span> <span class="pre">&#64;tuplename</span></tt> <a class="reference internal" href="commands.html#dash-command"><em>dash-command</em></a> (adjunct to commands which support that) and retrieve the value
+with <tt class="docutils literal"><span class="pre">-from</span> <span class="pre">&#64;tuplename</span></tt> (adjunct to commands which support that).</p>
 <p>Tuples can be directly manipulated via the <em class="xref std std-ref">put</em> and <em class="xref std std-ref">tuple</em> commands.</p>
 <div class="section" id="default-tuples">
 <span id="id13"></span><h3>Default Tuples<a class="headerlink" href="#default-tuples" title="Permalink to this headline">¶</a></h3>
@@ -276,10 +275,10 @@ yet exist.</p>
 <p>The system maintains a Last In, First Out (LIFO) stack of tuple variables for
 programming convenience manipulated via the <em class="xref std std-ref">lifo</em> command.</p>
 <p>A command and its dash-commands that expect tuple arguments can also take the
-argument <strong>``~``</strong> (&#8220;tilde&#8221;) which signifies &#8220;pop the tuple from the tuple
+argument <tt class="docutils literal"><span class="pre">~</span></tt> (&#8220;tilde&#8221;) which signifies &#8220;pop the tuple from the tuple
 stack&#8221;. An error will result if the stack is empty.</p>
 <p>When a command references a source or destination <em class="xref std std-ref">datasink</em>
-via the <tt class="docutils literal"><span class="pre">-to</span></tt> or <tt class="docutils literal"><span class="pre">-from</span></tt> dash-commands, that datasink may also be <strong>``~``</strong>
+via the <tt class="docutils literal"><span class="pre">-to</span></tt> or <tt class="docutils literal"><span class="pre">-from</span></tt> dash-commands, that datasink may also be <tt class="docutils literal"><span class="pre">~</span></tt>
 (&#8220;tilde&#8221;), meaning the source or destination is the tuple stack. Non-tuples,
 e.g, strings put to a destination datasink via <tt class="docutils literal"><span class="pre">-to</span> <span class="pre">~</span></tt> in this fashion are
 automatically wrapped in an anonymous tuple. Hence the following session:</p>
@@ -294,13 +293,13 @@ this is a test but not a clever test
 <div class="section" id="autonomic-tuple-variables">
 <h2>Autonomic Tuple Variables<a class="headerlink" href="#autonomic-tuple-variables" title="Permalink to this headline">¶</a></h2>
 <p>If the interpreter encounters a tuple variable or the tuple stack pop
-symbol :ref:<tt class="docutils literal"><span class="pre">~</span></tt> (tilde) when it is expecting a <cite>command  &lt;Commands&gt;</cite>, it
+symbol <a class="reference internal" href="#tuple-stack"><em>~</em></a> (tilde) when it is expecting a <cite>command  &lt;Commands&gt;</cite>, it
 checks the value of that variable. If the value is of a class in the
 list of autonomes, that is, classes whose instances are generally passed
 as the argument to the <em class="xref std std-ref">eponymous
 dash-command</em> of a specific Ublu
 command, that command is invoked with tuple as the eponymous argument,
-along with any <em class="xref std std-ref">dash-commands</em> and/or arguments which
+along with any <a class="reference internal" href="commands.html#dash-command"><em>dash-commands</em></a> and/or arguments which
 follow. If the variable is not autonomic, the interpreter reports an
 error.</p>
 <p>Thus, the third, fourth and sixth commands of the following example
@@ -352,7 +351,7 @@ used to contain longer whitespace-including strings of text.</p>
 <p>Constants are created via the <em class="xref std std-ref">const</em> command. Constants have a
 string value. The name of a constant has the form <tt class="docutils literal"><span class="pre">*somename</span></tt> and can be used
 as the <em class="xref std std-ref">argument</em> to a <em class="xref std std-ref">command</em> or
-<em class="xref std std-ref">dash-command</em> where the syntax notation represent the
+<a class="reference internal" href="commands.html#dash-command"><em>dash-command</em></a> where the syntax notation represent the
 argument as <tt class="docutils literal"><span class="pre">~&#64;{something}</span></tt> and only in such position. Constants are not
 expanded within quoted strings.  Constants cannot be used as the argument to a
 <tt class="docutils literal"><span class="pre">-from</span></tt> or <tt class="docutils literal"><span class="pre">-to</span></tt> dash-command. <a class="reference internal" href="#plainwords"><em>Plainwords</em></a> resembling
@@ -573,7 +572,7 @@ support a GUI, then the operation fails and a confusing exception is thrown
 complaining about the absence of a windowing system. You can avoid this
 windowing behavior and just allow the operation to fail on incorrect
 userid/password with an understandable exception by adding the following
-connection property <em class="xref std std-ref">dash-command</em> to the string of
+connection property <a class="reference internal" href="commands.html#dash-command"><em>dash-command</em></a> to the string of
 dash-commands for the <tt class="docutils literal"><span class="pre">db</span></tt> command:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span>-property prompt false
 </pre></div>

@@ -75,7 +75,7 @@ they take one or the other. The general order of the three parts is as follows:<
 </ul>
 <p>dash-command-argument ...] ] command-argument [command-argument ...]*</p>
 </div></blockquote>
-<p>Where <em class="xref std std-ref">dash-commands</em> are give in square brackets, e.g.,
+<p>Where <a class="reference internal" href="#dash-command"><em>dash-commands</em></a> are give in square brackets, e.g.,
 <tt class="docutils literal"><span class="pre">[-foo</span> <span class="pre">~&#64;{bazz}]</span></tt> the dash-command is optional and not required.</p>
 <p>In this documentation, square brackets and ellipses are used to describe the
 command structure. Those square brackets and ellipses are not part of the
@@ -98,7 +98,7 @@ cases are explained in the explanatory text for the command.</p>
 command invocation.</p>
 </div>
 <div class="section" id="dash-command">
-<h3>Dash Command<a class="headerlink" href="#dash-command" title="Permalink to this headline">¶</a></h3>
+<span id="id1"></span><h3>Dash Command<a class="headerlink" href="#dash-command" title="Permalink to this headline">¶</a></h3>
 <p>A <em>dash-command</em> is a modifier to the command, itself often possessing an
 argument or string of arguments.</p>
 <p>All dash-commands to a command must appear on the same line with the command,
@@ -111,7 +111,7 @@ command, so that if no dash-command is provided, this default provides
 the operation of the command anyway. These defaults are noted in the
 command descriptions.</p>
 <div class="section" id="eponymous-dash-command">
-<span id="id1"></span><h4>Eponymous dash-command ( <tt class="docutils literal"><span class="pre">--</span></tt> )<a class="headerlink" href="#eponymous-dash-command" title="Permalink to this headline">¶</a></h4>
+<span id="id2"></span><h4>Eponymous dash-command ( <tt class="docutils literal"><span class="pre">--</span></tt> )<a class="headerlink" href="#eponymous-dash-command" title="Permalink to this headline">¶</a></h4>
 <p>Many commands are used to create objects of various kinds and store them in
 <em class="xref std std-ref">tuple variables</em>. Later, these same command operate on
 these same objects which they themselves have created. This sort of command
@@ -211,7 +211,7 @@ instead of <tt class="docutils literal"><span class="pre">-job</span></tt>.</p>
 <h3>Datasinks<a class="headerlink" href="#datasinks" title="Permalink to this headline">¶</a></h3>
 <p>Command descriptions reference <em>datasinks</em>. A datasink is a data source or a
 data destination.</p>
-<p>Many commands offer the <em class="xref std std-ref">dash-command</em> <tt class="docutils literal"><span class="pre">-to</span></tt> which
+<p>Many commands offer the <a class="reference internal" href="#dash-command"><em>dash-command</em></a> <tt class="docutils literal"><span class="pre">-to</span></tt> which
 directs the output of the command (often an object) to the specified datasink.
 Some commands offer the <tt class="docutils literal"><span class="pre">-from</span></tt> dash-command which assigns a source datasink
 for input during the command, e.g., <em class="xref std std-ref">include</em> which reads and
@@ -228,7 +228,7 @@ interprets source code can have its input from a file or variable.</p>
 <ul class="simple">
 <li><tt class="docutils literal"><span class="pre">STD:</span></tt> represents standard input and output and is the default
 destination datasink if none is explicitly provided via the <tt class="docutils literal"><span class="pre">-to</span></tt>
-dash-command.<a href="#id2"><span class="problematic" id="id3">``</span></a><a href="#id4"><span class="problematic" id="id5">``</span></a></li>
+dash-command.<a href="#id3"><span class="problematic" id="id4">``</span></a><a href="#id5"><span class="problematic" id="id6">``</span></a></li>
 <li><tt class="docutils literal"><span class="pre">ERR:</span></tt> is the standard error output stream.</li>
 <li><tt class="docutils literal"><span class="pre">NULL:</span></tt> discards output.</li>
 <li>A file can be any filename, relative or fully qualified pathname.<ul>
