@@ -22,10 +22,11 @@ Commands are conceptually structured in three parts
 #. arguments
 
 Not all commands have dash-commands. Not all commands take arguments.  Usually
-they take one or the other. The general order of the three parts is as follows:
+they take one or the other. The general order of the three parts is as
+follows::
 
-    * command [dash-command dash-command-argument [dash-command-argument
-    dash-command-argument ...] ] command-argument [command-argument ...]*
+    command [dash-command dash-command-argument [dash-command-argument
+    dash-command-argument ...] ] command-argument [command-argument ...]
 
 Where :ref:`dash-commands  <Dash Command>` are give in square brackets, e.g.,
 ``[-foo ~@{bazz}]`` the dash-command is optional and not required.
