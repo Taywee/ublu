@@ -1,5 +1,8 @@
+Intro
+"""""
+
 Overview
-========
+--------
 
 `Ublu <https://github.com/jwoehr/ublu>`__ is a tool for ad-hoc process
 automation primarily aimed at `IBM
@@ -58,7 +61,7 @@ are welcome and should be made via whatever ticketing system is present
 on the site where Ublu is distributed.
 
 Installation
-============
+------------
 
 Ublu is distributed as an archive containing
 
@@ -114,8 +117,10 @@ Then define a function for your login shell:
 
    -  ``function ublu { java -jar /opt/ublu/ublu.jar $*; }``
 
+.. _Invocation:
+
 Invocation
-==========
+----------
 
 * ``java ublu.Ublu [args ...]`` *(set classpath first)*
 
@@ -214,15 +219,15 @@ Invocation
     ***
     Type help for help. Type license for license. Type bye to exit.
 
-| To exit the system, type ``bye`` . Some minimal cleanup will be
+* To exit the system, type ``bye`` . Some minimal cleanup will be
   performed.
-|  ``[Ctrl-D]`` is effectively the same as ``bye`` .
-|  If you must force exit, type ``exit`` . No cleanup beyond that
-  provided by Java itself will be performed.
-|  ``[Ctrl-C]`` is effectively the same as ``exit`` .
+* ``[Ctrl-D]`` is effectively the same as ``bye`` .
+* If you must force exit, type ``exit`` . No cleanup beyond that provided by
+  Java itself will be performed.
+* ``[Ctrl-C]`` is effectively the same as ``exit`` .
 
 Memory requirements
--------------------
+~~~~~~~~~~~~~~~~~~~
 
 Ublu ordinarily runs well with default Java memory values. However, in
 performing database operations on large databases one may be forced to
