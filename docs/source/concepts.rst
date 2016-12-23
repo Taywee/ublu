@@ -207,9 +207,9 @@ pair that is either globally accessible within the given interpreter session or
 made :ref:`local  <Local_variables>` to a function definition via the
 :ref:`LOCAL <LOCAL>` command. Tuples are always referenced with a "@" as the
 first character of their name, e.g., ``@session``. You can direct any kind of
-object to a tuple with the :ref:``-to`` ``@tuplename`` `dash-command
-<Dash_Command>` (adjunct to commands which support that) and retrieve the value
-with ``-from   @tuplename`` (adjunct to commands which support that).
+object to a tuple with the ``-to @tuplename`` :ref:`dash-command
+<Dash Command>` (adjunct to commands which support that) and retrieve the value
+with ``-from @tuplename`` (adjunct to commands which support that).
 
 Tuples can be directly manipulated via the :ref:`put <put>` and :ref:`tuple
 <tuple>` commands.
@@ -269,11 +269,11 @@ The system maintains a Last In, First Out (LIFO) stack of tuple variables for
 programming convenience manipulated via the :ref:`lifo <lifo>` command.
 
 A command and its dash-commands that expect tuple arguments can also take the
-argument **``~``** ("tilde") which signifies "pop the tuple from the tuple
+argument ``~`` ("tilde") which signifies "pop the tuple from the tuple
 stack". An error will result if the stack is empty.
 
 When a command references a source or destination :ref:`datasink  <Datasinks>`
-via the ``-to`` or ``-from`` dash-commands, that datasink may also be **``~``**
+via the ``-to`` or ``-from`` dash-commands, that datasink may also be ``~``
 ("tilde"), meaning the source or destination is the tuple stack. Non-tuples,
 e.g, strings put to a destination datasink via ``-to ~`` in this fashion are
 automatically wrapped in an anonymous tuple. Hence the following session::
@@ -288,13 +288,13 @@ Autonomic Tuple Variables
 -------------------------
 
 If the interpreter encounters a tuple variable or the tuple stack pop
-symbol :ref:``~`` (tilde) when it is expecting a `command  <Commands>`, it
+symbol :ref:`~ <Tuple stack>` (tilde) when it is expecting a `command  <Commands>`, it
 checks the value of that variable. If the value is of a class in the
 list of autonomes, that is, classes whose instances are generally passed
 as the argument to the :ref:`eponymous
 dash-command <Eponymous_dash-command>` of a specific Ublu
 command, that command is invoked with tuple as the eponymous argument,
-along with any :ref:`dash-commands  <Dash_Command>` and/or arguments which
+along with any :ref:`dash-commands  <Dash Command>` and/or arguments which
 follow. If the variable is not autonomic, the interpreter reports an
 error.
 
@@ -359,7 +359,7 @@ Constants
 Constants are created via the :ref:`const  <const>` command. Constants have a
 string value. The name of a constant has the form ``*somename`` and can be used
 as the :ref:`argument  <Argument>` to a :ref:`command  <Command>` or
-:ref:`dash-command  <Dash_Command>` where the syntax notation represent the
+:ref:`dash-command  <Dash Command>` where the syntax notation represent the
 argument as ``~@{something}`` and only in such position. Constants are not
 expanded within quoted strings.  Constants cannot be used as the argument to a
 ``-from`` or ``-to`` dash-command. :ref:`Plainwords  <Plainwords>` resembling
@@ -616,7 +616,7 @@ support a GUI, then the operation fails and a confusing exception is thrown
 complaining about the absence of a windowing system. You can avoid this
 windowing behavior and just allow the operation to fail on incorrect
 userid/password with an understandable exception by adding the following
-connection property :ref:`dash-command  <Dash_Command>` to the string of
+connection property :ref:`dash-command  <Dash Command>` to the string of
 dash-commands for the ``db`` command::
 
     -property prompt false

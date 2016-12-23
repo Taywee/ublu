@@ -1,14 +1,27 @@
++--------------------------+--------------------------+--------------------------+
+| Guide                    | |NASA JPL Candle in      | Copyright © 2016 Jack.   |
+|  to the                  | Space|                   | J. Woehr                 |
+| .. rubric:: Ublu         |                          |  jwoehr@softwoehr.com    |
+|                          |                          |   All Rights Reserved    |
+| Midrange and Mainframe   |                          |  SoftWoehr LLC           |
+|  Life Cycle Extension    |                          |                          |
+| Language                 |                          | http://www.softwoehr.com |
+|                          |                          |  PO Box 51               |
+|                          |                          |  Golden, CO 80402-0051   |
+|                          |                          |  USA                     |
++--------------------------+--------------------------+--------------------------+
+
 Who is this Guide for?
 ======================
 
 It's for people who just want an introduction to using Ublu, or who have
-downloaded and built Ublu, read enough of the :ref:`references <Intro>` to know
-how to launch `Ublu <https://github.com/jwoehr/ublu>`__, and now want more help
+downloaded and built Ublu, read enough of the `Ublu
+Reference <./ubluref.html>`__ to know how to launch
+`Ublu <https://github.com/jwoehr/ublu>`__, and now want more help
 understanding Ublu.
 
-.. note::
-    The Guide is meant to be easy to read, and extra stuff you may not want
-    to bother with is written as a note, like this.
+The Guide is meant to be easy to read, and extra stuff you may not want
+to bother with is written *like this in small italics*.
 
 Why Ublu?
 =========
@@ -45,16 +58,15 @@ environments:
    model programs which later may be written in straight Java to run
    locally on the server.
 
-.. note::
-    I also previously wrote `PigIron <http://pigiron.sourceforge.net/>`__, a
-    Java bridge to IBM z/VM ® System Management API `(SMAPI)
-    <https://www.ibm.com/support/knowledgecenter/SSB27U_6.3.0/com.ibm.zvm.v630.dmse6/toc.htm?lang=en>`__.
-    I provide PigIron support in Ublu. I had been using my `FIJI ForthIsh Java
-    Interpreter <http://fiji.sourceforge.net/>`__ to drive PigIron, which works
-    very well but is arcane, and also `ObjectRexx <http://www.oorexx.org/>`__,
-    which is a wonderful language which doesn't run on as many platforms as
-    Java. Ublu turns out to be an excellent language environment for PigIron
-    SMAPI operations.
+*I also previously wrote `PigIron <http://pigiron.sourceforge.net/>`__,
+a Java bridge to IBM z/VM ® System Management API
+`(SMAPI) <https://www.ibm.com/support/knowledgecenter/SSB27U_6.3.0/com.ibm.zvm.v630.dmse6/toc.htm?lang=en>`__.
+I provide PigIron support in Ublu. I had been using my `FIJI ForthIsh
+Java Interpreter <http://fiji.sourceforge.net/>`__ to drive PigIron,
+which works very well but is arcane, and also
+`ObjectRexx <http://www.oorexx.org/>`__, which is a wonderful language
+which doesn't run on as many platforms as Java. Ublu turns out to be an
+excellent language environment for PigIron SMAPI operations.*
 
 Ublu is a new language which was coded quick and easy in Java on top of
 other open source libraries. The "quick and easy" approach derives from
@@ -69,58 +81,61 @@ debugging and a TCP/IP port server mode.
 Work in Progress
 ----------------
 
-Ublu is a work in progress and, like all "living" software, likely to remain
-so. There are always more aspects to IBM i programming to support. Everything
-that's in Ublu is there because I/We needed it *right then*. The ``db`` command
-was almost the first thing added, which is effectively an interpretive shell
-around JDBC. On the other hand, we never needed classic record file access
-because everyone on staff was SQL-oriented and knew little about physical file
-access.  Thus, only recently have I added the ```file`` <ubluref.html#file>`__
-and ``record`` commands for classic record file access.
-
-If you find Ublu useful, please `let me know <http://www.softwoehr.com/>`__!
-
-If you find a bug, or wish to issue a feature request, you can `create an issue
-in the issue tracker <https://github.com/jwoehr/ublu/issues/new>`__.
+| Ublu is a work in progress and, like all "living" software, likely to
+  remain so. There are always more aspects to IBM i programming to
+  support. Everything that's in Ublu is there because I/We needed it
+  *right then*. The ``db`` command was almost the first thing added,
+  which is effectively an interpretive shell around JDBC. On the other
+  hand, we never needed classic record file access because everyone on
+  staff was SQL-oriented and knew little about physical file access.
+  Thus, only recently have I added the ```file`` <ubluref.html#file>`__
+  and ``record`` commands for classic record file access.
+|  If you find Ublu useful, please `let me
+  know <http://www.softwoehr.com/>`__!
+|  If you find a bug, or wish to issue a feature request, you can
+  `create an issue in the issue
+  tracker <https://github.com/jwoehr/ublu/issues/new>`__.
 
 What does Ublu do?
 ==================
 
-- Ublu is an interpreter with full language features such as flow
-  control (``IF``, ``ELSE``, ``DO``, ``WHILE`` etc.), exception handling, and even a
-  multitasker and debugger.
-- Ublu has commands that manipulate Java objects representing objects,
-  services and various facilities on the remote server.
-- In Ublu you can define functions to create complex programs to
-  manipulate the remote server and its databases, tape drives,
-  whatever.
-- You can also do `Postgresql <http://www.postgresql.org/>`__
-  databasing (and pretty much anything else) on your local computer,
-  allowing you to interoperate your local database with the database on
-  the remote server.
-- You can do this interactively or load a program from text files which can,
-  in turn, :ref:`include <include>` other text files.
-- You can automate a telnet 5250 terminal emulator session.
-- You can interact directly with the underlying Java and class
-  libraries.
+-  Ublu is an interpreter with full language features such as flow
+   control (``IF ELSE DO WHILE`` etc.), exception handling, and even a
+   multitasker and debugger.
+-  Ublu has commands that manipulate Java objects representing objects,
+   services and various facilities on the remote server.
+-  In Ublu you can define functions to create complex programs to
+   manipulate the remote server and its databases, tape drives,
+   whatever.
+-  You can also do `Postgresql <http://www.postgresql.org/>`__
+   databasing (and pretty much anything else) on your local computer,
+   allowing you to interoperate your local database with the database on
+   the remote server.
+-  You can do this interactively or load a program from text files which
+   can, in turn, ```include`` <./ubluref.html#include>`__ other text
+   files.
+-  You can automate a telnet 5250 terminal emulator session.
+-  You can interact directly with the underlying Java and class
+   libraries.
 
-When you've got your complete application written in Ublu, there's an Ublu
-command :ref:`gensh <gensh>` which autogenerates a shell script to work under
-either ``bash`` or ``ksh``. The script takes arguments via command-line
-switches and pass them to your program's top-level function. *The script
-effects a closure on your top-level function.*
+When you've got your complete application written in Ublu, there's an
+Ublu command ```gensh`` <#mozTocId10736>`__ which autogenerates a shell
+script to work under either ``bash`` or ``ksh``. The script takes
+arguments via command-line switches and pass them to your program's
+top-level function. *The script effects a closure on your top-level
+function.*
 
-For a formal summary of everything, see the rest of the reference, probably
-starting at the :ref:`intro <Intro>`.  That Reference tells you how to install
-and run Ublu and lists the Open Source project dependencies as well as
+For a formal summary of everything, see the `Ublu
+Reference <ubluref.html>`__. That Reference tells you how to install and
+run Ublu and lists the Open Source project dependencies as well as
 documenting every command and facility built into Ublu.
 
 Discussing Ublu Online
 ======================
 
-Currently I discuss Ublu on the `Ublu, Java & JTOpen forum
-<https://ibmioss.ryver.com/index.html#forums/1057363>`__ of the `OSS on IBM i
-Ryver team <https://ibmioss.ryver.com/index.html>`__.
+Currently I discuss Ublu on the `Ublu, Java & JTOpen
+forum <https://ibmioss.ryver.com/index.html#forums/1057363>`__ of the
+`OSS on IBM i Ryver team <https://ibmioss.ryver.com/index.html>`__.
 
 Quick Tour of the Ublu Language
 ===============================
@@ -128,106 +143,110 @@ Quick Tour of the Ublu Language
 Overview
 --------
 
-Ublu is mostly composed of commands and a language interpreter. There are also
-are other Ublu features such as server mode and the tasker, but commands and
-the language interpreter are the nexus.
+| Ublu is mostly composed of commands and a language interpreter. There
+  are also are other Ublu features such as server mode and the tasker,
+  but commands and the language interpreter are the nexus.
 
 Commands
 --------
 
-Ublu commands are like individual application programs which are invoked with
-their arguments under the language interpreter. Command arguments are often
-references to objects which have been created by other commands. You usually
-don't have to know much about objects passed from command to command other than
-what they're supposed to represent.
+| Ublu commands are like individual application programs which are
+  invoked with their arguments under the language interpreter. Command
+  arguments are often references to objects which have been created by
+  other commands. You usually don't have to know much about objects
+  passed from command to command other than what they're supposed to
+  represent.
 
-Most arguments are passed to the `dash-commands <ubluref.html#Dash_Command>`__
-associated with the command, e.g.::
+| Most arguments are passed to the
+  `dash-commands <ubluref.html#Dash_Command>`__ associated with the
+  command, e.g.
 
-    ask -to @answer -say ${ Do you wish to reply to this message? (y/n) }$
+    ::
 
-The ``ask`` command here has two dash-commands, ``-to`` and ``-say``.  ``-to``
-has an argument which says to which :ref:`variable <Tuple Variables>` to put
-the answer to the question about to be asked the user, and ``-say`` takes a
-:ref:`quoted string <Quoted Strings>` which is the prompt to the user.
+        ask -to @answer -say ${ Do you wish to reply to this message? (y/n) }$
+
+The ``ask`` command here has two dash-commands, ``-to`` and ``-say``.
+``-to`` has an argument which says to which
+`variable <ubluref.html#Tuple_Variables>`__ to put the answer to the
+question about to be asked the user, and ``-say`` takes a `quoted
+string <ubluref.html#Quoted_strings>`__ which is the prompt to the user.
+
+| Here is a link to the Ublu Reference's list of `commands by
+  category <ubluref.html#Commands_by_Category>`__.
 
 Language Interpreter
 --------------------
 
-The heart of the Ublu language is a text interpreter loop. There can be
-multiple nested or branching interpreter instances with different variable
-spaces in one Ublu session, but basically they're all doing the same sort of
-thing: an outer input loop is getting input and running an inner interpretive
-`loop <#ublu.util.Interpreter.loop>`__ to interpret a single line of text.
+| The heart of the Ublu language is a text interpreter loop. There can
+  be multiple nested or branching interpreter instances with different
+  variable spaces in one Ublu session, but basically they're all doing
+  the same sort of thing: an outer input loop is getting input and
+  running an inner interpretive `loop <#ublu.util.Interpreter.loop>`__
+  to interpret a single line of text.
+|  *There are actually several different but very similar loops, e.g.,
+  the debugger interpreter loop is different from the normal runtime
+  intepreter loop.*
+|  Parsing is very simplistic. The parse parses, and having parsed,
+  moves on, `*nor can all your piety and
+  wit* <https://www.google.com/search?q=nor+can+all+your+piety+and+wit>`__
+  make it go back one *lex* (unit of parsing).
+|  The text interpreter loop parses the next whitespace-delimited
+  element (a lex) and tries to locate it as an Ublu command or as a
+  defined function. Matching is case-sensitive.
+|  If no match is found, the loop falls out to the outer input loop with
+  an error. The outer loop then waits for more input to pass to the
+  inner interpretive loop.
+|  If the interpretive loop succeeds in finding the next lex in the
+  input as a command or function, it passes the rest of the line to the
+  command or to the function interpreter. Both do their work then pass
+  back the remnant of the input line that wasn't consumed in their work.
+|  Thus, line processing is a relay: the loop hands off to the
+  command/function, which then hands back to loop, and on to next
+  command/function ... until the line is consumed or an error is
+  encountered.
+|  If an error is encountered, the rest of the input is discarded.
+  Typically the interpretive loop will fall out to the outer parsing
+  loop. However, there is a ``TRY CATCH THROW`` exception facility in
+  Ublu allowing the program to catch errors without losing its place in
+  the executing program.
+|  While the interpretive loop is line-oriented, certain constructs can
+  span lines, particularly a delimited string or an execution block.
+  Strings are delimited
 
-.. note::
-    There are actually several different but very similar loops, e.g.,
-    the debugger interpreter loop is different from the normal runtime
-    intepreter loop.
+    ``${ like this }$``
 
-Parsing is very simplistic. The parse parses, and having parsed, moves on,
-`*nor can all your piety and wit*
-<https://www.google.com/search?q=nor+can+all+your+piety+and+wit>`__ make it go
-back one *lex* (unit of parsing).
+| and execution blocks
 
-The text interpreter loop parses the next whitespace-delimited element (a lex)
-and tries to locate it as an Ublu command or as a defined function. Matching is
-case-sensitive.
+    ``$[ like this ]$``
 
-If no match is found, the loop falls out to the outer input loop with an error.
-The outer loop then waits for more input to pass to the inner interpretive
-loop.
+| so it is easy for the loop to identify them and demand another line
+  from the outer loop if the closing delimiter hasn't been found yet.
+|  Language control flow constructs are just a form of command.
+  Typically they consume execution blocks from the input:
 
-If the interpretive loop succeeds in finding the next lex in the input as a
-command or function, it passes the rest of the line to the command or to the
-function interpreter. Both do their work then pass back the remnant of the
-input line that wasn't consumed in their work.
+    ``IF @truefalse THEN $[ command arg arg command arg arg     command arg ... ]$ ELSE $[ command arg ... ]$``
 
-Thus, line processing is a relay: the loop hands off to the command/function,
-which then hands back to loop, and on to next command/function ... until the
-line is consumed or an error is encountered.
-
-If an error is encountered, the rest of the input is discarded.  Typically the
-interpretive loop will fall out to the outer parsing loop. However, there is a
-``TRY CATCH THROW`` exception facility in Ublu allowing the program to catch
-errors without losing its place in the executing program.
-
-While the interpretive loop is line-oriented, certain constructs can span
-lines, particularly a delimited string or an execution block.  Strings are
-delimited::
-
-    ${ like this }$
-
-
-and execution blocks::
-
-    $[ like this ]$
-
-so it is easy for the loop to identify them and demand another line from the
-outer loop if the closing delimiter hasn't been found yet.
-
-Language control flow constructs are just a form of command.  Typically they
-consume execution blocks from the input::
-
-    IF @truefalse THEN $[
-        command arg arg command arg arg
-        command arg ...
-    ]$ ELSE $[
-        command arg ...
-    ]$
-
-
-As noted, these execution blocks can span multiple lines.
+| As noted, these execution blocks can span multiple lines.
 
 A Full Ublu Program
 ===================
 
-Here is a full Ublu program. It uses `FUNC <./ubluref.html#FUNC>`__ to define a
-number of functions allowing the user to checks a message queue on an i Series
-OS server and lists the messages, asking the user on each if s/he would like to
-reply, and parsing the reply if one is given.  Take a look at the program (and
-its associate shell script given here) and then we will `discuss the program
-line-by-line <#Understanding_examplesautoreply.ublu>`__ below.
+| Here is a full Ublu program. It uses `FUNC <./ubluref.html#FUNC>`__ to
+  define a number of functions allowing the user to checks a message
+  queue on an i Series OS server and lists the messages, asking the user
+  on each if s/he would like to reply, and parsing the reply if one is
+  given.  Take a look at the program (and its associate shell script
+  given here) and then we will `discuss the program
+  line-by-line <#Understanding_examplesautoreply.ublu>`__ below.
+|  *The Ublu codes samples are shown in this document with syntax
+  coloring from a `jEdit <http://www.jedit.org/>`__ mode* ``ublu.xml``
+  *reproduced here via
+  `Code2HTML. <https://www.palfrader.org/code/code2html/>`__
+   The jEdit mode is in* ``stuff/jEdit`` *with instructions how to
+  install it at the head of the mode file.*
+|  *There is also a `Vim <http://www.vim.org/>`__ mode for Ublu in*
+  ``stuff/ublu-vimfiles-master`` *. Just copy the dir structure under
+  that directory to your* ``$HOME/.vim`` *directory.*
 
 ``examples/autoreply.ublu``
 ---------------------------
@@ -280,78 +299,72 @@ Understanding ``examples/autoreply.ublu``
        3 # 2015-03-10
        4 
 
-These lines are, of course, comments. Comments go to the end of the line.
-
-As we discussed above, execution blocks (e.g., the body of a function)
-delimited by ``$[`` and ``]$`` can span lines. The way the interpretive loop
-does this is that it keeps calling for input from the outer parsing loop until
-it finds the closing delimiter.  Effectively, the entire execution block is one
-line. So line comments (those commented by the :ref:`# <comment introducer>`
-command) should not be placed inside function bodies or they will comment out
-the entire function body! Instead, inside functions use the :ref:`\\ <comment
-quote>` command.
+| These lines are, of course, comments. Comments go to the end of the
+  line.
+|  As we discussed above, execution blocks (e.g., the body of a
+  function) delimited by ``$[`` and ``]$`` can span lines. The way the
+  interpretive loop does this is that it keeps calling for input from
+  the outer parsing loop until it finds the closing delimiter.
+  Effectively, the entire execution block is one line. So line comments
+  (those commented by the ```#`` <ubluref.html#comment_introducer>`__
+  command) should not be placed inside function bodies or they will
+  comment out the entire function body! Instead, inside functions use
+  the ```\\`` <ubluref.html#comment_quote>`__ command.
 
 ::
 
-    6 FUNC getMsgQ ( system user password ifspath msgq ) $[
-    7     LOCAL @as400
-    8     as400 -to @as400 @@system @@user @@password
-    9     msgq -to @@msgq -as400 @as400 -instance @@ifspath
-    10 ]$
+       6 FUNC getMsgQ ( system user password ifspath msgq ) $[
+       7     LOCAL @as400
+       8     as400 -to @as400 @@system @@user @@password
+       9     msgq -to @@msgq -as400 @as400 -instance @@ifspath
+      10 ]$
 
-Here the function ``getMsgQ`` is defined. The argument list is not typed in any
-way. These are merely token names for whatever will appear in that position
-inside the parentheses when the function is invoked. Inside the body of the
-function these arguments will be referenced by prefixing them with ``@@`` e.g.,
-``@@password``.
-
-.. note::
-    the parentheses are separated from both the function name and from the
-    argument list!!
-
-.. note::
-    In the example, I happened to use the bad style of naming arguments the
-    same name as Ublu commands (``system``* *``user``* *and ``msgq``) which, of
-    course, the editor then syntax-colored, mistaking them for keywords. This
-    is entirely legal in Ublu but, again, it's bad style.
-
-The function body is the execution block between ``$[`` and ``]$``
-
-On line 7, a local variable is declared. All variables ("tuple variables" as
-they are called, or just "tuples") are identified by the ``@`` prefix, whether
-they are ``LOCAL`` or global (or interpreter-level-local).
-
-Tuple variables come into existence just by being mentioned.  Arguments to a
-function may be tuples or plain words, Ublu commands typically know what to do
-with either when passed them as arguments.
-
-The LOCAL declaration ``LOCAL @as400`` serves to says that there will be a
-local tuple variable which will hide any other variables of the same name in
-the program while in this execution block and then disappear at the end of the
-execution block, i.e., at the end of function execution. Equally, the variable
-name ``@as400`` could have been used without declaration, but then it would
-persist beyond the end of the function, and further, if there happened to
-already exist such a variable in the program, it would be referencing that same
-variable, possibly unintentionally.
-
-Lines 8 and 9 are Ublu commands.
-
-Line 8 says, "Create a remote server instance for the system function argument
-using the user and password function arguments. Store that instance in the
-declared local variable ``@as400``".
-
-Line 9 says, "Create an object referencing the message queue on the server
-represented by ``@as400`` and identified by the IFS path represented by the
-function argument ``ifspath`` and store that object to the function argument
-``msgq`` , presumably a variable, with an error resulting if a variable was not
-provided in that position in the function argument list."
-
-The variable named which is provided in the function argument list in that
-position does not have to be named anything like the declaring argument list
-named it. It could be called ``@fred`` for instance. It does not even have to
-have been previously declared. It comes into global existence by being named.
-It can later be deleted via the ``tuple -delete @fred`` command, if so desired.
-Or, it might be a LOCAL variable from a calling function.
+| Here the function ``getMsgQ`` is defined. The argument list is not
+  typed in any way. These are merely token names for whatever will
+  appear in that position inside the parentheses when the function is
+  invoked. Inside the body of the function these arguments will be
+  referenced by prefixing them with ``@@`` e.g., ``@@password``.
+|  **Note** that the parentheses are separated from both the function
+  name and from the argument list!!
+|  *In the example, I happened to use the bad style of naming arguments
+  the same name as Ublu commands (``system``* *``user``* *and ``msgq``)
+  which, of course, the editor then syntax-colored, mistaking them for
+  keywords. This is entirely legal in Ublu but, again, it's bad style.
+  *
+|  The function body is the execution block between ``$[`` and ``]$``
+|  On line 7, a local variable is declared. All variables ("tuple
+  variables" as they are called, or just "tuples") are identified by the
+  ``@`` prefix, whether they are ``LOCAL`` or global (or
+  interpreter-level-local).
+|  Tuple variables come into existence just by being mentioned.
+  Arguments to a function may be tuples or plain words, Ublu commands
+  typically know what to do with either when passed them as arguments.
+|  The LOCAL declaration ``LOCAL @as400`` serves to says that there will
+  be a local tuple variable which will hide any other variables of the
+  same name in the program while in this execution block and then
+  disappear at the end of the execution block, i.e., at the end of
+  function execution. Equally, the variable name ``@as400`` could have
+  been used without declaration, but then it would persist beyond the
+  end of the function, and further, if there happened to already exist
+  such a variable in the program, it would be referencing that same
+  variable, possibly unintentionally.
+|  Lines 8 and 9 are Ublu commands.
+|  Line 8 says, "Create a remote server instance for the system function
+  argument using the user and password function arguments. Store that
+  instance in the declared local variable ``@as400``".
+|  Line 9 says, "Create an object referencing the message queue on the
+  server represented by ``@as400`` and identified by the IFS path
+  represented by the function argument ``ifspath`` and store that object
+  to the function argument ``msgq`` , presumably a variable, with an
+  error resulting if a variable was not provided in that position in the
+  function argument list."
+|  The variable named which is provided in the function argument list in
+  that position does not have to be named anything like the declaring
+  argument list named it. It could be called ``@fred`` for instance. It
+  does not even have to have been previously declared. It comes into
+  global existence by being named. It can later be deleted via the
+  ``tuple -delete @fred`` command, if so desired. Or, it might be a
+  LOCAL variable from a calling function.
 
 ::
 
@@ -359,79 +372,71 @@ Or, it might be a LOCAL variable from a calling function.
       14     msgq -- @@msgq -query -reply -to @@replylist
       15 ]$
 
-
-These lines declare another function which says, "Given a message queue
-instance and a variable name in which to store the result of this function,
-create a list of messages needing reply waiting on the remoted i Series OS
-message queue represented by the message queue instance."
+| These lines declare another function which says, "Given a message
+  queue instance and a variable name in which to store the result of
+  this function, create a list of messages needing reply waiting on the
+  remoted i Series OS message queue represented by the message queue
+  instance."
 
 ::
 
-    18 FUNC autoreply ( system user password ifspath ) $[
-    19     LOCAL @msgq LOCAL @replylist LOCAL @key
-    20     LOCAL @answer LOCAL @tf LOCAL @reply
-    21     getMsgQ ( @@system @@user @@password @@ifspath @msgq )
-    22     getReplyMsgs ( @msgq @replylist )
-    23     FOR @msg in @replylist $[
-    24         msg -- @msg -to @key -key
-    25         put -from @msg
-    26         ask -to @answer -say ${ Do you wish to reply to this message? (y/n) }$
-    27         test -to @tf -eq @answer y
-    28         IF @tf THEN $[
-    29             ask -to @reply -say ${ Please enter your reply }$
-    30             msgq -- @msgq -sendreplybinkey @key @reply
-    31             put ${ Reply sent. }$
-    32         ]$
-    33     ]$
-    34 ]$
-    35 
+      18 FUNC autoreply ( system user password ifspath ) $[
+      19     LOCAL @msgq LOCAL @replylist LOCAL @key
+      20     LOCAL @answer LOCAL @tf LOCAL @reply
+      21     getMsgQ ( @@system @@user @@password @@ifspath @msgq )
+      22     getReplyMsgs ( @msgq @replylist )
+      23     FOR @msg in @replylist $[
+      24         msg -- @msg -to @key -key
+      25         put -from @msg
+      26         ask -to @answer -say ${ Do you wish to reply to this message? (y/n) }$
+      27         test -to @tf -eq @answer y
+      28         IF @tf THEN $[
+      29             ask -to @reply -say ${ Please enter your reply }$
+      30             msgq -- @msgq -sendreplybinkey @key @reply
+      31             put ${ Reply sent. }$
+      32         ]$
+      33     ]$
+      34 ]$
+      35 
 
-These lines declare ``autoreply`` which is the top-level function in the file.
-Note that we declared these functions from low-level to top level. This is not
-necessary, since the functions are not interpreted until called, but it's
-easier to understand this way.
+| 
+|  These lines declare ``autoreply`` which is the top-level function in
+  the file. Note that we declared these functions from low-level to top
+  level. This is not necessary, since the functions are not interpreted
+  until called, but it's easier to understand this way.
+|  *Ublu function definitions offer almost no compiler security. They
+  are simply parsed and stored as execution blocks associated with a
+  call specification and no validation of their runtime action is
+  performed.*
+|  ``autoreply`` takes as its arguments a system name, user id, password
+  and IFS path. Arguments to the function, whether they are plainwords
+  or variables are referenced inside the function by their declared name
+  decorated with ``@@`` . If a function is declared:
 
-.. note::
-    Ublu function definitions offer almost no compiler security. They are simply
-    parsed and stored as execution blocks associated with a call specification and
-    no validation of their runtime action is performed.
+    ``FUNC foo ( bar )``
 
-``autoreply`` takes as its arguments a system name, user id, password and IFS
-path. Arguments to the function, whether they are plainwords or variables are
-referenced inside the function by their declared name decorated with ``@@`` .
-If a function is declared::
+| then the argument ``bar`` is referenced inside the body of the
+  function as ``@@bar``
 
-    FUNC foo ( bar )
+    ``FUNC foo ( bar ) $[ put -from @@bar ]$``
 
-
-then the argument ``bar`` is referenced inside the body of the function as
-``@@bar``::
-
-    FUNC foo ( bar ) $[ put -from @@bar ]$
-
-
-``autoreply`` also declares a few local variables that will hide global and
-more outer local variables of the same name and then disappear at the end of
-the execution block in which they are declared.
-
-``autoreply`` calls the function ``getMsgQ`` to get the message queue
-instance.
-
-``autoreply`` then calls ``getReplyMsgs`` to get a list messages awaiting a
-reply.
-
-``autoreply`` then loops in a ``FOR`` loop through the list and uses ``ask``
-command to ask the user if the user wishes to reply each individual message. It
-does ``test`` on the response against the character ``y`` and ``IF`` the result
-of that test is true, gets a reply via ``ask`` and replies to the message
-queue, informing the user via ``put`` that the reply was sent.
-
-.. important::
-    Continue fixing RST at this point
+| ``autoreply``  also declares a few local variables that will hide
+  global and more outer local variables of the same name and then
+  disappear at the end of the execution block in which they are
+  declared.
+|  ``autoreply``  calls the function ``getMsgQ`` to get the message
+  queue instance.
+|  ``autoreply`` then calls ``getReplyMsgs`` to get a list messages
+  awaiting a reply.
+|  ``autoreply`` then loops in a ``FOR`` loop through the list and uses
+  ``ask`` command to ask the user if the user wishes to reply each
+  individual message. It does ``test`` on the response against the
+  character ``y`` and ``IF`` the result of that test is true, gets a
+  reply via ``ask`` and replies to the message queue, informing the user
+  via ``put`` that the reply was sent.
 
 Generating launcher scripts for Ublu programs via ``gensh``
 ===========================================================
-
 
 | The ``autoreply`` program would still require understanding of Ublu to
   load and execute, but our help desk operator doesn't have to deal with

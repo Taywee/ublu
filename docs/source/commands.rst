@@ -55,6 +55,8 @@ Command
 A *command* is a one-word command name. It is the first element of any Ublu
 command invocation.
 
+.. _Dash Command:
+
 Dash Command
 ~~~~~~~~~~~~
 
