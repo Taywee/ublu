@@ -181,7 +181,7 @@ don&#8217;t have to know much about objects passed from command to command other
 what they&#8217;re supposed to represent.</p>
 <p>Most arguments are passed to the <a class="reference external" href="ubluref.html#Dash_Command">dash-commands</a>
 associated with the command, e.g.:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>ask -to @answer -say ${ Do you wish to reply to this message? (y/n) }$
+<div class="highlight-ublu"><div class="highlight"><pre><span></span><span class="k">ask</span> <span class="ow">-to</span> <span class="nv">@answer</span> <span class="ow">-say</span> <span class="s">${ Do you wish to reply to this message? (y/n) }$</span>
 </pre></div>
 </div>
 <p>The <tt class="docutils literal"><span class="pre">ask</span></tt> command here has two dash-commands, <tt class="docutils literal"><span class="pre">-to</span></tt> and <tt class="docutils literal"><span class="pre">-say</span></tt>.  <tt class="docutils literal"><span class="pre">-to</span></tt>
@@ -225,21 +225,21 @@ errors without losing its place in the executing program.</p>
 <p>While the interpretive loop is line-oriented, certain constructs can span
 lines, particularly a delimited string or an execution block.  Strings are
 delimited:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>${ like this }$
+<div class="highlight-ublu"><div class="highlight"><pre><span></span><span class="s">${ like this }$</span>
 </pre></div>
 </div>
 <p>and execution blocks:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>$[ like this ]$
+<div class="highlight-ublu"><div class="highlight"><pre><span></span>$[ like this ]$
 </pre></div>
 </div>
 <p>so it is easy for the loop to identify them and demand another line from the
 outer loop if the closing delimiter hasn&#8217;t been found yet.</p>
 <p>Language control flow constructs are just a form of command.  Typically they
 consume execution blocks from the input:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>IF @truefalse THEN $[
+<div class="highlight-ublu"><div class="highlight"><pre><span></span><span class="k">IF</span> <span class="nv">@truefalse</span> <span class="k">THEN</span> $[
     command arg arg command arg arg
     command arg ...
-]$ ELSE $[
+]$ <span class="k">ELSE</span> $[
     command arg ...
 ]$
 </pre></div>
@@ -257,50 +257,50 @@ its associate shell script given here) and then we will <a class="reference exte
 line-by-line</a> below.</p>
 <div class="section" id="examples-autoreply-ublu">
 <h3><tt class="docutils literal"><span class="pre">examples/autoreply.ublu</span></tt><a class="headerlink" href="#examples-autoreply-ublu" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python"><div class="highlight"><pre><span></span> 1 # autoreply.ublu ... Find and reply to all *INQ &amp; *NOTIFY messages in a given MSGQ
- 2 # jack j. woehr jwoehr@absolute-performance.com jwoehr@softwoehr.com
- 3 # 2015-03-10
- 4
- 5 # instance message queue
- 6 FUNC getMsgQ ( system user password ifspath msgq ) $[
- 7     LOCAL @as400
- 8     as400 -to @as400 @@system @@user @@password
- 9     msgq -to @@msgq -as400 @as400 -instance @@ifspath
-10 ]$
-11
-12 # get list of messages needing reply
-13 FUNC getReplyMsgs ( msgq replylist ) $[
-14     msgq -- @@msgq -query -reply -to @@replylist
-15 ]$
-16
-17 # get messages, walk list and offer user chance to reply to each
-18 FUNC autoreply ( system user password ifspath ) $[
-19     LOCAL @msgq LOCAL @replylist LOCAL @key
-20     LOCAL @answer LOCAL @tf LOCAL @reply
-21     getMsgQ ( @@system @@user @@password @@ifspath @msgq )
-22     getReplyMsgs ( @msgq @replylist )
-23     FOR @msg in @replylist $[
-24         msg -- @msg -to @key -key
-25         put -from @msg
-26         ask -to @answer -say ${ Do you wish to reply to this message? (y/n) }$
-27         test -to @tf -eq @answer y
-28         IF @tf THEN $[
-29             ask -to @reply -say ${ Please enter your reply }$
-30             msgq -- @msgq -sendreplybinkey @key @reply
-31             put ${ Reply sent. }$
-32         ]$
-33     ]$
-34 ]$
-35
+<div class="highlight-ublu"><div class="highlight"><pre><span></span> <span class="m">1</span> <span class="c"># autoreply.ublu ... Find and reply to all *INQ &amp; *NOTIFY messages in a given MSGQ</span>
+ <span class="m">2</span> <span class="c"># jack j. woehr jwoehr@absolute-performance.com jwoehr@softwoehr.com</span>
+ <span class="m">3</span> <span class="c"># 2015-03-10</span>
+ <span class="m">4</span>
+ <span class="m">5</span> <span class="c"># instance message queue</span>
+ <span class="m">6</span> <span class="k">FUNC</span> getMsgQ ( <span class="k">system</span> <span class="k">user</span> password ifspath <span class="k">msgq</span> ) $[
+ <span class="m">7</span>     <span class="k">LOCAL</span> <span class="nv">@as400</span>
+ <span class="m">8</span>     <span class="k">as400</span> <span class="ow">-to</span> <span class="nv">@as400</span> <span class="nv">@@system</span> <span class="nv">@@user</span> <span class="nv">@@password</span>
+ <span class="m">9</span>     <span class="k">msgq</span> <span class="ow">-to</span> <span class="nv">@@msgq</span> <span class="ow">-as400</span> <span class="nv">@as400</span> <span class="ow">-instance</span> <span class="nv">@@ifspath</span>
+<span class="m">10</span> ]$
+<span class="m">11</span>
+<span class="m">12</span> <span class="c"># get list of messages needing reply</span>
+<span class="m">13</span> <span class="k">FUNC</span> getReplyMsgs ( <span class="k">msgq</span> replylist ) $[
+<span class="m">14</span>     <span class="k">msgq</span> <span class="ow">--</span> <span class="nv">@@msgq</span> <span class="ow">-query</span> <span class="ow">-reply</span> <span class="ow">-to</span> <span class="nv">@@replylist</span>
+<span class="m">15</span> ]$
+<span class="m">16</span>
+<span class="m">17</span> <span class="c"># get messages, walk list and offer user chance to reply to each</span>
+<span class="m">18</span> <span class="k">FUNC</span> autoreply ( <span class="k">system</span> <span class="k">user</span> password ifspath ) $[
+<span class="m">19</span>     <span class="k">LOCAL</span> <span class="nv">@msgq</span> <span class="k">LOCAL</span> <span class="nv">@replylist</span> <span class="k">LOCAL</span> <span class="nv">@key</span>
+<span class="m">20</span>     <span class="k">LOCAL</span> <span class="nv">@answer</span> <span class="k">LOCAL</span> <span class="nv">@tf</span> <span class="k">LOCAL</span> <span class="nv">@reply</span>
+<span class="m">21</span>     getMsgQ ( <span class="nv">@@system</span> <span class="nv">@@user</span> <span class="nv">@@password</span> <span class="nv">@@ifspath</span> <span class="nv">@msgq</span> )
+<span class="m">22</span>     getReplyMsgs ( <span class="nv">@msgq</span> <span class="nv">@replylist</span> )
+<span class="m">23</span>     <span class="k">FOR</span> <span class="nv">@msg</span> <span class="k">in</span> <span class="nv">@replylist</span> $[
+<span class="m">24</span>         <span class="k">msg</span> <span class="ow">--</span> <span class="nv">@msg</span> <span class="ow">-to</span> <span class="nv">@key</span> <span class="ow">-key</span>
+<span class="m">25</span>         <span class="k">put</span> <span class="ow">-from</span> <span class="nv">@msg</span>
+<span class="m">26</span>         <span class="k">ask</span> <span class="ow">-to</span> <span class="nv">@answer</span> <span class="ow">-say</span> <span class="s">${ Do you wish to reply to this message? (y/n) }$</span>
+<span class="m">27</span>         <span class="k">test</span> <span class="ow">-to</span> <span class="nv">@tf</span> <span class="ow">-eq</span> <span class="nv">@answer</span> y
+<span class="m">28</span>         <span class="k">IF</span> <span class="nv">@tf</span> <span class="k">THEN</span> $[
+<span class="m">29</span>             <span class="k">ask</span> <span class="ow">-to</span> <span class="nv">@reply</span> <span class="ow">-say</span> <span class="s">${ Please enter your reply }$</span>
+<span class="m">30</span>             <span class="k">msgq</span> <span class="ow">--</span> <span class="nv">@msgq</span> <span class="ow">-sendreplybinkey</span> <span class="nv">@key</span> <span class="nv">@reply</span>
+<span class="m">31</span>             <span class="k">put</span> <span class="s">${ Reply sent. }$</span>
+<span class="m">32</span>         ]$
+<span class="m">33</span>     ]$
+<span class="m">34</span> ]$
+<span class="m">35</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="understanding-examples-autoreply-ublu">
 <h3>Understanding <tt class="docutils literal"><span class="pre">examples/autoreply.ublu</span></tt><a class="headerlink" href="#understanding-examples-autoreply-ublu" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="mi">1</span> <span class="c1"># autoreply.ublu ... Find and reply to all *INQ &amp; *NOTIFY messages in a given MSGQ</span>
-<span class="mi">2</span> <span class="c1"># jack j. woehr jwoehr@absolute-performance.com jwoehr@softwoehr.com</span>
-<span class="mi">3</span> <span class="c1"># 2015-03-10</span>
-<span class="mi">4</span>
+<div class="highlight-ublu"><div class="highlight"><pre><span></span><span class="m">1</span> <span class="c"># autoreply.ublu ... Find and reply to all *INQ &amp; *NOTIFY messages in a given MSGQ</span>
+<span class="m">2</span> <span class="c"># jack j. woehr jwoehr@absolute-performance.com jwoehr@softwoehr.com</span>
+<span class="m">3</span> <span class="c"># 2015-03-10</span>
+<span class="m">4</span>
 </pre></div>
 </div>
 <p>These lines are, of course, comments. Comments go to the end of the line.</p>
@@ -311,11 +311,11 @@ it finds the closing delimiter.  Effectively, the entire execution block is one
 line. So line comments (those commented by the <em class="xref std std-ref">#</em>
 command) should not be placed inside function bodies or they will comment out
 the entire function body! Instead, inside functions use the <em class="xref std std-ref">\</em> command.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>6 FUNC getMsgQ ( system user password ifspath msgq ) $[
-7     LOCAL @as400
-8     as400 -to @as400 @@system @@user @@password
-9     msgq -to @@msgq -as400 @as400 -instance @@ifspath
-10 ]$
+<div class="highlight-ublu"><div class="highlight"><pre><span></span><span class="m">6</span> <span class="k">FUNC</span> getMsgQ ( <span class="k">system</span> <span class="k">user</span> password ifspath <span class="k">msgq</span> ) $[
+<span class="m">7</span>     <span class="k">LOCAL</span> <span class="nv">@as400</span>
+<span class="m">8</span>     <span class="k">as400</span> <span class="ow">-to</span> <span class="nv">@as400</span> <span class="nv">@@system</span> <span class="nv">@@user</span> <span class="nv">@@password</span>
+<span class="m">9</span>     <span class="k">msgq</span> <span class="ow">-to</span> <span class="nv">@@msgq</span> <span class="ow">-as400</span> <span class="nv">@as400</span> <span class="ow">-instance</span> <span class="nv">@@ifspath</span>
+<span class="m">10</span> ]$
 </pre></div>
 </div>
 <p>Here the function <tt class="docutils literal"><span class="pre">getMsgQ</span></tt> is defined. The argument list is not typed in any
@@ -365,33 +365,33 @@ named it. It could be called <tt class="docutils literal"><span class="pre">&#64
 have been previously declared. It comes into global existence by being named.
 It can later be deleted via the <tt class="docutils literal"><span class="pre">tuple</span> <span class="pre">-delete</span> <span class="pre">&#64;fred</span></tt> command, if so desired.
 Or, it might be a LOCAL variable from a calling function.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>13 FUNC getReplyMsgs ( msgq replylist ) $[
-14     msgq -- @@msgq -query -reply -to @@replylist
-15 ]$
+<div class="highlight-ublu"><div class="highlight"><pre><span></span><span class="m">13</span> <span class="k">FUNC</span> getReplyMsgs ( <span class="k">msgq</span> replylist ) $[
+<span class="m">14</span>     <span class="k">msgq</span> <span class="ow">--</span> <span class="nv">@@msgq</span> <span class="ow">-query</span> <span class="ow">-reply</span> <span class="ow">-to</span> <span class="nv">@@replylist</span>
+<span class="m">15</span> ]$
 </pre></div>
 </div>
 <p>These lines declare another function which says, &#8220;Given a message queue
 instance and a variable name in which to store the result of this function,
 create a list of messages needing reply waiting on the remoted i Series OS
 message queue represented by the message queue instance.&#8221;</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>18 FUNC autoreply ( system user password ifspath ) $[
-19     LOCAL @msgq LOCAL @replylist LOCAL @key
-20     LOCAL @answer LOCAL @tf LOCAL @reply
-21     getMsgQ ( @@system @@user @@password @@ifspath @msgq )
-22     getReplyMsgs ( @msgq @replylist )
-23     FOR @msg in @replylist $[
-24         msg -- @msg -to @key -key
-25         put -from @msg
-26         ask -to @answer -say ${ Do you wish to reply to this message? (y/n) }$
-27         test -to @tf -eq @answer y
-28         IF @tf THEN $[
-29             ask -to @reply -say ${ Please enter your reply }$
-30             msgq -- @msgq -sendreplybinkey @key @reply
-31             put ${ Reply sent. }$
-32         ]$
-33     ]$
-34 ]$
-35
+<div class="highlight-ublu"><div class="highlight"><pre><span></span><span class="m">18</span> <span class="k">FUNC</span> autoreply ( <span class="k">system</span> <span class="k">user</span> password ifspath ) $[
+<span class="m">19</span>     <span class="k">LOCAL</span> <span class="nv">@msgq</span> <span class="k">LOCAL</span> <span class="nv">@replylist</span> <span class="k">LOCAL</span> <span class="nv">@key</span>
+<span class="m">20</span>     <span class="k">LOCAL</span> <span class="nv">@answer</span> <span class="k">LOCAL</span> <span class="nv">@tf</span> <span class="k">LOCAL</span> <span class="nv">@reply</span>
+<span class="m">21</span>     getMsgQ ( <span class="nv">@@system</span> <span class="nv">@@user</span> <span class="nv">@@password</span> <span class="nv">@@ifspath</span> <span class="nv">@msgq</span> )
+<span class="m">22</span>     getReplyMsgs ( <span class="nv">@msgq</span> <span class="nv">@replylist</span> )
+<span class="m">23</span>     <span class="k">FOR</span> <span class="nv">@msg</span> <span class="k">in</span> <span class="nv">@replylist</span> $[
+<span class="m">24</span>         <span class="k">msg</span> <span class="ow">--</span> <span class="nv">@msg</span> <span class="ow">-to</span> <span class="nv">@key</span> <span class="ow">-key</span>
+<span class="m">25</span>         <span class="k">put</span> <span class="ow">-from</span> <span class="nv">@msg</span>
+<span class="m">26</span>         <span class="k">ask</span> <span class="ow">-to</span> <span class="nv">@answer</span> <span class="ow">-say</span> <span class="s">${ Do you wish to reply to this message? (y/n) }$</span>
+<span class="m">27</span>         <span class="k">test</span> <span class="ow">-to</span> <span class="nv">@tf</span> <span class="ow">-eq</span> <span class="nv">@answer</span> y
+<span class="m">28</span>         <span class="k">IF</span> <span class="nv">@tf</span> <span class="k">THEN</span> $[
+<span class="m">29</span>             <span class="k">ask</span> <span class="ow">-to</span> <span class="nv">@reply</span> <span class="ow">-say</span> <span class="s">${ Please enter your reply }$</span>
+<span class="m">30</span>             <span class="k">msgq</span> <span class="ow">--</span> <span class="nv">@msgq</span> <span class="ow">-sendreplybinkey</span> <span class="nv">@key</span> <span class="nv">@reply</span>
+<span class="m">31</span>             <span class="k">put</span> <span class="s">${ Reply sent. }$</span>
+<span class="m">32</span>         ]$
+<span class="m">33</span>     ]$
+<span class="m">34</span> ]$
+<span class="m">35</span>
 </pre></div>
 </div>
 <p>These lines declare <tt class="docutils literal"><span class="pre">autoreply</span></tt> which is the top-level function in the file.
@@ -408,12 +408,12 @@ no validation of their runtime action is performed.</p>
 path. Arguments to the function, whether they are plainwords or variables are
 referenced inside the function by their declared name decorated with <tt class="docutils literal"><span class="pre">&#64;&#64;</span></tt> .
 If a function is declared:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>FUNC foo ( bar )
+<div class="highlight-ublu"><div class="highlight"><pre><span></span><span class="k">FUNC</span> foo ( bar )
 </pre></div>
 </div>
 <p>then the argument <tt class="docutils literal"><span class="pre">bar</span></tt> is referenced inside the body of the function as
 <tt class="docutils literal"><span class="pre">&#64;&#64;bar</span></tt>:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>FUNC foo ( bar ) $[ put -from @@bar ]$
+<div class="highlight-ublu"><div class="highlight"><pre><span></span><span class="k">FUNC</span> foo ( bar ) $[ <span class="k">put</span> <span class="ow">-from</span> <span class="nv">@@bar</span> ]$
 </pre></div>
 </div>
 <p><tt class="docutils literal"><span class="pre">autoreply</span></tt> also declares a few local variables that will hide global and
@@ -446,93 +446,93 @@ closures.</p>
 <tt class="docutils literal"><span class="pre">autoreply</span></tt> from the program <tt class="docutils literal"><span class="pre">autoreply.ublu</span></tt></p>
 <div class="section" id="examples-autoreply-sh">
 <h3><tt class="docutils literal"><span class="pre">examples/autoreply.sh</span></tt><a class="headerlink" href="#examples-autoreply-sh" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python"><div class="highlight"><pre><span></span>1  # autoreply.sh ... Find and reply to all *INQ &amp; *NOTIFY messages in a given MSGQ
-2  # autogenerated Wed Mar 09 19:26:19 MST 2016 by jax using command:
-3  # gensh -to autoreply.sh -path /opt/ublu/ublu.jar -optr s SERVER @server ${ Server }$ -optr u USER @user ${ User }$ -optr p PASSWORD @password ${ Password }$ -optr q QPATHIFS @qpathifs ${ IFS path to message queue, e.g., /QSYS.LIB/QSYSOPR.MSGQ or /QSYS.LIB/QUSRSYS.LIB/MYUSERID.MSGQ }$ ${ autoreply.sh ... Find and reply to all *INQ &amp; *NOTIFY messages in a given MSGQ }$ /opt/ublu/examples/autoreply.ublu ${ autoreply ( @server @user @password @qpathifs ) }$
+<div class="highlight-sh"><div class="highlight"><pre><span></span><span class="m">1</span>  <span class="c1"># autoreply.sh ... Find and reply to all *INQ &amp; *NOTIFY messages in a given MSGQ</span>
+<span class="m">2</span>  <span class="c1"># autogenerated Wed Mar 09 19:26:19 MST 2016 by jax using command:</span>
+<span class="m">3</span>  <span class="c1"># gensh -to autoreply.sh -path /opt/ublu/ublu.jar -optr s SERVER @server ${ Server }$ -optr u USER @user ${ User }$ -optr p PASSWORD @password ${ Password }$ -optr q QPATHIFS @qpathifs ${ IFS path to message queue, e.g., /QSYS.LIB/QSYSOPR.MSGQ or /QSYS.LIB/QUSRSYS.LIB/MYUSERID.MSGQ }$ ${ autoreply.sh ... Find and reply to all *INQ &amp; *NOTIFY messages in a given MSGQ }$ /opt/ublu/examples/autoreply.ublu ${ autoreply ( @server @user @password @qpathifs ) }$</span>
 4
-5  # Usage message
-6  function usage {
-7  echo &quot;autoreply.sh ... Find and reply to all *INQ &amp; *NOTIFY messages in a given MSGQ &quot;
-8  echo &quot;This shell script was autogenerated Wed Mar 09 19:26:19 MST 2016 by jax.&quot;
-9  echo &quot;Usage: $0 [silent] -h -s SERVER -u USER -p PASSWORD -q QPATHIFS &quot;
-10 echo &quot;  where&quot;
-11 echo &quot;  -h      display this help message and exit 0&quot;
-12 echo &quot;  -s SERVER   Server  (required option)&quot;
-13 echo &quot;  -u USER User  (required option)&quot;
-14 echo &quot;  -p PASSWORD Password  (required option)&quot;
-15 echo &quot;  -q QPATHIFS IFS path to message queue, e.g., /QSYS.LIB/QSYSOPR.MSGQ or /QSYS.LIB/QUSRSYS.LIB/MYUSERID.MSGQ  (required option)&quot;
-16 echo &quot;---&quot;
-17 echo &quot;If the keyword &#39;silent&#39; appears ahead of all options, then included files will not echo and prompting is suppressed.&quot;
-18 echo &quot;Exit code is the result of execution, or 0 for -h or 2 if there is an error in processing options&quot;
-19 }
+<span class="m">5</span>  <span class="c1"># Usage message</span>
+<span class="m">6</span>  <span class="k">function</span> usage <span class="o">{</span>
+<span class="m">7</span>  <span class="nb">echo</span> <span class="s2">&quot;autoreply.sh ... Find and reply to all *INQ &amp; *NOTIFY messages in a given MSGQ &quot;</span>
+<span class="m">8</span>  <span class="nb">echo</span> <span class="s2">&quot;This shell script was autogenerated Wed Mar 09 19:26:19 MST 2016 by jax.&quot;</span>
+<span class="m">9</span>  <span class="nb">echo</span> <span class="s2">&quot;Usage: </span><span class="nv">$0</span><span class="s2"> [silent] -h -s SERVER -u USER -p PASSWORD -q QPATHIFS &quot;</span>
+<span class="m">10</span> <span class="nb">echo</span> <span class="s2">&quot;  where&quot;</span>
+<span class="m">11</span> <span class="nb">echo</span> <span class="s2">&quot;  -h      display this help message and exit 0&quot;</span>
+<span class="m">12</span> <span class="nb">echo</span> <span class="s2">&quot;  -s SERVER   Server  (required option)&quot;</span>
+<span class="m">13</span> <span class="nb">echo</span> <span class="s2">&quot;  -u USER User  (required option)&quot;</span>
+<span class="m">14</span> <span class="nb">echo</span> <span class="s2">&quot;  -p PASSWORD Password  (required option)&quot;</span>
+<span class="m">15</span> <span class="nb">echo</span> <span class="s2">&quot;  -q QPATHIFS IFS path to message queue, e.g., /QSYS.LIB/QSYSOPR.MSGQ or /QSYS.LIB/QUSRSYS.LIB/MYUSERID.MSGQ  (required option)&quot;</span>
+<span class="m">16</span> <span class="nb">echo</span> <span class="s2">&quot;---&quot;</span>
+<span class="m">17</span> <span class="nb">echo</span> <span class="s2">&quot;If the keyword &#39;silent&#39; appears ahead of all options, then included files will not echo and prompting is suppressed.&quot;</span>
+<span class="m">18</span> <span class="nb">echo</span> <span class="s2">&quot;Exit code is the result of execution, or 0 for -h or 2 if there is an error in processing options&quot;</span>
+<span class="m">19</span> <span class="o">}</span>
 20
-21 #Test if user wants silent includes
-22 if [ &quot;$1&quot; == &quot;silent&quot; ]
-23 then
-24     SILENT=&quot;-silent &quot;
-25     shift
-26 else
-27     SILENT=&quot;&quot;
-28 fi
+<span class="m">21</span> <span class="c1">#Test if user wants silent includes</span>
+<span class="m">22</span> <span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="nv">$1</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;silent&quot;</span> <span class="o">]</span>
+<span class="m">23</span> <span class="k">then</span>
+<span class="m">24</span>     <span class="nv">SILENT</span><span class="o">=</span><span class="s2">&quot;-silent &quot;</span>
+<span class="m">25</span>     <span class="nb">shift</span>
+<span class="m">26</span> <span class="k">else</span>
+<span class="m">27</span>     <span class="nv">SILENT</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+<span class="m">28</span> <span class="k">fi</span>
 29
-30 # Process options
-31 while getopts s:u:p:q:h the_opt
-32 do
-33     case &quot;$the_opt&quot; in
-34         s)  SERVER=&quot;$OPTARG&quot;;;
-35         u)  USER=&quot;$OPTARG&quot;;;
-36         p)  PASSWORD=&quot;$OPTARG&quot;;;
-37         q)  QPATHIFS=&quot;$OPTARG&quot;;;
-38         h)  usage;exit 0;;
-39         [?])    usage;exit 2;;
+<span class="m">30</span> <span class="c1"># Process options</span>
+<span class="m">31</span> <span class="k">while</span> <span class="nb">getopts</span> s:u:p:q:h the_opt
+<span class="m">32</span> <span class="k">do</span>
+<span class="m">33</span>     <span class="k">case</span> <span class="s2">&quot;</span>$<span class="s2">the_opt&quot;</span> in
+<span class="m">34</span>         s<span class="o">)</span>  <span class="nv">SERVER</span><span class="o">=</span><span class="s2">&quot;</span>$<span class="s2">OPTARG&quot;</span><span class="p">;;</span>
+<span class="m">35</span>         u<span class="o">)</span>  <span class="nv">USER</span><span class="o">=</span><span class="s2">&quot;</span>$<span class="s2">OPTARG&quot;</span><span class="p">;;</span>
+<span class="m">36</span>         p<span class="o">)</span>  <span class="nv">PASSWORD</span><span class="o">=</span><span class="s2">&quot;</span>$<span class="s2">OPTARG&quot;</span><span class="p">;;</span>
+<span class="m">37</span>         q<span class="o">)</span>  <span class="nv">QPATHIFS</span><span class="o">=</span><span class="s2">&quot;</span>$<span class="s2">OPTARG&quot;</span><span class="p">;;</span>
+<span class="m">38</span>         h<span class="o">)</span>  usage<span class="p">;</span><span class="nb">exit</span> 0<span class="p">;;</span>
+<span class="m">39</span>         <span class="o">[</span>?<span class="o">])</span>    usage<span class="p">;</span><span class="nb">exit</span> 2<span class="p">;;</span>
 40
-41     esac
-42 done
-43 shift `expr ${OPTIND} - 1`
-44 if [ $# -ne 0 ]
-45 then
-46     echo &quot;Superfluous argument(s) $*&quot;
-47     usage
-48     exit 2
-49 fi
+<span class="m">41</span>     <span class="k">esac</span>
+<span class="m">42</span> <span class="k">done</span>
+<span class="m">43</span> <span class="nb">shift</span> <span class="sb">`</span>expr <span class="si">${</span><span class="nv">OPTIND</span><span class="si">}</span> - 1<span class="sb">`</span>
+<span class="m">44</span> <span class="k">if</span> <span class="o">[</span> <span class="nv">$#</span> -ne <span class="m">0</span> <span class="o">]</span>
+<span class="m">45</span> <span class="k">then</span>
+<span class="m">46</span>     <span class="nb">echo</span> <span class="s2">&quot;Superfluous argument(s) </span><span class="nv">$*</span><span class="s2">&quot;</span>
+<span class="m">47</span>     usage
+<span class="m">48</span>     <span class="nb">exit</span> 2
+<span class="m">49</span> <span class="k">fi</span>
 50
-51 # Translate options to tuple assignments
-52 if [ &quot;${SERVER}&quot; != &quot;&quot; ]
-53 then
-54     gensh_runtime_opts=&quot;${gensh_runtime_opts}string -to @server -trim \${ ${SERVER} }$ &quot;
-55 else
-56     echo &quot;Option -s SERVER is a required option but is not present.&quot;
-57     usage
-58     exit 2
-59 fi
-60 if [ &quot;${USER}&quot; != &quot;&quot; ]
-61 then
-62     gensh_runtime_opts=&quot;${gensh_runtime_opts}string -to @user -trim \${ ${USER} }$ &quot;
-63 else
-64     echo &quot;Option -u USER is a required option but is not present.&quot;
-65     usage
-66     exit 2
-67 fi
-68 if [ &quot;${PASSWORD}&quot; != &quot;&quot; ]
-69 then
-70     gensh_runtime_opts=&quot;${gensh_runtime_opts}string -to @password -trim \${ ${PASSWORD} }$ &quot;
-71 else
-72     echo &quot;Option -p PASSWORD is a required option but is not present.&quot;
-73     usage
-74     exit 2
-75 fi
-76 if [ &quot;${QPATHIFS}&quot; != &quot;&quot; ]
-77 then
-78     gensh_runtime_opts=&quot;${gensh_runtime_opts}string -to @qpathifs -trim \${ ${QPATHIFS} }$ &quot;
-79 else
-80     echo &quot;Option -q QPATHIFS is a required option but is not present.&quot;
-81     usage
-82     exit 2
-83 fi
+<span class="m">51</span> <span class="c1"># Translate options to tuple assignments</span>
+<span class="m">52</span> <span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">SERVER</span><span class="si">}</span><span class="s2">&quot;</span> !<span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="o">]</span>
+<span class="m">53</span> <span class="k">then</span>
+<span class="m">54</span>     <span class="nv">gensh_runtime_opts</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">gensh_runtime_opts</span><span class="si">}</span><span class="s2">string -to @server -trim \${ </span><span class="si">${</span><span class="nv">SERVER</span><span class="si">}</span><span class="s2"> }</span>$<span class="s2"> &quot;</span>
+<span class="m">55</span> <span class="k">else</span>
+<span class="m">56</span>     <span class="nb">echo</span> <span class="s2">&quot;Option -s SERVER is a required option but is not present.&quot;</span>
+<span class="m">57</span>     usage
+<span class="m">58</span>     <span class="nb">exit</span> 2
+<span class="m">59</span> <span class="k">fi</span>
+<span class="m">60</span> <span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">USER</span><span class="si">}</span><span class="s2">&quot;</span> !<span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="o">]</span>
+<span class="m">61</span> <span class="k">then</span>
+<span class="m">62</span>     <span class="nv">gensh_runtime_opts</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">gensh_runtime_opts</span><span class="si">}</span><span class="s2">string -to @user -trim \${ </span><span class="si">${</span><span class="nv">USER</span><span class="si">}</span><span class="s2"> }</span>$<span class="s2"> &quot;</span>
+<span class="m">63</span> <span class="k">else</span>
+<span class="m">64</span>     <span class="nb">echo</span> <span class="s2">&quot;Option -u USER is a required option but is not present.&quot;</span>
+<span class="m">65</span>     usage
+<span class="m">66</span>     <span class="nb">exit</span> 2
+<span class="m">67</span> <span class="k">fi</span>
+<span class="m">68</span> <span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">PASSWORD</span><span class="si">}</span><span class="s2">&quot;</span> !<span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="o">]</span>
+<span class="m">69</span> <span class="k">then</span>
+<span class="m">70</span>     <span class="nv">gensh_runtime_opts</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">gensh_runtime_opts</span><span class="si">}</span><span class="s2">string -to @password -trim \${ </span><span class="si">${</span><span class="nv">PASSWORD</span><span class="si">}</span><span class="s2"> }</span>$<span class="s2"> &quot;</span>
+<span class="m">71</span> <span class="k">else</span>
+<span class="m">72</span>     <span class="nb">echo</span> <span class="s2">&quot;Option -p PASSWORD is a required option but is not present.&quot;</span>
+<span class="m">73</span>     usage
+<span class="m">74</span>     <span class="nb">exit</span> 2
+<span class="m">75</span> <span class="k">fi</span>
+<span class="m">76</span> <span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">QPATHIFS</span><span class="si">}</span><span class="s2">&quot;</span> !<span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="o">]</span>
+<span class="m">77</span> <span class="k">then</span>
+<span class="m">78</span>     <span class="nv">gensh_runtime_opts</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">gensh_runtime_opts</span><span class="si">}</span><span class="s2">string -to @qpathifs -trim \${ </span><span class="si">${</span><span class="nv">QPATHIFS</span><span class="si">}</span><span class="s2"> }</span>$<span class="s2"> &quot;</span>
+<span class="m">79</span> <span class="k">else</span>
+<span class="m">80</span>     <span class="nb">echo</span> <span class="s2">&quot;Option -q QPATHIFS is a required option but is not present.&quot;</span>
+<span class="m">81</span>     usage
+<span class="m">82</span>     <span class="nb">exit</span> 2
+<span class="m">83</span> <span class="k">fi</span>
 84
-85 # Invocation
-86 java -jar /opt/ublu/ublu.jar ${gensh_runtime_opts} include ${SILENT}/opt/ublu/examples/autoreply.ublu autoreply \( @server @user @password @qpathifs \)
-87 exit $?
+<span class="m">85</span> <span class="c1"># Invocation</span>
+<span class="m">86</span> java -jar /opt/ublu/ublu.jar <span class="si">${</span><span class="nv">gensh_runtime_opts</span><span class="si">}</span> include <span class="si">${</span><span class="nv">SILENT</span><span class="si">}</span>/opt/ublu/examples/autoreply.ublu autoreply <span class="se">\(</span> @server @user @password @qpathifs <span class="se">\)</span>
+<span class="m">87</span> <span class="nb">exit</span> <span class="nv">$?</span>
 </pre></div>
 </div>
 </div>
@@ -589,7 +589,7 @@ Ublu&#8217;s LIFO stack.</p>
 . Execution blocks are used as the body of control constructs, such as <tt class="docutils literal"><span class="pre">IF</span></tt>
 ... <tt class="docutils literal"><span class="pre">THEN</span></tt> ... <tt class="docutils literal"><span class="pre">ELSE</span></tt> , function definitions and <tt class="docutils literal"><span class="pre">TRY</span></tt> ... <tt class="docutils literal"><span class="pre">CATCH</span></tt> ,
 e.g.:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>IF @trueorfalse THEN $[ joblist -as400 @myserver -to @jl     ]$
+<div class="highlight-ublu"><div class="highlight"><pre><span></span><span class="k">IF</span> <span class="nv">@trueorfalse</span> <span class="k">THEN</span> $[ <span class="k">joblist</span> <span class="ow">-as400</span> <span class="nv">@myserver</span> <span class="ow">-to</span> <span class="nv">@jl</span>     ]$
 </pre></div>
 </div>
 </div>
@@ -597,8 +597,8 @@ e.g.:</p>
 <span id="id2"></span><h3>What are those dash thingies after Ublu commands?<a class="headerlink" href="#what-are-those-dash-thingies-after-ublu-commands" title="Permalink to this headline">¶</a></h3>
 <p>The dash-commands after Ublu commands pass arguments to the command, often
 objects being kept in variables.:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>as400 -to @myServer somehostname.com someuserid somepassword
-joblist -as400 @myServer
+<div class="highlight-ublu"><div class="highlight"><pre><span></span><span class="k">as400</span> <span class="ow">-to</span> <span class="nv">@myServer</span> somehostname.com someuserid somepassword
+<span class="k">joblist</span> <span class="ow">-as400</span> <span class="nv">@myServer</span>
 </pre></div>
 </div>
 <p>would retrieve a joblist from <tt class="docutils literal"><span class="pre">somehostname.com</span></tt> provided <tt class="docutils literal"><span class="pre">someuserid</span></tt> had
@@ -609,12 +609,12 @@ command instances and operates on objects representing a connection to a remote
 i Series OS server.  Once you have instanced such an object and stored it <tt class="docutils literal"><span class="pre">-to</span>
 <span class="pre">&#64;someServer</span></tt> you can use it and then later test if it is still connected by
 passing the same variable back to the <tt class="docutils literal"><span class="pre">as400</span></tt> command like this:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>as400 -as400 @someServer -connected
+<div class="highlight-ublu"><div class="highlight"><pre><span></span><span class="k">as400</span> <span class="ow">-as400</span> <span class="nv">@someServer</span> <span class="ow">-connected</span>
 </pre></div>
 </div>
 <p>which will <tt class="docutils literal"><span class="pre">put</span></tt> either <tt class="docutils literal"><span class="pre">true</span></tt> or <tt class="docutils literal"><span class="pre">false</span></tt>. But you could also have simply
 used the <a class="reference internal" href="commands.html#eponymous-dash-command"><em>eponymous dash-command</em></a>:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>as400 -- @someServer -connected
+<div class="highlight-ublu"><div class="highlight"><pre><span></span><span class="k">as400</span> <span class="ow">--</span> <span class="nv">@someServer</span> <span class="ow">-connected</span>
 </pre></div>
 </div>
 <p>since, for the as400 command, <tt class="docutils literal"><span class="pre">--</span></tt> represents <tt class="docutils literal"><span class="pre">-as400</span></tt>.</p>
@@ -650,11 +650,11 @@ a local of the same name is declared in the inner block, thus hiding the outer
 block&#8217;s local).</p>
 <p>This means you can pass a local as a positional argument to a function called
 within a block and that function can reference the provided value normally.:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>FUNC bar ( myarg ) $[ put -from @@myarg ]$
-FUNC foo ( ) $[
-    LOCAL @a
-    put -to @a 17
-    bar ( @a )
+<div class="highlight-ublu"><div class="highlight"><pre><span></span><span class="k">FUNC</span> bar ( myarg ) $[ <span class="k">put</span> <span class="ow">-from</span> <span class="nv">@@myarg</span> ]$
+<span class="k">FUNC</span> foo ( ) $[
+    <span class="k">LOCAL</span> <span class="nv">@a</span>
+    <span class="k">put</span> <span class="ow">-to</span> <span class="nv">@a</span> <span class="m">17</span>
+    bar ( <span class="nv">@a</span> )
 ]$
 </pre></div>
 </div>
@@ -666,46 +666,46 @@ cases where it appears you can pass a local to a function but you really
 cannot. Here&#8217;s an instance of that:</p>
 <div class="section" id="examples-test-localvarthread-ublu">
 <h6><tt class="docutils literal"><span class="pre">examples/test/localvarthread.ublu</span></tt><a class="headerlink" href="#examples-test-localvarthread-ublu" title="Permalink to this headline">¶</a></h6>
-<div class="highlight-python"><div class="highlight"><pre><span></span>1  # Test background threading with local vars and global vars.
-2  # Example from Ublu https://github.com/jwoehr/ublu
-3  # Copyright (C) 2016 Jack J. Woehr http://www.softwoehr.com
-4  # See the Ublu license (BSD-2 open source)
-5
-6  # A simple function to run in a thread
-7  FUNC localVarThread ( var ) $[
-8      LOCAL @myvar
-9      LOCAL @start
-10     LOCAL @end
-11     put -from @@var
-12     eval -to @myvar + 1 @@var
-13     put -to @start 1
-14     put -to @end 9
-15     DO @start @end $[
-16         eval -to @myvar + @myvar 1 put -from @myvar  system ${ sleep 10 }$
-17     ]$
-18     put done!
-19 ]$
-20
-21 # Doesn&#39;t work with locals.
-22 # Locals in the calling function don&#39;t exist in the context of the created thread.
-23 FUNC runItLocal ( number ) $[
-24     LOCAL @x
-25     put -to @x 100000
-26     eval -to @x + @@number 7
-27     put -to @p ${ localVarThread ( @x ) }$
-28     thread -to @t -from @p
-29     thread -thread @t -start
-30 ]$
-31
-32 # This works, uses a global variable
-33 FUNC runIt ( number ) $[
-34     put -to @x 100000
-35     eval -to @x + @@number 7
-36     put -to @p ${ localVarThread ( @x ) }$
-37     thread -to @t -from @p
-38     thread -thread @t -start
-39 ]$
-40
+<div class="highlight-ublu"><div class="highlight"><pre><span></span><span class="m">1</span>  <span class="c"># Test background threading with local vars and global vars.</span>
+<span class="m">2</span>  <span class="c"># Example from Ublu https://github.com/jwoehr/ublu</span>
+<span class="m">3</span>  <span class="c"># Copyright (C) 2016 Jack J. Woehr http://www.softwoehr.com</span>
+<span class="m">4</span>  <span class="c"># See the Ublu license (BSD-2 open source)</span>
+<span class="m">5</span>
+<span class="m">6</span>  <span class="c"># A simple function to run in a thread</span>
+<span class="m">7</span>  <span class="k">FUNC</span> localVarThread ( var ) $[
+<span class="m">8</span>      <span class="k">LOCAL</span> <span class="nv">@myvar</span>
+<span class="m">9</span>      <span class="k">LOCAL</span> <span class="nv">@start</span>
+<span class="m">10</span>     <span class="k">LOCAL</span> <span class="nv">@end</span>
+<span class="m">11</span>     <span class="k">put</span> <span class="ow">-from</span> <span class="nv">@@var</span>
+<span class="m">12</span>     <span class="k">eval</span> <span class="ow">-to</span> <span class="nv">@myvar</span> + <span class="m">1</span> <span class="nv">@@var</span>
+<span class="m">13</span>     <span class="k">put</span> <span class="ow">-to</span> <span class="nv">@start</span> <span class="m">1</span>
+<span class="m">14</span>     <span class="k">put</span> <span class="ow">-to</span> <span class="nv">@end</span> <span class="m">9</span>
+<span class="m">15</span>     <span class="k">DO</span> <span class="nv">@start</span> <span class="nv">@end</span> $[
+<span class="m">16</span>         <span class="k">eval</span> <span class="ow">-to</span> <span class="nv">@myvar</span> + <span class="nv">@myvar</span> <span class="m">1</span> <span class="k">put</span> <span class="ow">-from</span> <span class="nv">@myvar</span>  <span class="k">system</span> <span class="s">${ sleep 10 }$</span>
+<span class="m">17</span>     ]$
+<span class="m">18</span>     <span class="k">put</span> done!
+<span class="m">19</span> ]$
+<span class="m">20</span>
+<span class="m">21</span> <span class="c"># Doesn&#39;t work with locals.</span>
+<span class="m">22</span> <span class="c"># Locals in the calling function don&#39;t exist in the context of the created thread.</span>
+<span class="m">23</span> <span class="k">FUNC</span> runItLocal ( number ) $[
+<span class="m">24</span>     <span class="k">LOCAL</span> <span class="nv">@x</span>
+<span class="m">25</span>     <span class="k">put</span> <span class="ow">-to</span> <span class="nv">@x</span> <span class="m">100000</span>
+<span class="m">26</span>     <span class="k">eval</span> <span class="ow">-to</span> <span class="nv">@x</span> + <span class="nv">@@number</span> <span class="m">7</span>
+<span class="m">27</span>     <span class="k">put</span> <span class="ow">-to</span> <span class="nv">@p</span> <span class="s">${ localVarThread ( @x ) }$</span>
+<span class="m">28</span>     <span class="k">thread</span> <span class="ow">-to</span> <span class="nv">@t</span> <span class="ow">-from</span> <span class="nv">@p</span>
+<span class="m">29</span>     <span class="k">thread</span> <span class="ow">-thread</span> <span class="nv">@t</span> <span class="ow">-start</span>
+<span class="m">30</span> ]$
+<span class="m">31</span>
+<span class="m">32</span> <span class="c"># This works, uses a global variable</span>
+<span class="m">33</span> <span class="k">FUNC</span> runIt ( number ) $[
+<span class="m">34</span>     <span class="k">put</span> <span class="ow">-to</span> <span class="nv">@x</span> <span class="m">100000</span>
+<span class="m">35</span>     <span class="k">eval</span> <span class="ow">-to</span> <span class="nv">@x</span> + <span class="nv">@@number</span> <span class="m">7</span>
+<span class="m">36</span>     <span class="k">put</span> <span class="ow">-to</span> <span class="nv">@p</span> <span class="s">${ localVarThread ( @x ) }$</span>
+<span class="m">37</span>     <span class="k">thread</span> <span class="ow">-to</span> <span class="nv">@t</span> <span class="ow">-from</span> <span class="nv">@p</span>
+<span class="m">38</span>     <span class="k">thread</span> <span class="ow">-thread</span> <span class="nv">@t</span> <span class="ow">-start</span>
+<span class="m">39</span> ]$
+<span class="m">40</span>
 </pre></div>
 </div>
 <p>In the above example, a thread is launched with a string argument, effectively
@@ -775,8 +775,8 @@ class.</p>
 </li>
 </ul>
 <p>E.g, in the example ...:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>as400 -to @sys mysys myuid mypwd
-as400 -- @sys -alivesvc CENTRAL
+<div class="highlight-ublu"><div class="highlight"><pre><span></span><span class="k">as400</span> <span class="ow">-to</span> <span class="nv">@sys</span> mysys myuid mypwd
+<span class="k">as400</span> <span class="ow">--</span> <span class="nv">@sys</span> <span class="ow">-alivesvc</span> CENTRAL
 true
 </pre></div>
 </div>
@@ -794,11 +794,11 @@ allowed by Ublu to stand for its most typical command and the <a class="referenc
 dash-command</em></a>.</p>
 <p>Thus, assuming that <tt class="docutils literal"><span class="pre">&#64;job</span></tt> contains a valid instance created by the <em class="xref std std-ref">job
 command</em>,:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>job -- @job -info
+<div class="highlight-ublu"><div class="highlight"><pre><span></span><span class="k">job</span> <span class="ow">--</span> <span class="nv">@job</span> <span class="ow">-info</span>
 </pre></div>
 </div>
 <p>can be expressed:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>@job -info
+<div class="highlight-ublu"><div class="highlight"><pre><span></span><span class="nv">@job</span> <span class="ow">-info</span>
 </pre></div>
 </div>
 </div>
@@ -815,34 +815,34 @@ popped as arguments by the next function.  Additionally, the
 via the argument list to a function.</p>
 <p>Here is an example (<tt class="docutils literal"><span class="pre">examples/stringpush.ublu</span></tt>) of this object-disoriented
 slackomorphic style of programming:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>1  # stringpush.ublu
-2  # Example from Ublu Midrange and Mainframe Life Cycle Extension language
-3  # https://github.com/jwoehr/ublu
-4  # Copyright (C) 2016 Jack J. Woehr http://www.softwoehr.com
-5  # See the Ublu license (BSD-2 open source)
-6
-7  # Execute the string command providing the op and 2 arguments
-8  # and push the result to the tuple LIFO stack
-9  # Example: $-2 ( -cat ~ ~ ) will pop the tuple stack twice,
-10 # concatenate the two string values and push the result back.
-11 FUNC $~2 ( op a b ) $[ string -to ~ @@op @@a @@b ]$
-12 # Here&#39;s an example session:
-13 # &gt; put -to ~ ${ arf arf arf }$
-14 # &gt; put -to ~ ${ foo bar woof }$
-15 # &gt; $~2 ( -cat ~ ~ )
-16 # &gt; put ~
-17 # foo bar woof arf arf arf
-18 # ...
-19 # Note that &quot;the first shall be last&quot;.
-20 # ...
-21 # &gt; put -to ~ ${ arf arf arf }$
-22 # &gt; put -to ~ ${ arf arf arf }$
-23 # &gt; $~2 ( -eq ~ ~ )
-24 # &gt; put ~
-25 # true
-26
-27 # end
-28
+<div class="highlight-ublu"><div class="highlight"><pre><span></span><span class="m">1</span>  <span class="c"># stringpush.ublu</span>
+<span class="m">2</span>  <span class="c"># Example from Ublu Midrange and Mainframe Life Cycle Extension language</span>
+<span class="m">3</span>  <span class="c"># https://github.com/jwoehr/ublu</span>
+<span class="m">4</span>  <span class="c"># Copyright (C) 2016 Jack J. Woehr http://www.softwoehr.com</span>
+<span class="m">5</span>  <span class="c"># See the Ublu license (BSD-2 open source)</span>
+<span class="m">6</span>
+<span class="m">7</span>  <span class="c"># Execute the string command providing the op and 2 arguments</span>
+<span class="m">8</span>  <span class="c"># and push the result to the tuple LIFO stack</span>
+<span class="m">9</span>  <span class="c"># Example: $-2 ( -cat ~ ~ ) will pop the tuple stack twice,</span>
+<span class="m">10</span> <span class="c"># concatenate the two string values and push the result back.</span>
+<span class="m">11</span> <span class="k">FUNC</span> $~2 ( op a b ) $[ <span class="k">string</span> <span class="ow">-to</span> ~ <span class="nv">@@op</span> <span class="nv">@@a</span> <span class="nv">@@b</span> ]$
+<span class="m">12</span> <span class="c"># Here&#39;s an example session:</span>
+<span class="m">13</span> <span class="c"># &gt; put -to ~ ${ arf arf arf }$</span>
+<span class="m">14</span> <span class="c"># &gt; put -to ~ ${ foo bar woof }$</span>
+<span class="m">15</span> <span class="c"># &gt; $~2 ( -cat ~ ~ )</span>
+<span class="m">16</span> <span class="c"># &gt; put ~</span>
+<span class="m">17</span> <span class="c"># foo bar woof arf arf arf</span>
+<span class="m">18</span> <span class="c"># ...</span>
+<span class="m">19</span> <span class="c"># Note that &quot;the first shall be last&quot;.</span>
+<span class="m">20</span> <span class="c"># ...</span>
+<span class="m">21</span> <span class="c"># &gt; put -to ~ ${ arf arf arf }$</span>
+<span class="m">22</span> <span class="c"># &gt; put -to ~ ${ arf arf arf }$</span>
+<span class="m">23</span> <span class="c"># &gt; $~2 ( -eq ~ ~ )</span>
+<span class="m">24</span> <span class="c"># &gt; put ~</span>
+<span class="m">25</span> <span class="c"># true</span>
+<span class="m">26</span>
+<span class="m">27</span> <span class="c"># end</span>
+<span class="m">28</span>
 </pre></div>
 </div>
 </div>
@@ -857,11 +857,11 @@ Ublu sytax.</p>
 reply status of a queued message. Maybe I&#8217;ll add that later, if I need it
 enough. For the present, if I need that reply status, I <tt class="docutils literal"><span class="pre">calljava</span></tt> on the
 queued message object easily obtainable from Ublu.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>&gt; as400 -to @mysys MYSYS.ORG MYPROFILE MYPASSWORD
-&gt; joblog -to @jl -as400 @mysys -new MYJOBNAME MYUID 349989
-&gt; joblog -to ~ -- @jl -length
-&gt; joblog -- @jl -to ~ -qm 0 ~
-&gt; FOR @i in ~ $[ calljava -obj @i -method getReplyStatus -to @result put @result ]$
+<div class="highlight-ublu"><div class="highlight"><pre><span></span>&gt; <span class="k">as400</span> <span class="ow">-to</span> <span class="nv">@mysys</span> MYSYS.ORG MYPROFILE MYPASSWORD
+&gt; <span class="k">joblog</span> <span class="ow">-to</span> <span class="nv">@jl</span> <span class="ow">-as400</span> <span class="nv">@mysys</span> <span class="ow">-new</span> MYJOBNAME MYUID <span class="m">349989</span>
+&gt; <span class="k">joblog</span> <span class="ow">-to</span> ~ <span class="ow">--</span> <span class="nv">@jl</span> <span class="ow">-length</span>
+&gt; <span class="k">joblog</span> <span class="ow">--</span> <span class="nv">@jl</span> <span class="ow">-to</span> ~ <span class="ow">-qm</span> <span class="m">0</span> ~
+&gt; <span class="k">FOR</span> <span class="nv">@i</span> <span class="k">in</span> ~ $[ <span class="k">calljava</span> <span class="ow">-obj</span> <span class="nv">@i</span> <span class="ow">-method</span> getReplyStatus <span class="ow">-to</span> <span class="nv">@result</span> <span class="k">put</span> <span class="nv">@result</span> ]$
 </pre></div>
 </div>
 <p>Of course, in this sort of programming, downloading and perusing the
@@ -874,87 +874,87 @@ collection of <tt class="docutils literal"><span class="pre">com.ibm.as400.acces
 <div class="section" id="ublu-util-interpreter-loop">
 <span id="id6"></span><h3><tt class="docutils literal"><span class="pre">ublu.util.Interpreter.loop()</span></tt><a class="headerlink" href="#ublu-util-interpreter-loop" title="Permalink to this headline">¶</a></h3>
 <p>Here is the Java code for the interpretive loop.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>1122     /**
-1123      * The processing loop, processes all the input for a line until exhausted
-1124      * or until a command returns a command result indicating failure.
-1125      *
-1126      * @return the last command result indicating success or failure.
-1127      */
-1128     public COMMANDRESULT loop() {
-1129         COMMANDRESULT lastCommandResult = COMMANDRESULT.SUCCESS;
-1130         String initialCommandLine = getArgArray().toHistoryLine();
-1131         while (!getArgArray().isEmpty() &amp;&amp; !good_bye &amp;&amp; !isBreakIssued()) {
-1132             // /* Debug */ System.err.println(&quot; arg array is &quot; + getArgArray());
-1133             if (getArgArray().isNextTupleNameOrPop()) {
-1134                 Tuple t = getArgArray().peekNextTupleOrPop();
-1135                 if (Autonome.autonomize(t, getArgArray())) {
-1136                     continue;
-1137                 } else {
-1138                     getLogger().log(Level.SEVERE, &quot;non-autonomized tuple or pop : {0}&quot;, getArgArray().next());
-1139                     lastCommandResult = COMMANDRESULT.FAILURE;
-1140                     break;
-1141                 }
-1142             }
-1143             String commandName = getArgArray().next().trim();
-1144             if (commandName.equals(&quot;&quot;)) {
-1145                 continue; // cr or some sort of whitespace got parsed, skip to next
-1146             }
-1147             if (getCmdMap().containsKey(commandName)) {
-1148                 CommandInterface command = getCmd(this, commandName);
-1149                 try {
-1150                     setArgArray(command.cmd(getArgArray()));
-1151                     lastCommandResult = command.getResult();
-1152                     if (lastCommandResult == COMMANDRESULT.FAILURE) {
-1153                         break; // we exit the loop on error
-1154                     }
-1155                 } catch (IllegalArgumentException ex) {
-1156                     getLogger().log(Level.SEVERE, &quot;Command \&quot;&quot; + commandName + &quot;\&quot; threw exception&quot;, ex);
-1157                     lastCommandResult = COMMANDRESULT.FAILURE;
-1158                     break;
-1159                 } catch (java.lang.RuntimeException ex) {
-1160                     /* java.net.UnknownHostException lands here, as well as  */
-1161  /* com.ibm.as400.access.ExtendedIllegalArgumentException */
-1162                     getLogger().log(Level.SEVERE, &quot;Command \&quot;&quot; + commandName + &quot;\&quot; threw exception&quot;, ex);
-1163                     lastCommandResult = COMMANDRESULT.FAILURE;
-1164                     break;
-1165                 }
-1166             } else if (getFunctorMap().containsKey(commandName)) {
-1167                 try {
-1168                     TupleNameList tnl = parseTupleNameList();
-1169                     if (tnl != null) {
-1170                         lastCommandResult = executeFunctor(getFunctor(commandName), tnl);
-1171                         if (lastCommandResult == COMMANDRESULT.FAILURE) {
-1172                             break;
-1173                         }
-1174                     } else {
-1175                         getLogger().log(Level.SEVERE, &quot;Found function {0} but could not execute it&quot;, commandName);
-1176                         lastCommandResult = COMMANDRESULT.FAILURE;
-1177                         break;
-1178                     }
-1179                 } catch (java.lang.RuntimeException ex) {
-1180                     getLogger().log(Level.SEVERE, &quot;Function \&quot;&quot; + commandName + &quot;\&quot; threw exception&quot;, ex);
-1181                     lastCommandResult = COMMANDRESULT.FAILURE;
-1182                     break;
-1183                 }
-1184             } else {
-1185                 getLogger().log(Level.SEVERE, &quot;Command \&quot;{0}\&quot; not found.&quot;, commandName);
-1186                 lastCommandResult = COMMANDRESULT.FAILURE;
-1187                 break;
-1188             }
-1189         }
-1190         if (!isIncluding() &amp;&amp; !initialCommandLine.isEmpty()) {
-1191             if (getHistory() != null) {
-1192                 try {
-1193                     getHistory().writeLine(initialCommandLine);
-1194                 } catch (IOException ex) {
-1195                     getLogger().log(Level.WARNING, &quot;Couldn&#39;t write to history file &quot; + getHistory().getHistoryFileName(), ex);
-1196                 }
-1197             }
-1198         }
-1199         setGlobal_ret_val(lastCommandResult.ordinal());
-1200         return lastCommandResult;
-1201     }
-1202
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="mi">1122</span>     <span class="cm">/**</span>
+<span class="cm">1123      * The processing loop, processes all the input for a line until exhausted</span>
+<span class="cm">1124      * or until a command returns a command result indicating failure.</span>
+<span class="cm">1125      *</span>
+<span class="cm">1126      * @return the last command result indicating success or failure.</span>
+<span class="cm">1127      */</span>
+<span class="mi">1128</span>     <span class="kd">public</span> <span class="n">COMMANDRESULT</span> <span class="nf">loop</span><span class="o">()</span> <span class="o">{</span>
+<span class="mi">1129</span>         <span class="n">COMMANDRESULT</span> <span class="n">lastCommandResult</span> <span class="o">=</span> <span class="n">COMMANDRESULT</span><span class="o">.</span><span class="na">SUCCESS</span><span class="o">;</span>
+<span class="mi">1130</span>         <span class="n">String</span> <span class="n">initialCommandLine</span> <span class="o">=</span> <span class="n">getArgArray</span><span class="o">().</span><span class="na">toHistoryLine</span><span class="o">();</span>
+<span class="mi">1131</span>         <span class="k">while</span> <span class="o">(!</span><span class="n">getArgArray</span><span class="o">().</span><span class="na">isEmpty</span><span class="o">()</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">good_bye</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">isBreakIssued</span><span class="o">())</span> <span class="o">{</span>
+<span class="mi">1132</span>             <span class="c1">// /* Debug */ System.err.println(&quot; arg array is &quot; + getArgArray());</span>
+<span class="mi">1133</span>             <span class="k">if</span> <span class="o">(</span><span class="n">getArgArray</span><span class="o">().</span><span class="na">isNextTupleNameOrPop</span><span class="o">())</span> <span class="o">{</span>
+<span class="mi">1134</span>                 <span class="n">Tuple</span> <span class="n">t</span> <span class="o">=</span> <span class="n">getArgArray</span><span class="o">().</span><span class="na">peekNextTupleOrPop</span><span class="o">();</span>
+<span class="mi">1135</span>                 <span class="k">if</span> <span class="o">(</span><span class="n">Autonome</span><span class="o">.</span><span class="na">autonomize</span><span class="o">(</span><span class="n">t</span><span class="o">,</span> <span class="n">getArgArray</span><span class="o">()))</span> <span class="o">{</span>
+<span class="mi">1136</span>                     <span class="k">continue</span><span class="o">;</span>
+<span class="mi">1137</span>                 <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+<span class="mi">1138</span>                     <span class="n">getLogger</span><span class="o">().</span><span class="na">log</span><span class="o">(</span><span class="n">Level</span><span class="o">.</span><span class="na">SEVERE</span><span class="o">,</span> <span class="s">&quot;non-autonomized tuple or pop : {0}&quot;</span><span class="o">,</span> <span class="n">getArgArray</span><span class="o">().</span><span class="na">next</span><span class="o">());</span>
+<span class="mi">1139</span>                     <span class="n">lastCommandResult</span> <span class="o">=</span> <span class="n">COMMANDRESULT</span><span class="o">.</span><span class="na">FAILURE</span><span class="o">;</span>
+<span class="mi">1140</span>                     <span class="k">break</span><span class="o">;</span>
+<span class="mi">1141</span>                 <span class="o">}</span>
+<span class="mi">1142</span>             <span class="o">}</span>
+<span class="mi">1143</span>             <span class="n">String</span> <span class="n">commandName</span> <span class="o">=</span> <span class="n">getArgArray</span><span class="o">().</span><span class="na">next</span><span class="o">().</span><span class="na">trim</span><span class="o">();</span>
+<span class="mi">1144</span>             <span class="k">if</span> <span class="o">(</span><span class="n">commandName</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">&quot;&quot;</span><span class="o">))</span> <span class="o">{</span>
+<span class="mi">1145</span>                 <span class="k">continue</span><span class="o">;</span> <span class="c1">// cr or some sort of whitespace got parsed, skip to next</span>
+<span class="mi">1146</span>             <span class="o">}</span>
+<span class="mi">1147</span>             <span class="k">if</span> <span class="o">(</span><span class="n">getCmdMap</span><span class="o">().</span><span class="na">containsKey</span><span class="o">(</span><span class="n">commandName</span><span class="o">))</span> <span class="o">{</span>
+<span class="mi">1148</span>                 <span class="n">CommandInterface</span> <span class="n">command</span> <span class="o">=</span> <span class="n">getCmd</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">commandName</span><span class="o">);</span>
+<span class="mi">1149</span>                 <span class="k">try</span> <span class="o">{</span>
+<span class="mi">1150</span>                     <span class="n">setArgArray</span><span class="o">(</span><span class="n">command</span><span class="o">.</span><span class="na">cmd</span><span class="o">(</span><span class="n">getArgArray</span><span class="o">()));</span>
+<span class="mi">1151</span>                     <span class="n">lastCommandResult</span> <span class="o">=</span> <span class="n">command</span><span class="o">.</span><span class="na">getResult</span><span class="o">();</span>
+<span class="mi">1152</span>                     <span class="k">if</span> <span class="o">(</span><span class="n">lastCommandResult</span> <span class="o">==</span> <span class="n">COMMANDRESULT</span><span class="o">.</span><span class="na">FAILURE</span><span class="o">)</span> <span class="o">{</span>
+<span class="mi">1153</span>                         <span class="k">break</span><span class="o">;</span> <span class="c1">// we exit the loop on error</span>
+<span class="mi">1154</span>                     <span class="o">}</span>
+<span class="mi">1155</span>                 <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IllegalArgumentException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+<span class="mi">1156</span>                     <span class="n">getLogger</span><span class="o">().</span><span class="na">log</span><span class="o">(</span><span class="n">Level</span><span class="o">.</span><span class="na">SEVERE</span><span class="o">,</span> <span class="s">&quot;Command \&quot;&quot;</span> <span class="o">+</span> <span class="n">commandName</span> <span class="o">+</span> <span class="s">&quot;\&quot; threw exception&quot;</span><span class="o">,</span> <span class="n">ex</span><span class="o">);</span>
+<span class="mi">1157</span>                     <span class="n">lastCommandResult</span> <span class="o">=</span> <span class="n">COMMANDRESULT</span><span class="o">.</span><span class="na">FAILURE</span><span class="o">;</span>
+<span class="mi">1158</span>                     <span class="k">break</span><span class="o">;</span>
+<span class="mi">1159</span>                 <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">RuntimeException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+<span class="mi">1160</span>                     <span class="cm">/* java.net.UnknownHostException lands here, as well as  */</span>
+<span class="mi">1161</span>  <span class="cm">/* com.ibm.as400.access.ExtendedIllegalArgumentException */</span>
+<span class="mi">1162</span>                     <span class="n">getLogger</span><span class="o">().</span><span class="na">log</span><span class="o">(</span><span class="n">Level</span><span class="o">.</span><span class="na">SEVERE</span><span class="o">,</span> <span class="s">&quot;Command \&quot;&quot;</span> <span class="o">+</span> <span class="n">commandName</span> <span class="o">+</span> <span class="s">&quot;\&quot; threw exception&quot;</span><span class="o">,</span> <span class="n">ex</span><span class="o">);</span>
+<span class="mi">1163</span>                     <span class="n">lastCommandResult</span> <span class="o">=</span> <span class="n">COMMANDRESULT</span><span class="o">.</span><span class="na">FAILURE</span><span class="o">;</span>
+<span class="mi">1164</span>                     <span class="k">break</span><span class="o">;</span>
+<span class="mi">1165</span>                 <span class="o">}</span>
+<span class="mi">1166</span>             <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">getFunctorMap</span><span class="o">().</span><span class="na">containsKey</span><span class="o">(</span><span class="n">commandName</span><span class="o">))</span> <span class="o">{</span>
+<span class="mi">1167</span>                 <span class="k">try</span> <span class="o">{</span>
+<span class="mi">1168</span>                     <span class="n">TupleNameList</span> <span class="n">tnl</span> <span class="o">=</span> <span class="n">parseTupleNameList</span><span class="o">();</span>
+<span class="mi">1169</span>                     <span class="k">if</span> <span class="o">(</span><span class="n">tnl</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+<span class="mi">1170</span>                         <span class="n">lastCommandResult</span> <span class="o">=</span> <span class="n">executeFunctor</span><span class="o">(</span><span class="n">getFunctor</span><span class="o">(</span><span class="n">commandName</span><span class="o">),</span> <span class="n">tnl</span><span class="o">);</span>
+<span class="mi">1171</span>                         <span class="k">if</span> <span class="o">(</span><span class="n">lastCommandResult</span> <span class="o">==</span> <span class="n">COMMANDRESULT</span><span class="o">.</span><span class="na">FAILURE</span><span class="o">)</span> <span class="o">{</span>
+<span class="mi">1172</span>                             <span class="k">break</span><span class="o">;</span>
+<span class="mi">1173</span>                         <span class="o">}</span>
+<span class="mi">1174</span>                     <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+<span class="mi">1175</span>                         <span class="n">getLogger</span><span class="o">().</span><span class="na">log</span><span class="o">(</span><span class="n">Level</span><span class="o">.</span><span class="na">SEVERE</span><span class="o">,</span> <span class="s">&quot;Found function {0} but could not execute it&quot;</span><span class="o">,</span> <span class="n">commandName</span><span class="o">);</span>
+<span class="mi">1176</span>                         <span class="n">lastCommandResult</span> <span class="o">=</span> <span class="n">COMMANDRESULT</span><span class="o">.</span><span class="na">FAILURE</span><span class="o">;</span>
+<span class="mi">1177</span>                         <span class="k">break</span><span class="o">;</span>
+<span class="mi">1178</span>                     <span class="o">}</span>
+<span class="mi">1179</span>                 <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">RuntimeException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+<span class="mi">1180</span>                     <span class="n">getLogger</span><span class="o">().</span><span class="na">log</span><span class="o">(</span><span class="n">Level</span><span class="o">.</span><span class="na">SEVERE</span><span class="o">,</span> <span class="s">&quot;Function \&quot;&quot;</span> <span class="o">+</span> <span class="n">commandName</span> <span class="o">+</span> <span class="s">&quot;\&quot; threw exception&quot;</span><span class="o">,</span> <span class="n">ex</span><span class="o">);</span>
+<span class="mi">1181</span>                     <span class="n">lastCommandResult</span> <span class="o">=</span> <span class="n">COMMANDRESULT</span><span class="o">.</span><span class="na">FAILURE</span><span class="o">;</span>
+<span class="mi">1182</span>                     <span class="k">break</span><span class="o">;</span>
+<span class="mi">1183</span>                 <span class="o">}</span>
+<span class="mi">1184</span>             <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+<span class="mi">1185</span>                 <span class="n">getLogger</span><span class="o">().</span><span class="na">log</span><span class="o">(</span><span class="n">Level</span><span class="o">.</span><span class="na">SEVERE</span><span class="o">,</span> <span class="s">&quot;Command \&quot;{0}\&quot; not found.&quot;</span><span class="o">,</span> <span class="n">commandName</span><span class="o">);</span>
+<span class="mi">1186</span>                 <span class="n">lastCommandResult</span> <span class="o">=</span> <span class="n">COMMANDRESULT</span><span class="o">.</span><span class="na">FAILURE</span><span class="o">;</span>
+<span class="mi">1187</span>                 <span class="k">break</span><span class="o">;</span>
+<span class="mi">1188</span>             <span class="o">}</span>
+<span class="mi">1189</span>         <span class="o">}</span>
+<span class="mi">1190</span>         <span class="k">if</span> <span class="o">(!</span><span class="n">isIncluding</span><span class="o">()</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">initialCommandLine</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">())</span> <span class="o">{</span>
+<span class="mi">1191</span>             <span class="k">if</span> <span class="o">(</span><span class="n">getHistory</span><span class="o">()</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+<span class="mi">1192</span>                 <span class="k">try</span> <span class="o">{</span>
+<span class="mi">1193</span>                     <span class="n">getHistory</span><span class="o">().</span><span class="na">writeLine</span><span class="o">(</span><span class="n">initialCommandLine</span><span class="o">);</span>
+<span class="mi">1194</span>                 <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+<span class="mi">1195</span>                     <span class="n">getLogger</span><span class="o">().</span><span class="na">log</span><span class="o">(</span><span class="n">Level</span><span class="o">.</span><span class="na">WARNING</span><span class="o">,</span> <span class="s">&quot;Couldn&#39;t write to history file &quot;</span> <span class="o">+</span> <span class="n">getHistory</span><span class="o">().</span><span class="na">getHistoryFileName</span><span class="o">(),</span> <span class="n">ex</span><span class="o">);</span>
+<span class="mi">1196</span>                 <span class="o">}</span>
+<span class="mi">1197</span>             <span class="o">}</span>
+<span class="mi">1198</span>         <span class="o">}</span>
+<span class="mi">1199</span>         <span class="n">setGlobal_ret_val</span><span class="o">(</span><span class="n">lastCommandResult</span><span class="o">.</span><span class="na">ordinal</span><span class="o">());</span>
+<span class="mi">1200</span>         <span class="k">return</span> <span class="n">lastCommandResult</span><span class="o">;</span>
+<span class="mi">1201</span>     <span class="o">}</span>
+<span class="mi">1202</span>
 </pre></div>
 </div>
 <div class="admonition note">

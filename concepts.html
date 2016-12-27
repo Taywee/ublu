@@ -169,10 +169,10 @@ limitation in that within an <a class="reference internal" href="#execution-bloc
 the block opener <tt class="docutils literal"><span class="pre">$[</span></tt> nor the block closer <tt class="docutils literal"><span class="pre">]$</span></tt> are allowed to appear
 inside a quoted string. If you need to have those symbols in a quoted string,
 the limitation is easy to get around, as follows:</p>
-<div class="last highlight-python"><div class="highlight"><pre><span></span>put -to @foo ${ $[ }$
-put -to @bar ${ $] }$
-FOR @i in @foo $[ put -from @i ]$
-FOR @i in @bar $[ put -from @i ]$
+<div class="last highlight-ublu"><div class="highlight"><pre><span></span><span class="k">put</span> <span class="ow">-to</span> <span class="nv">@foo</span> <span class="s">${ $[ }$</span>
+<span class="k">put</span> <span class="ow">-to</span> <span class="nv">@bar</span> <span class="s">${ $] }$</span>
+<span class="k">FOR</span> <span class="nv">@i</span> <span class="k">in</span> <span class="nv">@foo</span> $[ <span class="k">put</span> <span class="ow">-from</span> <span class="nv">@i</span> ]$
+<span class="k">FOR</span> <span class="nv">@i</span> <span class="k">in</span> <span class="nv">@bar</span> $[ <span class="k">put</span> <span class="ow">-from</span> <span class="nv">@i</span> ]$
 </pre></div>
 </div>
 </div>
@@ -200,10 +200,10 @@ limitation in that within an <a class="reference internal" href="#execution-bloc
 the block opener <tt class="docutils literal"><span class="pre">$[</span></tt> nor the block closer <tt class="docutils literal"><span class="pre">]$</span></tt> are allowed to appear
 inside a quoted string. If you need to have those symbols in a quoted string,
 the limitation is easy to get around, as follows:</p>
-<div class="last highlight-python"><div class="highlight"><pre><span></span>put -to @foo ${ $[ }$
-put -to @bar ${ $] }$
-FOR @i in @foo $[ put -from @i ]$
-FOR @i in @bar $[ put -from @i ]$
+<div class="last highlight-ublu"><div class="highlight"><pre><span></span><span class="k">put</span> <span class="ow">-to</span> <span class="nv">@foo</span> <span class="s">${ $[ }$</span>
+<span class="k">put</span> <span class="ow">-to</span> <span class="nv">@bar</span> <span class="s">${ $] }$</span>
+<span class="k">FOR</span> <span class="nv">@i</span> <span class="k">in</span> <span class="nv">@foo</span> $[ <span class="k">put</span> <span class="ow">-from</span> <span class="nv">@i</span> ]$
+<span class="k">FOR</span> <span class="nv">@i</span> <span class="k">in</span> <span class="nv">@bar</span> $[ <span class="k">put</span> <span class="ow">-from</span> <span class="nv">@i</span> ]$
 </pre></div>
 </div>
 </div>
@@ -282,11 +282,11 @@ via the <tt class="docutils literal"><span class="pre">-to</span></tt> or <tt cl
 (&#8220;tilde&#8221;), meaning the source or destination is the tuple stack. Non-tuples,
 e.g, strings put to a destination datasink via <tt class="docutils literal"><span class="pre">-to</span> <span class="pre">~</span></tt> in this fashion are
 automatically wrapped in an anonymous tuple. Hence the following session:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>&gt; put -to ~ ${ but not a clever test }$
-&gt; put -to ~ ${ this is a test }$
-&gt; string -to ~ -cat ~ ~
-&gt; put ~
-this is a test but not a clever test
+<div class="highlight-ublu"><div class="highlight"><pre><span></span>&gt; <span class="k">put</span> <span class="ow">-to</span> ~ <span class="s">${ but not a clever test }$</span>
+&gt; <span class="k">put</span> <span class="ow">-to</span> ~ <span class="s">${ this is a test }$</span>
+&gt; <span class="k">string</span> <span class="ow">-to</span> ~ <span class="ow">-cat</span> ~ ~
+&gt; <span class="k">put</span> ~
+this is a <span class="k">test</span> but not a clever <span class="k">test</span>
 </pre></div>
 </div>
 </div>
@@ -305,15 +305,15 @@ error.</p>
 <p>Thus, the third, fourth and sixth commands of the following example
 using <em class="xref std std-ref">ifs</em> to get the size of a file in the Integrated File
 System are equivalent:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>&gt; as400 -to @mysys MYSYS.com myid mYpAssWoRd
-&gt; ifs -to @f -as400 @mysys -file /home/myid/.profile
-&gt; ifs -- @f -size
-56
-&gt; @f -size
-56
-&gt; lifo -push @f
-&gt; ~ -size
-56
+<div class="highlight-ublu"><div class="highlight"><pre><span></span>&gt; <span class="k">as400</span> <span class="ow">-to</span> <span class="nv">@mysys</span> MYSYS.com myid mYpAssWoRd
+&gt; <span class="k">ifs</span> <span class="ow">-to</span> <span class="nv">@f</span> <span class="ow">-as400</span> <span class="nv">@mysys</span> <span class="ow">-file</span> /home/myid/.profile
+&gt; <span class="k">ifs</span> <span class="ow">--</span> <span class="nv">@f</span> <span class="ow">-size</span>
+<span class="m">56</span>
+&gt; <span class="nv">@f</span> <span class="ow">-size</span>
+<span class="m">56</span>
+&gt; <span class="k">lifo</span> <span class="ow">-push</span> <span class="nv">@f</span>
+&gt; ~ <span class="ow">-size</span>
+<span class="m">56</span>
 </pre></div>
 </div>
 <p>Autonomic tuple variables offer a useful
@@ -370,7 +370,7 @@ opener <tt class="docutils literal"><span class="pre">$[</span></tt> and the blo
 <em class="xref std std-ref">FUN</em> command and with conditional control flow commands
 such as <em class="xref std std-ref">FOR</em> and <em class="xref std std-ref">IF - THEN - ELSE</em> to
 express the limit of a code phrase in a condition.:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>IF @varname THEN $[ command command .. ]$ ELSE $[     command command ]$
+<div class="highlight-ublu"><div class="highlight"><pre><span></span><span class="k">IF</span> <span class="nv">@varname</span> <span class="k">THEN</span> $[ command command .. ]$ <span class="k">ELSE</span> $[     command command ]$
 </pre></div>
 </div>
 <p>is a generalized example of block usage.</p>
@@ -393,10 +393,10 @@ limitation in that within an <a class="reference internal" href="#execution-bloc
 the block opener <tt class="docutils literal"><span class="pre">$[</span></tt> nor the block closer <tt class="docutils literal"><span class="pre">]$</span></tt> are allowed to appear
 inside a quoted string. If you need to have those symbols in a quoted string,
 the limitation is easy to get around, as follows:</p>
-<div class="last highlight-python"><div class="highlight"><pre><span></span>put -to @foo ${ $[ }$
-put -to @bar ${ $] }$
-FOR @i in @foo $[ put -from @i ]$
-FOR @i in @bar $[ put -from @i ]$
+<div class="last highlight-ublu"><div class="highlight"><pre><span></span><span class="k">put</span> <span class="ow">-to</span> <span class="nv">@foo</span> <span class="s">${ $[ }$</span>
+<span class="k">put</span> <span class="ow">-to</span> <span class="nv">@bar</span> <span class="s">${ $] }$</span>
+<span class="k">FOR</span> <span class="nv">@i</span> <span class="k">in</span> <span class="nv">@foo</span> $[ <span class="k">put</span> <span class="ow">-from</span> <span class="nv">@i</span> ]$
+<span class="k">FOR</span> <span class="nv">@i</span> <span class="k">in</span> <span class="nv">@bar</span> $[ <span class="k">put</span> <span class="ow">-from</span> <span class="nv">@i</span> ]$
 </pre></div>
 </div>
 </div>
@@ -419,16 +419,16 @@ collision results, and both the local and the function argument can be
 referenced.</p>
 <div class="admonition-example admonition">
 <p class="first admonition-title">example</p>
-<div class="last highlight-python"><div class="highlight"><pre><span></span>FUNC foo ( a ) $[
-    LOCAL @a
-    put -to @a ${ inner @a }$
-    put -n -s ${ outer a: }$ put -from @@a
-    put -n -s ${ local a: }$ put -from @a
+<div class="last highlight-ublu"><div class="highlight"><pre><span></span><span class="k">FUNC</span> foo ( a ) $[
+    <span class="k">LOCAL</span> <span class="nv">@a</span>
+    <span class="k">put</span> <span class="ow">-to</span> <span class="nv">@a</span> <span class="s">${ inner @a }$</span>
+    <span class="k">put</span> <span class="ow">-n</span> <span class="ow">-s</span> <span class="s">${ outer a: }$</span> <span class="k">put</span> <span class="ow">-from</span> <span class="nv">@@a</span>
+    <span class="k">put</span> <span class="ow">-n</span> <span class="ow">-s</span> <span class="s">${ local a: }$</span> <span class="k">put</span> <span class="ow">-from</span> <span class="nv">@a</span>
 ]$
-put -to @a ${ outer @a }$
-foo ( @a )
-outer a:  outer @a
-local a:  inner @a
+<span class="k">put</span> <span class="ow">-to</span> <span class="nv">@a</span> <span class="s">${ outer @a }$</span>
+foo ( <span class="nv">@a</span> )
+outer a:  outer <span class="nv">@a</span>
+local a:  inner <span class="nv">@a</span>
 </pre></div>
 </div>
 </div>
@@ -456,24 +456,24 @@ tuple itself, not the tuple&#8217;s value, and any alteration of the argument
 alters the tuple referred to in the argument list. The resolution of
 these arguments is discussed under <a class="reference internal" href="#function-parameter-binding"><em>Function Parameter
 Binding</em></a>:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>&gt; FUNC yadda ( a ) $[ FOR @word in @@a $[ put -n -s -from @word put ${ yadda-yadda ... }$ ]$ ]$
-&gt; put -to @words ${ this that t&#39;other }$
-&gt; yadda ( @words )
+<div class="highlight-ublu"><div class="highlight"><pre><span></span>&gt; <span class="k">FUNC</span> yadda ( a ) $[ <span class="k">FOR</span> <span class="nv">@word</span> <span class="k">in</span> <span class="nv">@@a</span> $[ <span class="k">put</span> <span class="ow">-n</span> <span class="ow">-s</span> <span class="ow">-from</span> <span class="nv">@word</span> <span class="k">put</span> <span class="s">${ yadda-yadda ... }$</span> ]$ ]$
+&gt; <span class="k">put</span> <span class="ow">-to</span> <span class="nv">@words</span> <span class="s">${ this that t&#39;other }$</span>
+&gt; yadda ( <span class="nv">@words</span> )
 this yadda-yadda ...
 that yadda-yadda ...
 t&#39;other yadda-yadda ...
-&gt; dict -list
-# yadda ublu.util.Functor@1d4b0e9
-FUNC yadda ( a ) $[ FOR @word in @@a $[ put -n -s -from @word put ${ yadda-yadda ... }$ ]$  ]$
+&gt; <span class="k">dict</span> <span class="ow">-list</span>
+<span class="c"># yadda ublu.util.Functor@1d4b0e9</span>
+<span class="k">FUNC</span> yadda ( a ) $[ <span class="k">FOR</span> <span class="nv">@word</span> <span class="k">in</span> <span class="nv">@@a</span> $[ <span class="k">put</span> <span class="ow">-n</span> <span class="ow">-s</span> <span class="ow">-from</span> <span class="nv">@word</span> <span class="k">put</span> <span class="s">${ yadda-yadda ... }$</span> ]$  ]$
 
-&gt; dict -save -to mydict
-&gt; FUNC -delete yadda
-&gt; dict -list
+&gt; <span class="k">dict</span> <span class="ow">-save</span> <span class="ow">-to</span> mydict
+&gt; <span class="k">FUNC</span> <span class="ow">-delete</span> yadda
+&gt; <span class="k">dict</span> <span class="ow">-list</span>
 
-&gt; dict -restore -from mydict
-&gt; dict -list
-# yadda ublu.util.Functor@14fd510
-FUNC yadda ( a ) $[ FOR @word in @@a $[ put -n -s -from @word put ${ yadda-yadda ... }$ ]$  ]$
+&gt; <span class="k">dict</span> <span class="ow">-restore</span> <span class="ow">-from</span> mydict
+&gt; <span class="k">dict</span> <span class="ow">-list</span>
+<span class="c"># yadda ublu.util.Functor@14fd510</span>
+<span class="k">FUNC</span> yadda ( a ) $[ <span class="k">FOR</span> <span class="nv">@word</span> <span class="k">in</span> <span class="nv">@@a</span> $[ <span class="k">put</span> <span class="ow">-n</span> <span class="ow">-s</span> <span class="ow">-from</span> <span class="nv">@word</span> <span class="k">put</span> <span class="s">${ yadda-yadda ... }$</span> ]$  ]$
 </pre></div>
 </div>
 <div class="admonition-see-also admonition">
@@ -510,15 +510,15 @@ appear at runtime wherever the argument is substituted in the
 function body.</li>
 </ul>
 <p>Thus, in the case of a function:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>foo ( a b c ) $[ put @@a put @@b put @@c ]$
+<div class="highlight-ublu"><div class="highlight"><pre><span></span>foo ( a b c ) $[ <span class="k">put</span> <span class="nv">@@a</span> <span class="k">put</span> <span class="nv">@@b</span> <span class="k">put</span> <span class="nv">@@c</span> ]$
 </pre></div>
 </div>
 <p>called with arguments:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>foo ( @bar woof @zotz )
+<div class="highlight-ublu"><div class="highlight"><pre><span></span>foo ( <span class="nv">@bar</span> woof <span class="nv">@zotz</span> )
 </pre></div>
 </div>
 <p>is effectively seen at invocation by the interpreter as:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>$[ put @bar put woof put @zotz ]$
+<div class="highlight-ublu"><div class="highlight"><pre><span></span>$[ <span class="k">put</span> <span class="nv">@bar</span> <span class="k">put</span> woof <span class="k">put</span> <span class="nv">@zotz</span> ]$
 </pre></div>
 </div>
 <p>The temporary alias actually pasted for tuple variable arguments to
@@ -550,12 +550,12 @@ of the host using the <em class="xref std std-ref">as400</em> command so that yo
 of the system name, userid and password. On system operations, if the user ID
 or password is incorrect, you will be prompted to enter the correct user ID
 and/or password, upon completion of which the command will proceed.:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>&gt; joblist testsys frrd oopswrong
+<div class="highlight-ublu"><div class="highlight"><pre><span></span>&gt; <span class="k">joblist</span> testsys frrd oopswrong
 Please enter a valid userid for testsys: fred
 Please enter a valid password for testsys (will not echo):
-000000/QSYS/SCPF
-000736/QSYS/QSYSARB
-000737/QSYS/QSYSARB2
+<span class="m">000000</span>/QSYS/SCPF
+<span class="m">000736</span>/QSYS/QSYSARB
+<span class="m">000737</span>/QSYS/QSYSARB2
 </pre></div>
 </div>
 <p>... etc.</p>
@@ -574,7 +574,7 @@ windowing behavior and just allow the operation to fail on incorrect
 userid/password with an understandable exception by adding the following
 connection property <a class="reference internal" href="commands.html#dash-command"><em>dash-command</em></a> to the string of
 dash-commands for the <tt class="docutils literal"><span class="pre">db</span></tt> command:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>-property prompt false
+<div class="highlight-ublu"><div class="highlight"><pre><span></span><span class="ow">-property</span> prompt false
 </pre></div>
 </div>
 <p>which adds <tt class="docutils literal"><span class="pre">;prompt=false</span></tt> to the URL for the JDBC connection and disables

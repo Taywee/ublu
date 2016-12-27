@@ -241,36 +241,36 @@ last command that Ublu processed.</p>
 </ul>
 </li>
 </ul>
-<div class="highlight-python"><div class="highlight"><pre><span></span>$ java -jar ublu.jar
-Ublu version 1.1.3+ build of 2016-10-16 09:30:57
+<div class="highlight-ublu"><div class="highlight"><pre><span></span>$ java <span class="ow">-jar</span> ublu.jar
+Ublu version <span class="m">1.1</span>.3+ build of <span class="m">2016</span><span class="ow">-10-16</span> <span class="m">09</span>:30:57
 Author: Jack J. Woehr.
-Copyright 2015, Absolute Performance, Inc., http://www.absolute-performance.com
-Copyright 2016, Jack J. Woehr, http://www.softwoehr.com
+Copyright <span class="m">2015</span>, Absolute Performance, Inc., http://www.absolute-performance.com
+Copyright <span class="m">2016</span>, Jack J. Woehr, http://www.softwoehr.com
 All Rights Reserved
-Ublu is Open Source Software under the BSD 2-clause license.
+Ublu is Open Source Software under the BSD <span class="m">2</span><span class="ow">-clause</span> <span class="k">license</span>.
 THERE IS NO WARRANTY and NO GUARANTEE OF CORRECTNESS NOR APPLICABILITY.
 ***
 Ublu utilizes the following open source projects:
 IBM Toolbox for Java:
-Open Source Software, JTOpen 9.1, codebase 5770-SS1 V7R3M0.00 built=20160705 @RF
-Supports JDBC version 3.0
-Toolbox driver version 11.1
----
-Postgresql PostgreSQL 9.4.1208.jre6
-Copyright (c) 1997-2011, PostgreSQL Global Development Group
+Open Source Software, JTOpen <span class="m">9.1</span>, codebase <span class="m">5770</span><span class="ow">-SS1</span> V7R3M0.00 built=20160705 <span class="nv">@RF</span>
+Supports JDBC version <span class="m">3.0</span>
+Toolbox driver version <span class="m">11.1</span>
+<span class="ow">---</span>
+Postgresql PostgreSQL <span class="m">9.4</span>.1208.jre6
+Copyright (c) <span class="m">1997</span><span class="ow">-2011,</span> PostgreSQL Global Development Group
 All rights reserved http://www.postgresql.org
----
+<span class="ow">---</span>
 tn5250j http://tn5250j.sourceforge.net/
-NO WARRANTY (GPL) see the file tn5250_LICENSE
----
-PigIron 0.9.7+ http://pigiron.sourceforge.net
-Copyright (c) 2008-2016 Jack J. Woehr, PO Box 51, Golden CO 80402 USA
+NO WARRANTY (GPL) see the <span class="k">file</span> tn5250_LICENSE
+<span class="ow">---</span>
+PigIron <span class="m">0.9</span>.7+ http://pigiron.sourceforge.net
+Copyright (c) <span class="m">2008</span><span class="ow">-2016</span> Jack J. Woehr, PO Box <span class="m">51</span>, Golden CO <span class="m">80402</span> USA
 All Rights Reserved
----
+<span class="ow">---</span>
 org.json
-Copyright (c) 2002 JSON.org
+Copyright (c) <span class="m">2002</span> JSON.org
 ***
-Type help for help. Type license for license. Type bye to exit.
+Type <span class="k">help</span> for <span class="k">help</span>. Type <span class="k">license</span> for <span class="k">license</span>. Type <span class="k">bye</span> to <span class="k">exit</span>.
 </pre></div>
 </div>
 <ul class="simple">
@@ -286,7 +286,7 @@ Java itself will be performed.</li>
 <p>Ublu ordinarily runs well with default Java memory values. However, in
 performing database operations on large databases one may be forced to
 boost the heap allocation considerably on invocation, e.g.:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>java -Xms4g -Xmx4g -jar /opt/ublu/ublu.jar ...
+<div class="highlight-ublu"><div class="highlight"><pre><span></span>java <span class="ow">-Xms4g</span> <span class="ow">-Xmx4g</span> <span class="ow">-jar</span> /opt/ublu/ublu.jar ...
 </pre></div>
 </div>
 <p>which allocates 4 gigabytes.</p>

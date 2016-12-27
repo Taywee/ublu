@@ -70,7 +70,7 @@ library</a>.</p>
 <p>Not all commands have dash-commands. Not all commands take arguments.  Usually
 they take one or the other. The general order of the three parts is as
 follows:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>command [dash-command dash-command-argument [dash-command-argument
+<div class="highlight-ublu"><div class="highlight"><pre><span></span>command [dash-command dash-command-argument [dash-command-argument
 dash-command-argument ...] ] command-argument [command-argument ...]
 </pre></div>
 </div>
@@ -180,7 +180,7 @@ string either <tt class="docutils literal"><span class="pre">int</span></tt>, <t
 <h3>Command Example<a class="headerlink" href="#command-example" title="Permalink to this headline">¶</a></h3>
 <p>An example of a command with dash-commands and arguments is the
 following:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>job -job @j -to @subsys -get subsystem
+<div class="highlight-ublu"><div class="highlight"><pre><span></span><span class="k">job</span> <span class="ow">-job</span> <span class="nv">@j</span> <span class="ow">-to</span> <span class="nv">@subsys</span> <span class="ow">-get</span> subsystem
 </pre></div>
 </div>
 <ul class="simple">
@@ -199,7 +199,7 @@ plainword argument indicating what aspect of the job represented by
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p>the above example could equally have been written:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>job -- @j -to @subsys -get subsystem
+<div class="highlight-ublu"><div class="highlight"><pre><span></span><span class="k">job</span> <span class="ow">--</span> <span class="nv">@j</span> <span class="ow">-to</span> <span class="nv">@subsys</span> <span class="ow">-get</span> subsystem
 </pre></div>
 </div>
 <p class="last">using the <a class="reference internal" href="#eponymous-dash-command"><em>eponymous dash-command</em></a>
